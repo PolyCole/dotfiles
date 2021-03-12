@@ -1,0 +1,120 @@
+# Enabling powerlevel10k instant prompt.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/cole.polyak/.oh-my-zsh"
+
+# Ensuring we source p10k.
+source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# oh-my-zsh theme in case the ~simple~ asthetic is needed.
+# ZSH_THEME="robbyrussell"
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# There are a bunch more configuration options for oh-my-zsh here,
+# but I've removed them to save space. You can view them here:
+# https://github.com/ohmyzsh/ohmyzsh/blob/master/templates/zshrc.zsh-template
+
+
+plugins=(
+  git
+  zsh-osx-keychain
+)
+
+source $ZSH/oh-my-zsh.sh
+. /usr/local/opt/asdf/asdf.sh
+
+# ************************************
+#              ALIASES
+# ************************************
+
+# If, in the future, this gets unmanageable, there's a simple way to frag this.
+# Similarly, this can be done to separate personal versus work files.
+# if [ -f $HOME/.bash_aliases ]: then
+#   . $HOME/.bash_aliases
+# fi
+
+# Ibotta Monolith stuff.
+alias monolith="cd /Users/cole.polyak/Desktop/hub/repos/Ibotta"
+alias drake="saml2aws exec --exec-profile monolith -- bin/drake"
+alias rspec="saml2aws exec --exec-profile monolith -- bin/drake spring rspec"
+alias awslog="saml2aws login --skip-prompt --force"
+
+# Microservice stuff.
+alias ecrchk="saml2aws exec --exec-profile monolith -- ~/ecrimagecheck.sh"
+
+# General Aliases
+alias python="python3"
+alias cat="bat"
+alias lsa="ls -a"
+alias lsal="ls -al"
+alias reload="source ~/.zshrc"
+alias repos="cd /Users/cole.polyak/Desktop/hub/repos"
+alias zhelp="python /Users/cole.polyak/Desktop/hub/code/scripts/custom_commands_help.py"
+
+# zsh-osx-keychain stuff.
+alias zshenv-var="set-keychain-environment-variable"
+alias rm-zshenv-var="delete-keychain-environment-variable"
+
+
+# ************************************
+#       ENVIRONMENT VARIABLES
+# ************************************
+
+# AWS Vars
+export AWS_DEFAULT_REGION=us-east-1
+export AWS_REGION=us-east-1
+export AWS_SESSION_TTL=12h
+export AWS_FEDERATION_TOKEN_TTL=12h
+export AWS_ASSUME_ROLE_TTL=1h
+export AWS_DEFAULT_REGION=us-east-1
+export AWS_REGION=$AWS_DEFAULT_REGION
+
+# Private Repo Logins.
+export GEM_REPO_LOGIN=$(keychain-environment-variable PRIVATE_PACKAGE_REPO_LOGIN)
+export NPM_REPO_LOGIN=$(keychain-environment-variable PRIVATE_PACKAGE_REPO_LOGIN)
+export MVN_REPO_LOGIN=$(keychain-environment-variable PRIVATE_PACKAGE_REPO_LOGIN)
+export MASTER_GENERATOR_LOGIN=$(keychain-environment-variable MASTER_GENERATOR_LOGIN)
+
+# Kubernetes -- Staging is default environment.
+export KUBECONFIG=~/.kube/apollo
+
+
+# ************************************
+#             FUNCTIONS
+# ************************************
+
+
+# Deploying to staging via Argo.
+deploy-argo-stage(){
+        kubeconfig-stage
+        ./scripts/deploy.sh staging
+}
+
+# Deploying to production via Argo.
+deploy-argo-prod(){
+        kubeconfig-prod
+        ./scripts/deploy.sh production
+}
+
+# Setting Kubernetes config to Production.
+kubeconfig-prod(){
+        export KUBECONFIG=~/.kube/barrel
+}
+
+# Setting Kubernetes config to Staging.
+kubeconfig-stage(){
+        export KUBECONFIG=~/.kube/apollo
+}
+
+# Docker is being annoying, let's just burn it to the ground.
+dockermurder() {
+    docker volume prune
+    docker container prune --filter "until=24h"
+    docker image prune -a --filter "until=24h"
+}
