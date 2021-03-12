@@ -25,4 +25,6 @@ if [[ `git status --porcelain` ]]; then
   git add .
   git commit -m "Update: $(timestamp)"
   git push origin main
+else
+  echo "No changes detected. You're backed-up!"
 fi
