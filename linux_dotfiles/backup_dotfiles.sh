@@ -38,8 +38,9 @@ cd /home/cole/repos/dotfiles/linux_dotfiles
 
 # Finally, let's pull and push the repo.
 git_changes=`git status --porcelain`
+blank=""
 
-if [ git_changes ]; then
+if [ git_changes != blank ]; then
   git pull origin main
   git add .
   git commit -m "Update: $(timestamp)"
