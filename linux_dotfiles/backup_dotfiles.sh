@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Create a timestamp alias for the commit message.
 timestamp() {
@@ -37,10 +37,12 @@ cp /home/cole/.cole.theme.bash /home/cole/repos/dotfiles/linux_dotfiles/cole_the
 cd /home/cole/repos/dotfiles/linux_dotfiles
 
 # Finally, let's pull and push the repo.
-git_changes=`git status --porcelain`
-blank=""
 
-if [ git_changes != blank ]; then
+# Check git status
+gs="$(git status | grep -i "modified")"
+
+# If there is a new change
+if [[ $gs == *"modified"* ]]; then
   git pull origin main
   git add .
   git commit -m "Update: $(timestamp)"
