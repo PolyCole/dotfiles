@@ -18,7 +18,7 @@ cp snap-list /home/cole/repos/dotfiles/linux_dotfiles/
 rm snap-list
 
 # Third, let's dump pip.
-python -m pip list > pip-list
+/usr/bin/python3 -m pip list > pip-list
 cp pip-list /home/cole/repos/dotfiles/linux_dotfiles/
 rm pip-list
 
@@ -32,13 +32,15 @@ rm npm-list
 cp /home/cole/.bashrc /home/cole/repos/dotfiles/linux_dotfiles/bashrc
 cp /home/cole/.bash_logout /home/cole/repos/dotfiles/linux_dotfiles/bash_logout
 cp /home/cole/.gitconfig /home/cole/repos/dotfiles/linux_dotfiles/gitconfig
-cp /home/cole/.cole.theme.bash / home/cole/repos/dotfiles/linux_dotfiles/cole_theme
+cp /home/cole/.cole.theme.bash /home/cole/repos/dotfiles/linux_dotfiles/cole_theme
 
 
 cd /home/cole/repos/dotfiles/linux_dotfiles
 
 # Finally, let's pull and push the repo.
-if [[ `git status --porcelain` ]]; then
+git_changes=`git status --porcelain`
+
+if [ git_changes ]; then
   git pull origin main
   git add .
   git commit -m "Update: $(timestamp)"

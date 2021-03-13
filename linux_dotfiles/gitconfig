@@ -1,0 +1,5 @@
+[user]
+	email = colepolyak@gmail.com
+	name = cole polyak
+[credential]
+	helper = cache
