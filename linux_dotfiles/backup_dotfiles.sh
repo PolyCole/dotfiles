@@ -1,5 +1,4 @@
 #!/bin/sh
-#!/bin/sh
 
 # Create a timestamp alias for the commit message.
 timestamp() {
