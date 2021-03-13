@@ -32,6 +32,7 @@ rm npm-list
 cp /home/cole/.bashrc /home/cole/repos/dotfiles/linux_dotfiles/bashrc
 cp /home/cole/.bash_logout /home/cole/repos/dotfiles/linux_dotfiles/bash_logout
 cp /home/cole/.gitconfig /home/cole/repos/dotfiles/linux_dotfiles/gitconfig
+cp /home/cole/.cole.theme.bash / home/cole/repos/dotfiles/linux_dotfiles/cole_theme
 
 
 cd /home/cole/repos/dotfiles/linux_dotfiles
