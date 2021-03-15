@@ -10,3 +10,4 @@
 	process = git-lfs filter-process
 [core]
 	excludesfile = /Users/cole.polyak/.gitignore_global
+	pager = diff-so-fancy | less --tabs=4 -RFX
