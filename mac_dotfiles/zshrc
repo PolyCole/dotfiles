@@ -85,6 +85,9 @@ export MASTER_GENERATOR_LOGIN=$(keychain-environment-variable MASTER_GENERATOR_L
 # Kubernetes -- Staging is default environment.
 export KUBECONFIG=~/.kube/apollo
 
+# Ruby Gem configs.
+export GEM_HOME="$HOME/.gems"
+
 
 # ************************************
 #             FUNCTIONS

@@ -7,7 +7,7 @@ timestamp() {
 
 # First, let's dump homebrew.
 cd ~
-brew bundle dump
+/usr/local/bin/brew bundle dump
 cp Brewfile /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles
 rm Brewfile
 
