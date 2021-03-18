@@ -38,6 +38,7 @@ source $ZSH/oh-my-zsh.sh
 # if [ -f $HOME/.bash_aliases ]: then
 #   . $HOME/.bash_aliases
 # fi
+# Obviously this is for bash_aliases, but something similar can be accomplished for zsh.
 
 # Ibotta Monolith stuff.
 alias monolith="cd /Users/cole.polyak/Desktop/hub/repos/Ibotta"
