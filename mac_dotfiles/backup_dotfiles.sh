@@ -5,6 +5,12 @@ timestamp() {
   date +"%Y-%m-%d @ %T"
 }
 
+# Selects a random emoji to be used with the commit message.
+randomEmoji() {
+  emojis=("🟠" "🟣" "⚫" "🟡" "🔵" "🟤" "🟢" "⚪" "⭕" "🔴" "⏺️")
+  selected_emoji=${emojis["$[RANDOM % ${#emojis[@]}]"]}
+}
+
 # First, let's dump homebrew.
 cd ~
 /usr/local/bin/brew bundle dump
@@ -21,9 +27,11 @@ cd /Users/cole.polyak/Desktop/hub/repos/dotfiles
 
 # Finally, let's pull and push the repo.
 if [[ `git status --porcelain` ]]; then
+  randomEmoji
+
   git pull origin main
   git add .
-  git commit -m "Update: $(timestamp)"
+  git commit -m "$selected_emoji Update: $(timestamp)"
   git push origin main
 else
   echo "No changes detected. You're backed-up!"

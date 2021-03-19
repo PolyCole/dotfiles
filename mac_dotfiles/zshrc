@@ -61,7 +61,7 @@ alias lsal="ls -al"
 alias diff="diff-so-fancy"
 alias reload="source ~/.zshrc"
 alias repos="cd /Users/cole.polyak/Desktop/hub/repos"
-alias zhelp="python /Users/cole.polyak/Desktop/hub/code/scripts/custom_commands_help.py"
+alias zhelp="custom_commands_help.sh"
 
 # zsh-osx-keychain stuff.
 alias zshenv-var="set-keychain-environment-variable"
@@ -92,6 +92,17 @@ export KUBECONFIG=~/.kube/apollo
 
 # Ruby Gem configs.
 export GEM_HOME="$HOME/.gems"
+
+
+# ************************************
+#        PATH MODIFICATION
+# ************************************
+
+# append
+path+=('/Users/cole.polyak/toolbox/ibotta_scripts')
+path+=('/Users/cole.polyak/toolbox/ibotta_scripts/ibotta_linkers')
+path+=('/Users/cole.polyak/toolbox/found_scripts')
+export path
 
 
 # ************************************
