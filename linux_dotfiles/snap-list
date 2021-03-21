@@ -1,5 +1,5 @@
 Name                    Version               Rev    Tracking         Publisher     Notes
-brave                   1.21.76               102    latest/stable    brave         -
+brave                   1.21.77               103    latest/stable    brave         -
 canonical-livepatch     9.5.5                 95     latest/stable    canonical*    -
 core                    16-2.49               10859  latest/stable    canonical*    core
 core18                  20210128              1988   latest/stable    canonical*    base
@@ -10,13 +10,13 @@ gnome-3-34-1804         0+git.3556cb3         66     latest/stable/…  canonica
 gtk-common-themes       0.1-50-gf7627e4       1514   latest/stable/…  canonical*    -
 heroku                  v7.49.0               4037   latest/stable    heroku*       classic
 htop                    3.0.5                 2185   latest/stable    maxiberta     -
-intellij-idea-ultimate  2020.3.3              282    latest/stable    jetbrains*    classic
+intellij-idea-ultimate  2020.3.3              285    latest/stable    jetbrains*    classic
 postman                 7.36.5                133    latest/stable    postman-inc*  -
-pycharm-professional    2020.3.3              230    latest/stable    jetbrains*    classic
+pycharm-professional    2020.3.4              236    latest/stable    jetbrains*    classic
 rem                     0.13.4                34     latest/stable    martin-borho  classic
-rubymine                2020.3.2              205    latest/stable    jetbrains*    classic
+rubymine                2020.3.3              217    latest/stable    jetbrains*    classic
 slack                   4.13.0                37     latest/stable    slack*        classic
 snap-store              3.38.0-59-g494f078    518    latest/stable/…  canonical*    -
 snapd                   2.49                  11107  latest/stable    canonical*    snapd
-spotify                 1.1.46.916.g416cacf1  43     latest/stable    spotify*      -
+spotify                 1.1.55.494.gca75f788  45     latest/stable    spotify*      -
 sublime-text            3211                  97     latest/stable    snapcrafters  classic

@@ -5,6 +5,12 @@ timestamp() {
   date +"%Y-%m-%d @ %T"
 }
 
+# Selects a random emoji to be used with the commit message.
+randomEmoji() {
+  emojis=("🟠" "🟣" "⚫" "🟡" "🔵" "🟤" "🟢" "⚪" "⭕" "🔴" "⏺️")
+  selected_emoji=${emojis["$[RANDOM % ${#emojis[@]}]"]}
+}
+
 # First, let's dump apt just to be sure we have that on record. 
 cd ~
 apt list > apt-list
@@ -32,6 +38,7 @@ cp /home/cole/.bashrc /home/cole/repos/dotfiles/linux_dotfiles/bashrc
 cp /home/cole/.bash_logout /home/cole/repos/dotfiles/linux_dotfiles/bash_logout
 cp /home/cole/.gitconfig /home/cole/repos/dotfiles/linux_dotfiles/gitconfig
 cp /home/cole/.cole.theme.bash /home/cole/repos/dotfiles/linux_dotfiles/cole_theme
+cp /home/cole/.cole_config /home/cole/repos/dotfiles/linux_dotfiles/cole_config
 
 
 cd /home/cole/repos/dotfiles/linux_dotfiles
@@ -43,9 +50,11 @@ gs="$(git status | grep -i "modified")"
 
 # If there is a new change
 if [[ $gs == *"modified"* ]]; then
+  randomEmoji
+
   git pull origin main
   git add .
-  git commit -m "Update: $(timestamp)"
+  git commit -m "$selected_emoji Update: $(timestamp)"
   git push origin main
 else
   echo "No changes detected. You're backed-up!"
