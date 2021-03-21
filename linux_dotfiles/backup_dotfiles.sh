@@ -11,6 +11,8 @@ randomEmoji() {
   selected_emoji=${emojis["$[RANDOM % ${#emojis[@]}]"]}
 }
 
+ssh -T git@github.com
+
 # First, let's dump apt just to be sure we have that on record. 
 cd ~
 apt list > apt-list
