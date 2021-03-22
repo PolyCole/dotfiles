@@ -138,3 +138,8 @@ dockermurder() {
     docker container prune --filter "until=24h"
     docker image prune -a --filter "until=24h"
 }
+
+# Create a new directory and enter it
+mkd() {
+	mkdir -p "$@" && cd "$_";
+}
