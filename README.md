@@ -10,4 +10,4 @@ Step 1: define the `PATH` for crontab, which is doable with this [script](https:
 
 Step 2: Ensure access to the Github repo is using SSH, which is succinctly summarized by [this gist](https://gist.github.com/developius/c81f021eb5c5916013dc)
 
-Step 3: Add a couple of
+Step 3: Profit :) 
