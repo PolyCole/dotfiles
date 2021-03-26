@@ -45,28 +45,32 @@ source $ZSH/oh-my-zsh.sh
 # Obviously this is for bash_aliases, but something similar can be accomplished for zsh.
 
 # Ibotta Monolith stuff.
-alias monolith="cd /Users/cole.polyak/Desktop/hub/repos/Ibotta"
-alias drake="saml2aws exec --exec-profile monolith -- bin/drake"
-alias rspec="saml2aws exec --exec-profile monolith -- bin/drake spring rspec"
 alias awslog="saml2aws login --skip-prompt --force"
+alias drake="saml2aws exec --exec-profile monolith -- bin/drake"
+alias monolith="cd /Users/cole.polyak/Desktop/hub/repos/Ibotta"
+alias rspec="saml2aws exec --exec-profile monolith -- bin/drake spring rspec"
 
 # Microservice stuff.
 alias ecrchk="saml2aws exec --exec-profile monolith -- ~/ecrimagecheck.sh"
+alias gradle="./gradlew"
 
 # General Aliases
-alias python="python3"
 alias cat="bat"
+alias diff="diff-so-fancy"
 alias lsa="ls -a"
 alias lsal="ls -al"
-alias diff="diff-so-fancy"
+alias python="python3"
 alias reload="source ~/.zshrc"
 alias repos="cd /Users/cole.polyak/Desktop/hub/repos"
+alias tools="cd ~/toolbox"
 alias zhelp="custom_commands_help.sh"
 
 # zsh-osx-keychain stuff.
-alias zshenv-var="set-keychain-environment-variable"
-alias rm-zshenv-var="delete-keychain-environment-variable"
 alias peek-zshenv-var="keychain-environment-variable"
+alias rm-zshenv-var="delete-keychain-environment-variable"
+alias zshenv-var="set-keychain-environment-variable"
+
+
 
 # ************************************
 #       ENVIRONMENT VARIABLES

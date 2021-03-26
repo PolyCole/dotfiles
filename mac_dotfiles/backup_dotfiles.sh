@@ -23,9 +23,15 @@ cp /Users/cole.polyak/.zshrc /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_d
 cp /Users/cole.polyak/.asdfrc /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/asdfrc
 cp /Users/cole.polyak/.gitconfig /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/gitconfig
 
-cd /Users/cole.polyak/Desktop/hub/repos/dotfiles
+
+# Third, let's make sure we grab globally installed npm packages...
+npm -g list >> npm_list
+cp npm_list /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/npm_list
+rm npm_list
 
 # Finally, let's pull and push the repo.
+cd /Users/cole.polyak/Desktop/hub/repos/dotfiles
+
 if [[ `git status --porcelain` ]]; then
   randomEmoji
 
