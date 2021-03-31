@@ -40,5 +40,7 @@ if [[ `git status --porcelain` ]]; then
   git commit -m "$selected_emoji Update: $(timestamp)"
   git push origin main
 else
-  echo "No changes detected. You're backed-up!"
+  echo "********************************************"
+  echo "No changes detected. Dotfiles are backed-up!"
+  echo "********************************************"
 fi
