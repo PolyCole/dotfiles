@@ -22,6 +22,7 @@ rm Brewfile
 cp /Users/cole.polyak/.zshrc /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/zshrc
 cp /Users/cole.polyak/.asdfrc /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/asdfrc
 cp /Users/cole.polyak/.gitconfig /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/gitconfig
+cp /Users/cole.polyak/.p10k.zsh /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/p10k.zsh
 
 
 # Third, let's make sure we grab globally installed npm packages...

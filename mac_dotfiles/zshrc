@@ -31,6 +31,8 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# asdf config.
 . /usr/local/opt/asdf/asdf.sh
 
 # ************************************
@@ -70,8 +72,6 @@ alias peek-zshenv-var="keychain-environment-variable"
 alias rm-zshenv-var="delete-keychain-environment-variable"
 alias zshenv-var="set-keychain-environment-variable"
 
-
-
 # ************************************
 #       ENVIRONMENT VARIABLES
 # ************************************
@@ -97,6 +97,9 @@ export KUBECONFIG=~/.kube/apollo
 # Ruby Gem configs.
 export GEM_HOME="$HOME/.gems"
 
+# export LDFLAGS="-L/usr/local/opt/ruby/lib"
+# export CPPFLAGS="-I/usr/local/opt/ruby/include"
+
 
 # ************************************
 #        PATH MODIFICATION
@@ -106,6 +109,7 @@ export GEM_HOME="$HOME/.gems"
 path+=('/Users/cole.polyak/toolbox/ibotta_scripts')
 path+=('/Users/cole.polyak/toolbox/ibotta_scripts/ibotta_linkers')
 path+=('/Users/cole.polyak/toolbox/found_scripts')
+export PATH=/usr/local/bin:$PATH
 export path
 
 
@@ -137,7 +141,7 @@ kubeconfig-stage(){
 }
 
 # Docker is being annoying, let's just burn it to the ground.
-dockermurder() {
+murderdocker() {
     docker volume prune
     docker container prune --filter "until=24h"
     docker image prune -a --filter "until=24h"
