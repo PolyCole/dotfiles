@@ -94,11 +94,13 @@ export MASTER_GENERATOR_LOGIN=$(keychain-environment-variable MASTER_GENERATOR_L
 # Kubernetes -- Staging is default environment.
 export KUBECONFIG=~/.kube/apollo
 
-# Ruby Gem configs.
+# Ruby and Ruby Gems config.
 export GEM_HOME="$HOME/.gems"
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1) --with-libyaml-dir=$(brew --prefix libyaml)"
 
-# export LDFLAGS="-L/usr/local/opt/ruby/lib"
-# export CPPFLAGS="-I/usr/local/opt/ruby/include"
+
+export LDFLAGS="-L/usr/local/opt/ruby@2.6/lib"
+export CPPFLAGS="-I/usr/local/opt/ruby@2.6/include"
 
 
 # ************************************
@@ -110,6 +112,12 @@ path+=('/Users/cole.polyak/toolbox/ibotta_scripts')
 path+=('/Users/cole.polyak/toolbox/ibotta_scripts/ibotta_linkers')
 path+=('/Users/cole.polyak/toolbox/found_scripts')
 export path
+
+
+# ************************************
+#             MISCELLANEOUS
+# ************************************
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 
 # ************************************
@@ -150,4 +158,15 @@ murderdocker() {
 mkd() {
 	mkdir -p "$@" && cd "$_";
 }
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# Purges a directory from a git repository, including the repo's history.
+git-purge-dir() {
+  git filter-branch --tree-filter "rm -rf $1" --prune-empty HEAD
+  git for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git update-ref -d
+  echo $1/ >> .gitignore
+  git add .gitignore
+  git commit -m "Removing $1 from git history."
+  git gc
+  git push origin main --force
+}
+export PATH="/usr/local/opt/ruby@2.6/bin:$PATH"
