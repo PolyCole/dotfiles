@@ -1,6 +1,6 @@
 /usr/local/lib
-├── @ibotta/generator-master-generator@3.4.6
-├── npm@7.6.3
-├── tldr@3.3.7
-└── yo@3.1.1
++-- @ibotta/generator-master-generator@3.4.6
++-- npm@7.6.3
++-- tldr@3.3.7
+`-- yo@3.1.1
 
