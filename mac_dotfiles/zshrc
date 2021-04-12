@@ -49,12 +49,15 @@ source $ZSH/oh-my-zsh.sh
 # Ibotta Monolith stuff.
 alias awslog="saml2aws login --skip-prompt --force"
 alias drake="saml2aws exec --exec-profile monolith -- bin/drake"
-alias monolith="cd /Users/cole.polyak/Desktop/hub/repos/Ibotta"
+alias monolith="/Users/cole.polyak/Desktop/hub/repos/Ibotta"
 alias rspec="saml2aws exec --exec-profile monolith -- bin/drake spring rspec"
 
 # Microservice stuff.
 alias ecrchk="saml2aws exec --exec-profile monolith -- ~/ecrimagecheck.sh"
 alias gradle="./gradlew"
+alias bvs="/Users/cole.polyak/Desktop/hub/repos/barcode-verification-service"
+alias wtc="/Users/cole.polyak/Desktop/hub/repos/walmart-tc-service"
+alias ocr="/Users/cole.polyak/Desktop/hub/repos/receipt-ocr-service"
 
 # General Aliases
 alias cat="bat"
@@ -66,6 +69,10 @@ alias reload="source ~/.zshrc"
 alias repos="cd /Users/cole.polyak/Desktop/hub/repos"
 alias tools="cd ~/toolbox"
 alias zhelp="custom_commands_help.sh"
+
+# Pass-throughs
+alias a="a "
+alias o="o "
 
 # zsh-osx-keychain stuff.
 alias peek-zshenv-var="keychain-environment-variable"
@@ -169,4 +176,25 @@ git-purge-dir() {
   git gc
   git push origin main --force
 }
+
+# Opens the current (or specified) directory in file explorer.
+function o() {
+	if [ $# -eq 0 ]; then
+		open .;
+	else
+		open "$@";
+	fi;
+}
+
+# Opens the current (or specified) directory in atom text editor.
+function a() {
+	if [ $# -eq 0 ]; then
+		atom .;
+	else
+		atom "$@";
+	fi;
+}
+
+
+
 export PATH="/usr/local/opt/ruby@2.6/bin:$PATH"
