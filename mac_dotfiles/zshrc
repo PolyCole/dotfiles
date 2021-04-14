@@ -166,6 +166,11 @@ mkd() {
 	mkdir -p "$@" && cd "$_";
 }
 
+# Prints the current week of the year
+week() {
+  echo "Week `date +%V` of 52"
+}
+
 # Purges a directory from a git repository, including the repo's history.
 git-purge-dir() {
   git filter-branch --tree-filter "rm -rf $1" --prune-empty HEAD
