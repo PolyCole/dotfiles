@@ -69,6 +69,7 @@ alias reload="source ~/.zshrc"
 alias repos="cd /Users/cole.polyak/Desktop/hub/repos"
 alias tools="cd ~/toolbox"
 alias zhelp="custom_commands_help.sh"
+alias monopr="monolith_pr_generator.sh"
 
 # Pass-throughs
 alias a="a "
