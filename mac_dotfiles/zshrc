@@ -160,6 +160,7 @@ murderdocker() {
     docker volume prune
     docker container prune --filter "until=24h"
     docker image prune -a --filter "until=24h"
+    docker network prune
 }
 
 # Create a new directory and enter it
