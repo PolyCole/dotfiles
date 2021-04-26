@@ -58,6 +58,7 @@ alias gradle="./gradlew"
 alias bvs="/Users/cole.polyak/Desktop/hub/repos/barcode-verification-service"
 alias wtc="/Users/cole.polyak/Desktop/hub/repos/walmart-tc-service"
 alias ocr="/Users/cole.polyak/Desktop/hub/repos/receipt-ocr-service"
+alias trs="/Users/cole.polyak/Desktop/hub/repos/transaction-return-service"
 
 # General Aliases
 alias cat="bat"
@@ -105,8 +106,6 @@ export KUBECONFIG=~/.kube/apollo
 # Ruby and Ruby Gems config.
 export GEM_HOME="$HOME/.gems"
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1) --with-libyaml-dir=$(brew --prefix libyaml)"
-
-
 export LDFLAGS="-L/usr/local/opt/ruby@2.6/lib"
 export CPPFLAGS="-I/usr/local/opt/ruby@2.6/include"
 
@@ -120,6 +119,7 @@ path+=('/Users/cole.polyak/toolbox/ibotta_scripts')
 path+=('/Users/cole.polyak/toolbox/ibotta_scripts/ibotta_linkers')
 path+=('/Users/cole.polyak/toolbox/found_scripts')
 export path
+export PATH="/usr/local/opt/ruby@2.6/bin:$PATH"
 
 
 # ************************************
@@ -184,6 +184,17 @@ git-purge-dir() {
   git push origin main --force
 }
 
+# Purges a file from a git repository, including the repo's history.
+git-purge-file() {
+  git filter-branch --tree-filter "rm -f $1" --prune-empty HEAD
+  git for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git update-ref -d
+  echo $1/ >> .gitignore
+  git add .gitignore
+  git commit -m "Removing $1 from git history."
+  git gc
+  git push origin main --force
+}
+
 # Opens the current (or specified) directory in file explorer.
 function o() {
 	if [ $# -eq 0 ]; then
@@ -201,7 +212,3 @@ function a() {
 		atom "$@";
 	fi;
 }
-
-
-
-export PATH="/usr/local/opt/ruby@2.6/bin:$PATH"
