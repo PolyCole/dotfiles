@@ -32,6 +32,7 @@ brew "kubernetes-cli", link: false
 brew "libmaxminddb"
 brew "mysql"
 brew "node"
+brew "prototool"
 brew "ruby-build"
 brew "rbenv"
 brew "ruby"
