@@ -55,6 +55,7 @@ alias rspec="saml2aws exec --exec-profile monolith -- bin/drake spring rspec"
 # Microservice stuff.
 alias ecrchk="saml2aws exec --exec-profile monolith -- ~/ecrimagecheck.sh"
 alias gradle="./gradlew"
+alias detekt="gradle task detekt"
 alias bvs="/Users/cole.polyak/Desktop/hub/repos/barcode-verification-service"
 alias wtc="/Users/cole.polyak/Desktop/hub/repos/walmart-tc-service"
 alias ocr="/Users/cole.polyak/Desktop/hub/repos/receipt-ocr-service"
