@@ -135,13 +135,13 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 
 # Deploying to staging via Argo.
-deploy-argo-stage(){
+argo-deploy-stage(){
         kubeconfig-stage
         ./scripts/deploy.sh staging
 }
 
 # Deploying to production via Argo.
-deploy-argo-prod(){
+argo-deploy-prod(){
         kubeconfig-prod
         ./scripts/deploy.sh production
 }
