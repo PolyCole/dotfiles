@@ -76,6 +76,9 @@ alias monopr="monolith_pr_generator.sh"
 # Pass-throughs
 alias a="a "
 alias o="o "
+alias pblint="pblint "
+alias pbcheck="pbcheck "
+alias pbbuild="pbbuild "
 
 # zsh-osx-keychain stuff.
 alias peek-zshenv-var="keychain-environment-variable"
@@ -244,5 +247,32 @@ function a() {
 		atom .;
 	else
 		atom "$@";
+	fi;
+}
+
+# Lints either all proto bufs, or a specified pb package.
+function pblint() {
+  if [ $# -eq 0 ]; then
+		docker-compose run defs -- lint_protos;
+	else
+		docker-compose run defs -- lint_protos "$@";
+	fi;
+}
+
+# Checks either all proto bufs for breaking changes, or a specified pb package.
+function pbcheck() {
+  if [ $# -eq 0 ]; then
+		saml2aws exec --exec-profile monolith -- docker-compose run defs -- break_check_protos;
+	else
+		saml2aws exec --exec-profile monolith -- docker-compose run defs -- break_check_protos "$@";
+	fi;
+}
+
+# Builds either all proto bufs, or a specified pb package.
+function pbbuild() {
+  if [ $# -eq 0 ]; then
+		docker-compose run defs -- build_protos;
+	else
+		docker-compose run defs -- build_protos "$@";
 	fi;
 }
