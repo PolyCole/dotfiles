@@ -69,7 +69,7 @@ alias lsal="ls -al"
 alias python="python3"
 alias reload="source ~/.zshrc"
 alias repos="cd /Users/cole.polyak/Desktop/hub/repos"
-alias tools="cd ~/toolbox"
+alias tools="~/toolbox"
 alias zhelp="custom_commands_help.sh"
 alias monopr="monolith_pr_generator.sh"
 
