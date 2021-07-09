@@ -51,6 +51,7 @@ alias awslog="saml2aws login --skip-prompt --force --session-duration=43200"
 alias drake="saml2aws exec --exec-profile monolith -- bin/drake"
 alias monolith="/Users/cole.polyak/Desktop/hub/repos/Ibotta"
 alias rspec="saml2aws exec --exec-profile monolith -- bin/drake spring rspec"
+alias ecrlogin="(saml2aws exec --exec-profile monolith -- aws ecr get-login-password --region us-east-1) | docker login --password-stdin --username AWS 264606497040.dkr.ecr.us-east-1.amazonaws.com"
 
 # Microservice stuff.
 alias ecrchk="saml2aws exec --exec-profile monolith -- ~/ecrimagecheck.sh"
@@ -85,6 +86,20 @@ alias peek-zshenv-var="keychain-environment-variable"
 alias rm-zshenv-var="delete-keychain-environment-variable"
   # note: this is for setting variables, you just specify the var name first.
 alias zshenv-var="set-keychain-environment-variable"
+
+# Monolith deploy on-call items
+alias oncall-check="saml-monolith ibotta_cli application revisions api-server 'environment:production'"
+alias oncall-deploy="saml-monolith ibotta_cli application deploy_api_server_production"
+alias oncall-verify="saml-monolith ibotta_cli application verify_revisions api-server 'role:api_server*'"
+alias oncall-fix="saml-monolith ibotta_cli application deploy_api_server_production --fix"
+alias oncall-migrate="saml-monolith ./bin/drake db:migration:prod"
+alias oncall-rollback="saml-monolith ibotta_cli application rollback_api_server_production"
+
+# SSH Aliases
+alias ssh-billy="ssh william-homer.dev.ibotta.com"
+alias ssh-khoa="ssh khoal.dev.ibotta.com"
+alias ssh-receipts="ssh receipts.dev.ibotta.com"
+alias ssh-tools="ssh tools.ibotta.com"
 
 # ************************************
 #       ENVIRONMENT VARIABLES
@@ -192,6 +207,16 @@ kubeconfig-stage(){
   export KUBECONFIG=~/.kube/apollo
 }
 
+# Deploying published branch to monolith staging
+mono-deploy-stage() {
+  branchName="${1}"
+
+  if [ -z "$branchName" ]; then
+	   error "Must specify a branch name to deploy: mono-deploy-stage <branchName>"
+  fi
+  saml2aws exec --exec-profile staging -- ibotta_cli application deploy api-server name:receipts -r $branchName
+}
+
 # Docker is being annoying, let's just burn it to the ground.
 murderdocker() {
   docker volume prune
@@ -275,4 +300,12 @@ function pbbuild() {
 	else
 		docker-compose run defs -- build_protos "$@";
 	fi;
+}
+
+function stage-rails-c() {
+  printf "*********Displaying Rails Console*********\n"
+  printf "ibotta_app_user\n"
+  printf "ibotta_current\n"
+  printf "bin/rails console\n"
+  printf "******************************************\n"
 }
