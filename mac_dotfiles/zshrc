@@ -101,6 +101,9 @@ alias ssh-khoa="ssh khoal.dev.ibotta.com"
 alias ssh-receipts="ssh receipts.dev.ibotta.com"
 alias ssh-tools="ssh tools.ibotta.com"
 
+# Git Aliases
+alias git-upstream="git push --set-upstream origin "
+
 # ************************************
 #       ENVIRONMENT VARIABLES
 # ************************************
