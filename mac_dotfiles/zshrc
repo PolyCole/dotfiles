@@ -304,11 +304,3 @@ function pbbuild() {
 		docker-compose run defs -- build_protos "$@";
 	fi;
 }
-
-function stage-rails-c() {
-  printf "*********Displaying Rails Console*********\n"
-  printf "ibotta_app_user\n"
-  printf "ibotta_current\n"
-  printf "bin/rails console\n"
-  printf "******************************************\n"
-}
