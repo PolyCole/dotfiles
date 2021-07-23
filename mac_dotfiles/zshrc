@@ -71,8 +71,14 @@ alias python="python3"
 alias reload="source ~/.zshrc"
 alias repos="cd /Users/cole.polyak/Desktop/hub/repos"
 alias tools="~/toolbox"
-alias zhelp="custom_commands_help.sh"
-alias monopr="monolith_pr_generator.sh"
+
+# Programmatically generated linker aliases
+if [ -f $HOME/.linker_aliases ]; then
+   . $HOME/.linker_aliases
+fi
+# alias zhelp="custom_commands_help.sh"
+# alias monopr="monolith_pr_generator.sh"
+# alias open-in-admin="open_in_admin.sh"
 
 # Pass-throughs
 alias a="a "

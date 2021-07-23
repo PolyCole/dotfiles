@@ -1,0 +1,4 @@
+alias generate-linker="generate_linker.sh"
+alias open-in-admin="open_in_admin.sh"
+alias monopr="monolith_pr_generator.sh"
+alias zhelp="custom_commands_help.sh"
