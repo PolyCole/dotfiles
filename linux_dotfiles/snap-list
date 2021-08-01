@@ -13,6 +13,7 @@ gtk-common-themes       0.1-52-gb92ac40             1515   latest/stable/…  ca
 heroku                  v7.56.0                     4068   latest/stable    heroku*       classic
 htop                    3.0.5                       2802   latest/stable    maxiberta     -
 intellij-idea-ultimate  2021.2                      311    latest/stable    jetbrains*    classic
+mutt                    2-0-7-rel                   265    latest/stable    snapcrafters  -
 postman                 7.36.5                      133    latest/stable    postman-inc*  -
 pycharm-professional    2021.2                      252    latest/stable    jetbrains*    classic
 rem                     0.14.0                      44     latest/stable    martin-borho  classic
