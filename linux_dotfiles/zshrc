@@ -1,0 +1,127 @@
+# ************************************
+#      Five-Linux Z-Shell Config.
+# ************************************
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Created by newuser for 5.8
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+# ************************************
+#              ALIASES
+# ************************************
+
+# If, in the future, this gets unmanageable, there's a simple way to frag this.
+# Similarly, this can be done to separate personal versus work files.
+# if [ -f $HOME/.bash_aliases ]: then
+#   . $HOME/.bash_aliases
+# fi
+# Obviously this is for bash_aliases, but something similar can be accomplished for zsh.
+
+# General Aliases
+alias cat="batcat"
+alias lsa="ls -a"
+alias lsal="ls -al"
+alias python="python3"
+alias reload="source ~/.zshrc"
+alias repos="cd ~/repos"
+alias tools="cd ~/toolbox"
+alias pensieve="cd ~/repos/pensieve && source env/bin/activate"
+
+# Pass-throughs
+alias a="a "
+alias o="o "
+
+# SSH Aliases
+alias ssh-pi="ssh pi@192.168.0.12"
+
+# Git Aliases
+alias git-upstream="git push --set-upstream origin "
+
+# ************************************
+#       ENVIRONMENT VARIABLES
+# ************************************
+
+# AWS Vars
+export AWS_DEFAULT_REGION=us-east-1
+export AWS_REGION=$AWS_DEFAULT_REGION
+
+# ************************************
+#        PATH MODIFICATION
+# ************************************
+
+# append
+path+=('/home/cole/toolbox/personal_scripts/')
+path+=('/home/cole/toolbox/personal_scripts/personal_linkers')
+export path
+
+# ************************************
+#             FUNCTIONS
+# ************************************
+
+# Docker is being annoying, let's just burn it to the ground.
+murderdocker() {
+  docker volume prune
+  docker container prune --filter "until=24h"
+  docker image prune -a --filter "until=24h"
+  docker network prune
+}
+
+# Create a new directory and enter it
+mkd() {
+	mkdir -p "$@" && cd "$_";
+}
+
+# Prints the current week of the year
+week() {
+  echo "Week `date +%V` of 52"
+}
+
+# Purges a directory from a git repository, including the repo's history.
+git-purge-dir() {
+  git filter-branch --tree-filter "rm -rf $1" --prune-empty HEAD
+  git for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git update-ref -d
+  echo $1/ >> .gitignore
+  git add .gitignore
+  git commit -m "Removing $1 from git history."
+  git gc
+  git push origin main --force
+}
+
+# Purges a file from a git repository, including the repo's history.
+git-purge-file() {
+  git filter-branch --tree-filter "rm -f $1" --prune-empty HEAD
+  git for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git update-ref -d
+  echo $1/ >> .gitignore
+  git add .gitignore
+  git commit -m "Removing $1 from git history."
+  git gc
+  git push origin main --force
+}
+
+# Opens the current (or specified) directory in file explorer.
+function o() {
+	if [ $# -eq 0 ]; then
+		open .;
+	else
+		open "$@";
+	fi;
+}
+
+# Opens the current (or specified) directory in atom text editor.
+function a() {
+	if [ $# -eq 0 ]; then
+		atom .;
+	else
+		atom "$@";
+	fi;
+}

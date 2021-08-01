@@ -11,7 +11,7 @@ randomEmoji() {
   selected_emoji=${emojis["$[RANDOM % ${#emojis[@]}]"]}
 }
 
-# First, let's dump apt just to be sure we have that on record. 
+# First, let's dump apt just to be sure we have that on record.
 cd ~
 apt list > apt-list
 cp apt-list /home/cole/repos/dotfiles/linux_dotfiles/
@@ -34,12 +34,9 @@ rm npm-list
 
 
 # Fifth, let's snag some dotfiles.
-cp /home/cole/.bashrc /home/cole/repos/dotfiles/linux_dotfiles/bashrc
-cp /home/cole/.bash_logout /home/cole/repos/dotfiles/linux_dotfiles/bash_logout
+cp /home/cole/.zshrc /home/cole/repos/dotfiles/linux_dotfiles/zshrc
 cp /home/cole/.gitconfig /home/cole/repos/dotfiles/linux_dotfiles/gitconfig
-cp /home/cole/.cole.theme.bash /home/cole/repos/dotfiles/linux_dotfiles/cole_theme
-cp /home/cole/.cole_config /home/cole/repos/dotfiles/linux_dotfiles/cole_config
-
+cp /home/cole/powerlevel10k/powerlevel10k.zsh-theme /home/cole/repos/dotfiles/linux_dotfiles/cole_theme
 
 cd /home/cole/repos/dotfiles/linux_dotfiles
 
