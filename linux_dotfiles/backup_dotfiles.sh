@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Author: Cole Polyak
+# 1 August 2020
+# This script facilitates the backing up of dotfiles on Five-Linux
+
 # Create a timestamp alias for the commit message.
 timestamp() {
   date +"%Y-%m-%d @ %T"
