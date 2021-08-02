@@ -1,5 +1,5 @@
 # ************************************
-#      Cole's Z-Shell Config.
+#    Work Macbook Z-Shell Config.
 # ************************************
 
 # Path to your oh-my-zsh installation.
@@ -311,3 +311,6 @@ function pbbuild() {
 		docker-compose run defs -- build_protos "$@";
 	fi;
 }
+
+# ls colors
+LS_COLORS=$LS_COLORS:'di=1;32:ex=4;31' ; export LS_COLORS
