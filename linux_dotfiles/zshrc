@@ -29,6 +29,7 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # General Aliases
 alias cat="batcat"
+alias ls="ls --color"
 alias lsa="ls -a"
 alias lsal="ls -al"
 alias python="python3"
@@ -42,7 +43,7 @@ alias a="a "
 alias o="o "
 
 # SSH Aliases
-alias ssh-pi="ssh pi@192.168.0.12"
+alias ssh-pi="ssh pi@192.168.0.25"
 
 # Git Aliases
 alias git-upstream="git push --set-upstream origin "
@@ -125,3 +126,7 @@ function a() {
 		atom "$@";
 	fi;
 }
+
+
+
+LS_COLORS=$LS_COLORS:'di=1;32:ex=4;31' ; export LS_COLORS
