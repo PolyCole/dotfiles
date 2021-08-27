@@ -313,5 +313,16 @@ function pbbuild() {
 	fi;
 }
 
+function thanks_for_your_contribution_detekt() {
+  print "\n\n**Detekt is an A1 linter**\n\n"
+  ./gradlew detekt
+  print "\n\n**I love every part of it**\n\n"
+  git add -A
+  print "\n\n**Especially that it flunks builds for arbitrary things**\n\n"
+  git commit -m "Submitting to the indomitable will of Detekt."
+  print "\n\n**That it then fixes on its own!**\n\n"
+  git push
+}
+
 # ls colors
 LS_COLORS=$LS_COLORS:'di=1;32:ex=4;31' ; export LS_COLORS
