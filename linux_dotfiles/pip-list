@@ -4,6 +4,7 @@ apturl                            0.5.2
 awscli                            1.18.69             
 backports.entry-points-selectable 1.1.0               
 bcrypt                            3.1.7               
+beautifulsoup4                    4.9.3               
 blinker                           1.4                 
 botocore                          1.16.19             
 Brlapi                            0.7.0               
@@ -12,6 +13,7 @@ chardet                           3.0.4
 Click                             7.0                 
 colorama                          0.4.3               
 command-not-found                 0.3                 
+commonmark                        0.9.1               
 cryptography                      2.8                 
 cupshelpers                       1.0                 
 dbus-python                       1.2.16              
@@ -51,7 +53,7 @@ protobuf                          3.6.1
 pyasn1                            0.4.2               
 pycairo                           1.16.2              
 pycups                            1.9.73              
-Pygments                          2.3.1               
+Pygments                          2.9.0               
 PyGObject                         3.36.0              
 PyJWT                             1.7.1               
 pymacaroons                       0.13.0              
@@ -66,6 +68,7 @@ PyYAML                            5.3.1
 reportlab                         3.5.34              
 requests                          2.22.0              
 requests-unixsocket               0.2.0               
+rich                              10.7.0              
 roman                             2.0.0               
 rsa                               4.0                 
 s3transfer                        0.3.3               
@@ -74,6 +77,7 @@ SecretStorage                     2.3.1
 setuptools                        45.2.0              
 simplejson                        3.16.0              
 six                               1.14.0              
+soupsieve                         2.2.1               
 systemd-python                    234                 
 ubuntu-advantage-tools            20.3                
 ubuntu-drivers-common             0.0.0               
