@@ -56336,7 +56336,7 @@ postgresql-client-common/focal-updates,focal-updates,focal-security,focal-securi
 postgresql-client/focal-updates,focal-updates,focal-security,focal-security 12+214ubuntu0.1 all
 postgresql-common/focal-updates,focal-updates,focal-security,focal-security,now 214ubuntu0.1 all [installed,automatic]
 postgresql-comparator/focal 2.3.1-5 amd64
-postgresql-contrib/focal-updates,focal-updates,focal-security,focal-security 12+214ubuntu0.1 all
+postgresql-contrib/focal-updates,focal-updates,focal-security,focal-security,now 12+214ubuntu0.1 all [installed]
 postgresql-doc-12/focal-updates,focal-updates,focal-security,focal-security 12.8-0ubuntu0.20.04.1 all
 postgresql-doc/focal-updates,focal-updates,focal-security,focal-security 12+214ubuntu0.1 all
 postgresql-filedump/focal 11.0-1 amd64
