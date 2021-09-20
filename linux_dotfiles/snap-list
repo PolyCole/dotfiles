@@ -1,6 +1,6 @@
 Name                    Version                     Rev    Tracking         Publisher     Notes
 atom                    1.57.0                      282    latest/stable    snapcrafters  classic
-brave                   1.29.76                     127    latest/stable    brave         -
+brave                   1.29.81                     130    latest/stable    brave         -
 canonical-livepatch     9.7.3                       105    latest/stable    canonical*    -
 core                    16-2.51.4                   11606  latest/stable    canonical*    core
 core18                  20210722                    2128   latest/stable    canonical*    base
@@ -12,13 +12,13 @@ gnome-3-34-1804         0+git.3556cb3               72     latest/stable/…  ca
 gtk-common-themes       0.1-52-gb92ac40             1515   latest/stable/…  canonical*    -
 heroku                  v7.59.0                     4076   latest/stable    heroku*       classic
 htop                    3.0.5                       2802   latest/stable    maxiberta     -
-intellij-idea-ultimate  2021.2.1                    316    latest/stable    jetbrains*    classic
+intellij-idea-ultimate  2021.2.2                    319    latest/stable    jetbrains*    classic
 mutt                    2-0-7-rel                   265    latest/stable    snapcrafters  -
 postman                 7.36.5                      133    latest/stable    postman-inc*  -
-pycharm-professional    2021.2.1                    254    latest/stable    jetbrains*    classic
+pycharm-professional    2021.2.2                    256    latest/stable    jetbrains*    classic
 rem                     0.14.0                      44     latest/stable    martin-borho  classic
-rubymine                2021.2.1                    245    latest/stable    jetbrains*    classic
+rubymine                2021.2.2                    248    latest/stable    jetbrains*    classic
 slack                   4.19.2                      44     latest/stable    slack*        classic
 snap-store              3.38.0-64-g23c4c77          547    latest/stable/…  canonical*    -
 snapd                   2.51.4                      12883  latest/stable    canonical*    snapd
-spotify                 1.1.67.586.gbb5ef64e        50     latest/stable    spotify*      -
+spotify                 1.1.68.628.geb44bd66        52     latest/stable    spotify*      -
