@@ -103,10 +103,9 @@ alias oncall-migrate="saml-monolith ./bin/drake db:migration:prod"
 alias oncall-rollback="saml-monolith ibotta_cli application rollback_api_server_production"
 
 # SSH Aliases
-alias ssh-billy="ssh william-homer.dev.ibotta.com"
-alias ssh-khoa="ssh khoal.dev.ibotta.com"
 alias ssh-receipts="ssh receipts.dev.ibotta.com"
 alias ssh-tools="ssh tools.ibotta.com"
+alias ssh-cole="ssh cpolyak.dev.ibotta.com"
 
 # Git Aliases
 alias git-upstream="git push --set-upstream origin "
@@ -283,6 +282,30 @@ function a() {
 	else
 		atom "$@";
 	fi;
+}
+
+# Deploys the specified branch to the specified monolith instance.
+function deploy_mono_stage() {
+  if [ $# -ne 2 ]; then
+    print "Please specify the instance and branchname using: \n"
+    print "deploy_mono_stage [instance] [branch]\n"
+  else
+    echo running: saml2aws exec --exec-profile staging -- ibotta_cli application deploy api-server name:$1 -r $2
+    saml2aws exec --exec-profile staging -- ibotta_cli application deploy api-server name:$1 -r $2
+  fi
+}
+
+# Pulls down and boots up the specified monolith staging instance.
+function reset_mono_stage() {
+  if [ $# -ne 1 ]; then
+    print "Please specify the instance name using: \n"
+    print "reset_mono_stage [instance]\n"
+  else
+    cd /Users/cole.polyak/Desktop/hub/repos/infrastructure
+    print "\n\nTearing and Rolling instance: $1\n\n"
+    saml2aws exec --exec-profile staging -- ibotta_cli sfn destroy $1
+    saml2aws exec --exec-profile staging -- ibotta_cli sfn create $1 -f sparkleformation/development.rb
+  fi
 }
 
 # Lints either all proto bufs, or a specified pb package.
