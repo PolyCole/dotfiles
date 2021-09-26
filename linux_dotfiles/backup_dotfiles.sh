@@ -41,6 +41,7 @@ rm npm-list
 cp /home/cole/.zshrc /home/cole/repos/dotfiles/linux_dotfiles/zshrc
 cp /home/cole/.gitconfig /home/cole/repos/dotfiles/linux_dotfiles/gitconfig
 cp /home/cole/powerlevel10k/powerlevel10k.zsh-theme /home/cole/repos/dotfiles/linux_dotfiles/cole_theme
+cp /home/cole/cole_pgp_public_key /home/cole/repos/dotfiles/linux_dotfiles/cole_pgp_public_key
 
 cd /home/cole/repos/dotfiles/linux_dotfiles
 
