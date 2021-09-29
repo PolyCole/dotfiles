@@ -35,6 +35,7 @@ brew "jruby"
 brew "kotlin"
 brew "kubernetes-cli", link: false
 brew "libmaxminddb"
+brew "minikube"
 brew "mysql"
 brew "node"
 brew "prototool"
