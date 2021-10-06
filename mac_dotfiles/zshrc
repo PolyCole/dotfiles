@@ -206,14 +206,19 @@ argo-deploy-prod(){
   ./scripts/deploy.sh production
 }
 
-# Setting Kubernetes config to Production.
+# Sets Kubernetes configuration to the production cluster.
 kubeconfig-prod(){
   export KUBECONFIG=~/.kube/barrel
 }
 
-# Setting Kubernetes config to Staging.
+# Sets Kubernetes configuration to the staging cluster.
 kubeconfig-stage(){
   export KUBECONFIG=~/.kube/apollo
+}
+
+# Sets Kubernetes configuration to my local machine.
+kubeconfig-local() {
+  export KUBECONFIG=~/.kube/config
 }
 
 # Deploying published branch to monolith staging
