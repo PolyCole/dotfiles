@@ -109,6 +109,11 @@ git-purge-file() {
   git push origin main --force
 }
 
+woogapi() {
+  cd ~/repos/wooglin-api
+  source venv/bin/activate
+}
+
 # Opens the current (or specified) directory in file explorer.
 function o() {
 	if [ $# -eq 0 ]; then
