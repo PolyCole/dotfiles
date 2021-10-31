@@ -48,6 +48,11 @@ alias ssh-pi="ssh pi@192.168.0.25"
 # Git Aliases
 alias git-upstream="git push --set-upstream origin "
 
+# Django Stuff
+alias runserver="python manage.py runserver"
+alias make="python manage.py makemigrations"
+alias migrate="python manage.py migrate"
+
 # ************************************
 #       ENVIRONMENT VARIABLES
 # ************************************
@@ -111,6 +116,11 @@ git-purge-file() {
 
 woogapi() {
   cd ~/repos/wooglin-api
+  source venv/bin/activate
+}
+
+woogbot() {
+  cd ~/repos/wooglin-bot
   source venv/bin/activate
 }
 
