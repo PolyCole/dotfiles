@@ -1,5 +1,5 @@
 /usr/local/lib
-+-- @ibotta/generator-master-generator@3.5.3
++-- @ibotta/generator-master-generator@3.10.6
 +-- artillery@1.7.6
 +-- generator-generator@5.1.0
 +-- npm@7.21.0
