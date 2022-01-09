@@ -1,7 +1,7 @@
 Name                    Version                     Rev    Tracking         Publisher     Notes
 atom                    1.57.0                      282    latest/stable    snapcrafters  classic
 bare                    1.0                         5      latest/stable    canonical*    base
-brave                   1.33.106                    140    latest/stable    brave         -
+brave                   1.34.80                     141    latest/stable    brave         -
 canonical-livepatch     10.1.2                      126    latest/stable    canonical*    -
 core                    16-2.52.1                   11993  latest/stable    canonical*    core
 core18                  20211028                    2253   latest/stable    canonical*    base
