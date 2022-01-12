@@ -1,5 +1,5 @@
 # ************************************
-#    Work Macbook Z-Shell Config.
+#    Work Macbook ZShell Config.
 # ************************************
 
 # Path to your oh-my-zsh installation.
@@ -59,6 +59,7 @@ alias detekt="gradle task detekt"
 alias bvs="/Users/cole.polyak/Desktop/hub/repos/barcode-verification-service"
 alias wtc="/Users/cole.polyak/Desktop/hub/repos/walmart-tc-service"
 alias ocr="/Users/cole.polyak/Desktop/hub/repos/receipt-ocr-service"
+alias som="/Users/cole.polyak/Desktop/hub/repos/synchronous-matching-lambda"
 alias trs="/Users/cole.polyak/Desktop/hub/repos/transaction-return-service"
 alias rdc="/Users/cole.polyak/Desktop/hub/repos/receipt-data-coordinator"
 
@@ -111,7 +112,7 @@ alias ssh-cole="ssh cpolyak.dev.ibotta.com"
 alias git-upstream="git push --set-upstream origin "
 
 # ************************************
-#       ENVIRONMENT VARIABLES
+#       Environment Variables
 # ************************************
 
 # AWS Vars
@@ -140,7 +141,7 @@ export CPPFLAGS="-I/usr/local/opt/ruby@2.6/include"
 
 
 # ************************************
-#        PATH MODIFICATION
+#        Path Modification
 # ************************************
 
 # append
@@ -152,13 +153,13 @@ export PATH="/usr/local/opt/ruby@2.6/bin:$PATH"
 
 
 # ************************************
-#             MISCELLANEOUS
+#             Miscellaneous
 # ************************************
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 
 # ************************************
-#             FUNCTIONS
+#             Functions
 # ************************************
 
 
