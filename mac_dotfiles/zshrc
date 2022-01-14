@@ -62,6 +62,7 @@ alias ocr="/Users/cole.polyak/Desktop/hub/repos/receipt-ocr-service"
 alias som="/Users/cole.polyak/Desktop/hub/repos/synchronous-matching-lambda"
 alias trs="/Users/cole.polyak/Desktop/hub/repos/transaction-return-service"
 alias rdc="/Users/cole.polyak/Desktop/hub/repos/receipt-data-coordinator"
+alias aws-som="saml2aws exec --exec-profile staging-synchronous-matching-lambda -- "
 
 # General Aliases
 alias cat="bat"
