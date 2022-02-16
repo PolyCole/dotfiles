@@ -53,7 +53,7 @@ alias rspec="saml2aws exec --exec-profile monolith -- bin/drake spring rspec"
 alias ecrlogin="(saml2aws exec --exec-profile monolith -- aws ecr get-login-password --region us-east-1) | docker login --password-stdin --username AWS 264606497040.dkr.ecr.us-east-1.amazonaws.com"
 
 # Microservice stuff.
-alias ecrchk="saml2aws exec --exec-profilef monolith -- ~/ecrimagecheck.sh"
+alias ecrchk="saml2aws exec --exec-profile monolith -- ~/ecrimagecheck.sh"
 alias gradle="./gradlew"
 alias detekt="gradle task detekt"
 alias bvs="/Users/cole.polyak/Desktop/hub/repos/barcode-verification-service"
