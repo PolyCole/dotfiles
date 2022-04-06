@@ -13,3 +13,9 @@
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [init]
 	templatedir = /Users/cole.polyak/Desktop/hub/repos/memes/.github/template
+[pull]
+	rebase = true
+[fetch]
+	prune = true
+[diff]
+	colorMoved = zebra
