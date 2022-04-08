@@ -363,5 +363,15 @@ function git-upstream() {
   git push --set-upstream origin $BRANCH_NAME
 }
 
+# Amends the previous git commit message with the message passed in.
+function amend() {
+  if [ $# -ne 1 ]; then
+    print "Please specify the new commit message using: \n"
+    print "amend [new commit message]\n"
+  else
+    git commit --amend -m $1
+  fi
+}
+
 # ls colors
 LS_COLORS=$LS_COLORS:'di=1;32:ex=4;31' ; export LS_COLORS
