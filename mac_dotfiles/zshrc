@@ -90,6 +90,9 @@ alias pblint="pblint "
 alias pbcheck="pbcheck "
 alias pbbuild="pbbuild "
 
+# Docker
+alias containers="docker ps --format \"table {{.ID}} \t{{.Image}}\""
+
 # zsh-osx-keychain stuff.
 alias peek-zshenv-var="keychain-environment-variable"
 alias rm-zshenv-var="delete-keychain-environment-variable"
