@@ -134,29 +134,17 @@ export MASTER_GENERATOR_LOGIN=$(keychain-environment-variable MASTER_GENERATOR_L
 # Kubernetes -- Staging is default environment.
 export KUBECONFIG=~/.kube/apollo
 
-# Ruby and Ruby Gems config.
-export GEM_HOME="$HOME/.gems"
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1) --with-libyaml-dir=$(brew --prefix libyaml)"
-export LDFLAGS="-L/usr/local/opt/ruby@2.6/lib"
-export CPPFLAGS="-I/usr/local/opt/ruby@2.6/include"
-
-
 # ************************************
 #        Path Modification
 # ************************************
-
-# append
-path+=('/Users/cole.polyak/toolbox/ibotta_scripts')
-path+=('/Users/cole.polyak/toolbox/ibotta_scripts/ibotta_linkers')
-path+=('/Users/cole.polyak/toolbox/found_scripts')
-export path
-export PATH="/usr/local/opt/ruby@2.6/bin:$PATH"
-
+export PATH="/Users/cole.polyak/toolbox/ibotta_scripts:$PATH"
+export PATH="/Users/cole.polyak/toolbox/ibotta_scripts/ibotta_linkers:$PATH"
+export PATH="/Users/cole.polyak/toolbox/found_scripts:$PATH"
 
 # ************************************
 #             Miscellaneous
 # ************************************
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which rbenv > /dev/null; then eval "$(rbenv init - zsh)"; fi
 
 
 # ************************************
