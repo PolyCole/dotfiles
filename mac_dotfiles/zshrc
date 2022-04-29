@@ -66,7 +66,7 @@ alias aws-som="saml2aws exec --exec-profile staging-synchronous-matching-lambda 
 
 # General Aliases
 alias cat="bat"
-alias diff="diff-so-fancy"
+# alias diff="diff-so-fancy"
 alias lsa="ls -a"
 alias lsal="ls -al"
 alias python="python3"
