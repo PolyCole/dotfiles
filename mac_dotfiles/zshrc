@@ -78,6 +78,11 @@ alias repos="cd /Users/cole.polyak/Desktop/hub/repos"
 alias tools="~/toolbox"
 alias check_receipt="python ~/toolbox/ibotta_scripts/check_receipt.py"
 
+# Crypto :)
+alias crypto="curl rate.sx"
+alias eth="curl rate.sx/eth"
+alias btc="curl rate.sx/btc"
+
 # Programmatically generated linker aliases
 if [ -f $HOME/.linker_aliases ]; then
    . $HOME/.linker_aliases
