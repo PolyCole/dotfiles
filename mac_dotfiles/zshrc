@@ -148,6 +148,7 @@ export KUBECONFIG=~/.kube/apollo
 export PATH="/Users/cole.polyak/toolbox/ibotta_scripts:$PATH"
 export PATH="/Users/cole.polyak/toolbox/ibotta_scripts/ibotta_linkers:$PATH"
 export PATH="/Users/cole.polyak/toolbox/found_scripts:$PATH"
+path+=('/home/[user]/npm/bin')
 
 # ************************************
 #             Miscellaneous
