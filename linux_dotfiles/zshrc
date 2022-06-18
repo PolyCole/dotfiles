@@ -54,6 +54,7 @@ alias make="python manage.py makemigrations"
 alias migrate="python manage.py migrate"
 alias test="python manage.py test"
 alias shell="python manage.py shell"
+alias refresh-reqs="rm requirements.txt && pip freeze >> requirements.txt"
 
 # ************************************
 #       ENVIRONMENT VARIABLES
