@@ -119,7 +119,7 @@ git-purge-file() {
 
 woogapi() {
   cd ~/repos/wooglin-api
-  source venv/bin/activate
+  source env/bin/activate
 }
 
 woogbot() {
