@@ -118,7 +118,7 @@ alias oncall-rollback="saml-monolith ibotta_cli application rollback_api_server_
 # SSH Aliases
 alias ssh-receipts="ssh receipts.dev.ibotta.com"
 alias ssh-tools="ssh tools.ibotta.com"
-alias ssh-cole="ssh cpolyak.dev.ibotta.com"
+alias ssh-cole="ssh colep.dev.ibotta.com"
 
 # ************************************
 #       Environment Variables
