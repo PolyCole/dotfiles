@@ -11,6 +11,7 @@
 [core]
 	excludesfile = /Users/cole.polyak/.gitignore_global
 	pager = diff-so-fancy | less --tabs=4 -RFX
+	askpass = git-gui--askpass
 [init]
 	templatedir = /Users/cole.polyak/Desktop/hub/repos/memes/.github/template
 [pull]
