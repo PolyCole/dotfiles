@@ -3,6 +3,7 @@
 +-- @ibotta/generator-infra-pipeline@4.4.18
 +-- @ibotta/generator-master-generator@3.10.39
 +-- artillery@1.7.6
++-- express@4.18.1
 +-- generator-generator@5.1.0
 +-- generator-hubot@0.4.0
 +-- npm@8.8.0
