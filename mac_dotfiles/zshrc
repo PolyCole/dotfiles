@@ -66,6 +66,7 @@ alias aws-som="saml2aws exec --exec-profile staging-synchronous-matching-lambda 
 alias prs="/Users/cole.polyak/Desktop/hub/repos/purchase-rating-service"
 alias sms="/Users/cole.polyak/Desktop/hub/repos/self-moderation-service"
 alias acs="/Users/cole.polyak/Desktop/hub/repos/auto-credit-service"
+alias earnings="/Users/cole.polyak/Desktop/hub/repos/earnings-service"
 
 # General Aliases
 alias cat="bat"
