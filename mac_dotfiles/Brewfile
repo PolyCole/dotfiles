@@ -28,6 +28,7 @@ brew "libssh2"
 brew "openldap"
 brew "curl"
 brew "diff-so-fancy"
+brew "gh"
 brew "jpeg", link: true
 brew "git"
 brew "glib"
