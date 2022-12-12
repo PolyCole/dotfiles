@@ -1,0 +1,23 @@
+# Print big ol' personal logo.
+
+# Print big ol' Ibotta logo.
+# Docs: https://helpful.wiki/ascii/
+BACKGROUND=$(( $RANDOM % 219 + 22 ))
+echo $BACKGROUND
+COLOR="\e[38;5;231m\e[48;5;${BACKGROUND}m"
+# COLOR='\e[38;5;231m\e[48;5;019m'
+NC='\033[0m'
+echo "
+        ${COLOR}                            ${NC}
+\t${COLOR}             _              ${NC}     
+\t${COLOR}            (_)             ${NC}
+\t${COLOR}       ___   _  __  __      ${NC}
+\t${COLOR}      / __| | | \ \/ /      ${NC}
+\t${COLOR}      \__ \ | |  >  <       ${NC}
+\t${COLOR}      |___/ |_| /_/\_\      ${NC}
+        ${COLOR}                            ${NC}
+"
+
+print "$(python3 $DOTFILES/personal/get_startup_message.py)\n"
+
+source $DOTFILES/personal/.woog_config

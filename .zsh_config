@@ -1,0 +1,27 @@
+# oh-my-zsh installation location 
+export ZSH="$HOME/.oh-my-zsh"
+
+# Sourcing p10k
+source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Enable p10k instant prompt.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# oh-my-zsh theme in case the ~simple~ asthetic is needed.
+# ZSH_THEME="robbyrussell"
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# There are a bunch more configuration options for oh-my-zsh here,
+# but I've removed them to save space. You can view them here:
+# https://github.com/ohmyzsh/ohmyzsh/blob/master/templates/zshrc.zsh-template
+
+
+# plugins=(
+#   git
+#   zsh-osx-keychain
+# )
+
+source $ZSH/oh-my-zsh.sh

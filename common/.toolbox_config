@@ -1,0 +1,17 @@
+### Beware, all who enter here.
+### This area is exceedingly WIP.
+
+
+
+# If, in the future, this gets unmanageable, there's a simple way to frag this.
+# Similarly, this can be done to separate personal versus work files.
+# if [ -f $HOME/.zsh_aliases ]: then
+#   . $HOME/.zsh_aliases
+# fi
+
+alias tools="~/toolbox"
+
+# Programmatically generated linker aliases
+if [ -f $HOME/.linker_aliases ]; then
+   . $HOME/.linker_aliases
+fi

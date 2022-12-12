@@ -1,0 +1,152 @@
+# ************************************
+#              ALIASES
+# ************************************
+
+alias cat="bat"
+alias lsa="ls -a"
+alias lsal="ls -al"
+alias python="python3"
+alias reload="source ~/.zshrc"
+alias repos="$HOME/repos"
+
+# ************************************
+#         FILE INTERACTIONS
+# ************************************
+
+alias a="a "
+alias o="o "
+
+# Opens the current (or specified) directory in file explorer.
+function o() {
+	if [ $# -eq 0 ]; then
+		open .;
+	else
+		open "$@";
+	fi;
+}
+
+# Opens the current (or specified) directory in atom text editor.
+function a() {
+	if [ $# -eq 0 ]; then
+		code .;
+	else
+		code "$@";
+	fi;
+}
+
+# ************************************
+#              DOCKER
+# ************************************
+
+alias containers="docker ps --format \"table {{.ID}} \t{{.Image}}\""
+
+# Docker is being annoying, let's just burn it to the ground.
+murderdocker() {
+  docker volume prune
+  docker container prune --filter "until=24h"
+  docker image prune -a --filter "until=24h"
+  docker network prune
+}
+
+# ************************************
+#               GIT
+# ************************************
+
+# Purges a directory from a git repository, including the repo's history.
+git-purge-dir() {
+  if [ $# -ne 1 ]; then
+    print "Please specify the directory to purge using: \n"
+    print "git-purge-dir [directory]\n"
+    exit 0
+  fi;
+
+  git filter-branch --tree-filter "rm -rf $1" --prune-empty HEAD
+  git for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git update-ref -d
+  echo $1/ >> .gitignore
+  git add .gitignore
+  git commit -m "Removing $1 from git history."
+  git gc
+  git push origin main --force
+}
+
+# Purges a file from a git repository, including the repo's history.
+git-purge-file() {
+  if [ $# -ne 1 ]; then
+    print "Please specify the file to purge using: \n"
+    print "git-purge-file [filename]\n"
+    exit 0
+  fi;
+
+  git filter-branch --tree-filter "rm -f $1" --prune-empty HEAD
+  git for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git update-ref -d
+  echo $1/ >> .gitignore
+  git add .gitignore
+  git commit -m "Removing $1 from git history."
+  git gc
+  git push origin main --force
+}
+
+function git-upstream() {
+  BRANCH_NAME=$(git branch --show-current)
+  git push --set-upstream origin $BRANCH_NAME
+}
+
+# Amends the previous git commit message with the message passed in.
+function git-amend() {
+  if [ $# -ne 1 ]; then
+    print "Please specify the new commit message using: \n"
+    print "git-amend [new commit message]\n"
+  else
+    git commit --amend -m $1
+  fi
+}
+
+# ************************************
+#               MISC
+# ************************************
+
+# Create a new directory and enter it
+mkd() {
+	mkdir -p "$@" && cd "$_";
+}
+
+# Prints the current week of the year
+week() {
+  echo "Week `date +%V` of 52"
+}
+
+# Retrieves weather for specified location.
+function weather() {
+  if [ $# -ne 1 ]; then
+    curl "https://wttr.in/Denver\?TuF0"
+  else
+    curl "https://wttr.in/$1\?TuF0"
+  fi;
+}
+
+# For my personal config, I maintain a list of startup messages.
+# I'd love to add to them regardless of what machine I'm on :)
+function message() {
+    echo "$1" >> $DOTFILES/personal/messages.txt
+}
+
+# Opens up to a specified HTTP Status Dog :) 
+function status-dog() {
+  if [ $# -ne 1 ]; then
+    print "Please specify the error code you're looking up using:\n"
+    print "status-dog [errorcode]"
+    exit 0
+  fi;
+  
+	open "https://httpstatusdogs.com/$1"
+}
+
+# ************************************
+#               MISC
+# ************************************
+
+alias aoc="advent-of-code "
+
+function advent-of-code() {
+  python $HOME/repos/AdventOfCode/template_aoc.py --day $1
+}
