@@ -11,25 +11,31 @@ randomEmoji() {
   selected_emoji=${emojis["$[RANDOM % ${#emojis[@]}]"]}
 }
 
-# We're going to ignore this for now. I need to circle back and actually make this work across machines...
-# # First, let's dump homebrew.
-# cd ~
-# /usr/local/bin/brew bundle dump
-# cp Brewfile /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles
-# rm Brewfile
+if [ "$HOST" = "six" ]; then
+  echo "Copy Six brewfile"
+  echo "Copy Six global python packages"
+  echo "Copy Six gitconfig"
+else
+  # Grabbing Brew Packages
+  cd ~
+  /usr/local/bin/brew bundle dump
+  cp Brewfile $DOTFILES/work
+  rm Brewfile
 
+  # Grabbing some other dotfiles.
+  cp $HOME/.asdfrc $DOTFILES/work/asdfrc
+  cp $HOME/.gitconfig $DOTFILES/work/gitconfig
+  cp $HOME/.p10k.zsh $DOTFILES/work/p10k.zsh
+  cp $HOME/.linker_aliases $DOTFILES/work/linker_aliases
 
-# # Second, let's snag some dotfiles.
-# cp /Users/cole.polyak/.zshrc /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/zshrc # <----- This is one that we defnitely want...
-# cp /Users/cole.polyak/.asdfrc /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/asdfrc
-# cp /Users/cole.polyak/.gitconfig /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/gitconfig
-# cp /Users/cole.polyak/.p10k.zsh /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/p10k.zsh
-# cp /Users/cole.polyak/.linker_aliases /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/linker_aliases
+  # Grabbing globally installed npm packages
+  npm -g list >> npm_list
+  cp npm_list $DOTFILES/work/npm_list
+  rm npm_list
+fi 
 
-# # Third, let's make sure we grab globally installed npm packages...
-# npm -g list >> npm_list
-# cp npm_list /Users/cole.polyak/Desktop/hub/repos/dotfiles/mac_dotfiles/npm_list
-# rm npm_list
+# Copying top-level zshrc into place.
+cp ~/.zshrc $DOTFILES/zshrc
 
 # Finally, let's pull and push the repo.
 cd $HOME/repos/dotfiles

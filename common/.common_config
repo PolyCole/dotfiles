@@ -9,6 +9,11 @@ alias python="python3"
 alias reload="source ~/.zshrc"
 alias repos="$HOME/repos"
 
+# Crypto :)
+alias crypto="curl rate.sx"
+alias eth="curl rate.sx/eth"
+alias btc="curl rate.sx/btc"
+
 # ************************************
 #         FILE INTERACTIONS
 # ************************************
@@ -142,7 +147,7 @@ function status-dog() {
 }
 
 # ************************************
-#               MISC
+#            Advent of Code
 # ************************************
 
 alias aoc="advent-of-code "
