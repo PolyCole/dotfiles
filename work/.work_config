@@ -15,6 +15,8 @@ ${COLOR} |______/|_______/  \______/    \___/   \___/   \_______/  ${NC}
 ${COLOR}                                                           ${NC} 
 "
 
+python $DOTFILES/work/ping_services.py
+
 # ************************************
 #            ASDF Config
 # ************************************
@@ -118,8 +120,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
 
-cron-schedule() {
-  print "FIGURE ME OUT COLE"
+cronsch() {
   print "\n***************************************"
   print "🟢 Dotfiles -- M, W, F   @9:30 am"
   print "🧰 Toolbox  -- T, R,     @9:30 am"

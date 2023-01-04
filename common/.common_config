@@ -8,6 +8,7 @@ alias lsal="ls -al"
 alias python="python3"
 alias reload="source ~/.zshrc"
 alias repos="$HOME/repos"
+alias dotfiles="$DOTFILES"
 
 # Crypto :)
 alias crypto="curl rate.sx"
