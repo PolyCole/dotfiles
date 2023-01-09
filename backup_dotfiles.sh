@@ -12,9 +12,19 @@ randomEmoji() {
 }
 
 if [ "$HOST" = "six" ]; then
-  echo "Copy Six brewfile"
-  echo "Copy Six global python packages"
-  echo "Copy Six gitconfig"
+  # Grabbing Brewfile.
+  cd ~
+  brew bundle dump
+  cp Brewfile $DOTFILES/personal
+  rm Brewfile
+
+  # Grabbing global python packages.
+  cd ~
+  python -m pip list >> python_packages
+  cp python_packages $DOTFILES/personal
+  rm python_packages
+
+  cp $HOME/.gitconfig $DOTFILES/personal/gitconfig
 else
   # Grabbing Brew Packages
   cd ~

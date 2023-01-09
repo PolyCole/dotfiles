@@ -1,0 +1,9 @@
+tap "hashicorp/tap"
+tap "homebrew/bundle"
+tap "homebrew/core"
+tap "homebrew/services"
+tap "romkatv/powerlevel10k"
+brew "bat"
+brew "postgresql@14", restart_service: true
+brew "hashicorp/tap/terraform"
+brew "romkatv/powerlevel10k/powerlevel10k"

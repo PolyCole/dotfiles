@@ -2,9 +2,6 @@
 #          Cole's Dotfiles
 # ************************************
 
-# Any changes to this file need to be committed ASAP, as cron pulls 
-# will be screwed up until the change is reflected. 
-
 # Checking for the existance of our dotfile repo.
 export DOTFILES="$HOME/repos/dotfiles"
 if [ ! -d "$DOTFILES" ]; then
@@ -27,10 +24,10 @@ source $DOTFILES/common/.common_config
 # We'll decide on which specific configuration we want to run
 # based on the machine we're on. Things that I want to be common across
 # all my machines can simply be placed outside of this block.
-if [ "$HOST" = "six" ]; then 
-  source $DOTFILES/personal/.personal_config
-else
+if (( $(hostname -s) != six )); then
   source $DOTFILES/work/.work_config
+else
+  source $DOTFILES/personal/.personal_config
 fi;
 
 # ls colors
