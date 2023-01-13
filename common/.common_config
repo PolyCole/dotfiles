@@ -121,6 +121,12 @@ week() {
   echo "Week `date +%V` of 52"
 }
 
+# For my personal config, I maintain a list of startup messages.
+# I'd love to add to them regardless of what machine I'm on :)
+function message() {
+    echo "$1" >> $DOTFILES/personal/messages.txt
+}
+
 # Retrieves weather for specified location.
 function weather() {
   if [ $# -ne 1 ]; then
@@ -128,12 +134,6 @@ function weather() {
   else
     curl "https://wttr.in/$1\?TuF0"
   fi;
-}
-
-# For my personal config, I maintain a list of startup messages.
-# I'd love to add to them regardless of what machine I'm on :)
-function message() {
-    echo "$1" >> $DOTFILES/personal/messages.txt
 }
 
 # Opens up to a specified HTTP Status Dog :) 
