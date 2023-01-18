@@ -2,15 +2,20 @@ import requests
 from rich.console import Console
 import concurrent.futures
 import time
+import os
 
 console = Console()
 outputs = []
 
-services = [
-        ("Earnings       ", "http://api.ibops.net/earnings-service"),
-        ("Auto Credit    ", "http://api.ibops.net/auto-credit-service"),
-        ("Purchase Rating", "http://api.ibops.net/purchase-rating-service")
-    ]
+def get_services_list():
+    eas = os.environ.get("EARNINGS", "").split(",")
+    acs = os.environ.get("ACS", "").split(",")
+    prs = os.environ.get("PRS", "").split(",")
+        
+    return [eas, acs, prs]
+
+services = get_services_list()
+
 
 def hit_endpoint(url):
     response = requests.get(url)
