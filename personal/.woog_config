@@ -6,9 +6,21 @@ alias test="python manage.py test"
 alias shell="python manage.py shell"
 alias refresh-reqs="rm requirements.txt && pip freeze >> requirements.txt"
 
+woog-commands() {
+  print "\n*******************************************"
+  print "runserver -- starts the app"
+  print "make -- makes the migrations"
+  print "migrate -- applies migrations"
+  print "test -- runs test"
+  print "shell -- opens app shell"
+  print "refresh-reqs -- re-loads requirements.txt"
+  print "******************************************\n"
+
+}
+
 woogapi() {
   cd ~/repos/wooglin-api
-  source env/bin/activate
+  source venv/bin/activate
 }
 
 woogbot() {

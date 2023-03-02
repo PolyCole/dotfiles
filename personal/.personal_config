@@ -21,3 +21,11 @@ echo "
 print "$(python3 $DOTFILES/personal/get_startup_message.py)\n"
 
 source $DOTFILES/personal/.woog_config
+
+cronsch() {
+  print "\n***************************************"
+  print "🟢 Dotfiles -- M,T,W,R,F,S,S   @8:30 pm"
+  print "***************************************"
+}
+
+eval "$(rbenv init - zsh)"
