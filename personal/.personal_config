@@ -3,7 +3,7 @@
 # Print big ol' Ibotta logo.
 # Docs: https://helpful.wiki/ascii/
 BACKGROUND=$(( $RANDOM % 219 + 22 ))
-echo $BACKGROUND
+# echo $BACKGROUND
 COLOR="\e[38;5;231m\e[48;5;${BACKGROUND}m"
 # COLOR='\e[38;5;231m\e[48;5;019m'
 NC='\033[0m'
@@ -28,17 +28,10 @@ cronsch() {
   print "***************************************"
 }
 
-export PYPI_USERNAME=__token__
-export PYPI_KEY=$(keychain-environment-variable PYPI_KEY)
-
-export CODEARTIFACT_REPOSITORY_URL=`aws codeartifact get-repository-endpoint --domain colep --domain-owner 614517820915 --repository colep --format pypi --query repositoryEndpoint --output text`
-export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain colep --domain-owner 614517820915 --query authorizationToken --output text`
-export CODEARTIFACT_USER=aws
-
-export POETRY_HTTP_BASIC_ARTIFACT_USERNAME=aws
-export POETRY_HTTP_BASIC_ARTIFACT_PASSWORD=$CODEARTIFACT_AUTH_TOKEN
-
-# export POETRY_HTTP_BASIC_FRONTEND_USERNAME=aws
-# export POETRY_HTTP_BASIC_FRONTEND_PASSWORD=$(aws codeartifact get-authorization-token --domain-owner 614517820915 --domain colep --query 'authorizationToken' --output text)
+# Pyenv stuff.
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
 
 eval "$(rbenv init - zsh)"

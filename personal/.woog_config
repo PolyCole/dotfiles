@@ -1,6 +1,5 @@
 # Django Stuff
 alias runserver="python manage.py runserver"
-alias make="python manage.py makemigrations"
 alias migrate="python manage.py migrate"
 alias test="python manage.py test"
 alias shell="python manage.py shell"
