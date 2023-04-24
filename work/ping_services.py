@@ -31,9 +31,9 @@ def check_service(service):
     health = hit_endpoint(health)['status']
 
     if health == "UP":
-        outputs.append(f"{service_name} [bold white on green]{health}[/bold white on green] [black on white]{info}[/black on white]")
+        outputs.append(f"{service_name} [bold white on green] {health} [/bold white on green] [black on white] {info} [/black on white]")
     else:
-        outputs.append(f"{service_name} [bold white on red]{health}[/bold white on red] [black on white]{info}[/black on white]")
+        outputs.append(f"{service_name} [bold white on red] {health} [/bold white on red] [black on white] {info} [/black on white]")
         
 def main():
     # Threadding this operation makes it ~65% faster than iterating.
