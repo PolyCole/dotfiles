@@ -10,6 +10,8 @@ alias reload="source ~/.zshrc"
 alias repos="$HOME/repos"
 alias dotfiles="$DOTFILES"
 
+alias 1:1="echo hello"
+
 # Crypto :)
 alias crypto="curl rate.sx"
 alias eth="curl rate.sx/eth"
