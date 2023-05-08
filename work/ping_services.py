@@ -19,6 +19,7 @@ services = get_services_list()
 
 def hit_endpoint(url):
     response = requests.get(url)
+    print(response.json())
     return response.json()
 
 def check_service(service):
