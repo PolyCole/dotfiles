@@ -105,6 +105,9 @@ export PRS=$(keychain-environment-variable PRS)
 # Kubernetes -- Staging is default environment.
 export KUBECONFIG=~/.kube/apollo
 
+# Docker/Colima
+export DOCKER_HOST="unix:///${HOME}/.colima/docker.sock"
+
 # ************************************
 #        Path Modification
 # ************************************
