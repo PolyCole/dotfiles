@@ -34,4 +34,7 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 
+# Rust Stuff
+source "$HOME/.cargo/env"
+
 eval "$(rbenv init - zsh)"
