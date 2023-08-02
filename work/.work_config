@@ -83,6 +83,9 @@ alias ssh-receipts="ssh receipts.dev.ibotta.com"
 alias ssh-tools="ssh tools.ibotta.com"
 alias ssh-cole="ssh colep.dev.ibotta.com"
 
+# NPX Goodness
+alias clean="npx nx run-many --target=clean --all"
+
 # ************************************
 #       Environment Variables
 # ************************************
@@ -241,7 +244,6 @@ kubeconfig-stage(){
 kubeconfig-local() {
   export KUBECONFIG=~/.kube/config
 }
-
 
 # ************************************
 #     Functions I wrote while very 
