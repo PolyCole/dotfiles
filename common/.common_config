@@ -94,6 +94,7 @@ git-purge-file() {
   git push origin main --force
 }
 
+# No longer necessary with [push] autoSetupRemote = true
 function git-upstream() {
   BRANCH_NAME=$(git branch --show-current)
   git push --set-upstream origin $BRANCH_NAME
