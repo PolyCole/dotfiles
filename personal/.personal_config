@@ -28,6 +28,8 @@ cronsch() {
   print "***************************************"
 }
 
+alias cosy="code /Users/cole/repos/Cosy"
+
 # Pyenv stuff.
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
