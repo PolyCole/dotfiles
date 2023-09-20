@@ -34,6 +34,7 @@ alias ecrlogin="(saml2aws exec --exec-profile monolith -- aws ecr get-login-pass
 alias nx="npx nx"
 alias cata="/Users/cole.polyak/Desktop/hub/repos/ibotta-catalog"
 alias know="/Users/cole.polyak/Desktop/hub/repos/tech-knowledge"
+alias scripts="cat package.json| jq .scripts"
 
 # Microservice stuff.
 alias ecrchk="saml2aws exec --exec-profile monolith -- ~/ecrimagecheck.sh"
