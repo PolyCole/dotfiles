@@ -20,3 +20,5 @@
 	prune = true
 [diff]
 	colorMoved = zebra
+[push]
+	autoSetupRemote = true
