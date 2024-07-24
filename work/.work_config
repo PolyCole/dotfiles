@@ -14,6 +14,11 @@ ${COLOR}  /\$\$\$\$\$\$| \$\$\$\$\$\$\$/|  \$\$\$\$\$\$/  |  \$\$\$\$/|  \$\$\$\
 ${COLOR} |______/|_______/  \______/    \___/   \___/   \_______/  ${NC}
 ${COLOR}                                                           ${NC} 
 "
+# ************************************
+#          Common Locations
+# ************************************
+export REPO_BASE_PATH=~/repos
+
 
 # ************************************
 #            ASDF Config
@@ -26,34 +31,35 @@ ${COLOR}                                                           ${NC}
 # Ibotta Monolith stuff.
 alias awslog="saml2aws login --skip-prompt --force --session-duration=43200"
 alias drake="saml2aws exec --exec-profile monolith -- bin/drake"
-alias monolith="/Users/cole.polyak/Desktop/hub/repos/Ibotta"
+alias monolith="$REPO_BASE_PATH/Ibotta"
 alias rspec="saml2aws exec --exec-profile monolith -- bin/drake spring rspec"
 alias ecrlogin="(saml2aws exec --exec-profile monolith -- aws ecr get-login-password --region us-east-1) | docker login --password-stdin --username AWS 264606497040.dkr.ecr.us-east-1.amazonaws.com"
 
 # DevEx Stuff
 alias nx="npx nx"
-alias cata="/Users/cole.polyak/Desktop/hub/repos/ibotta-catalog"
-alias know="/Users/cole.polyak/Desktop/hub/repos/tech-knowledge"
+alias cata="$REPO_BASE_PATH/ibotta-catalog"
+alias know="$REPO_BASE_PATH/tech-knowledge"
+alias hub="$REPO_BASE_PATH/enablement-data-hub"
 alias scripts="cat package.json| jq .scripts"
 
 # Microservice stuff.
 alias ecrchk="saml2aws exec --exec-profile monolith -- ~/ecrimagecheck.sh"
 alias gradle="./gradlew"
 alias detekt="gradle task detekt"
-alias bvs="/Users/cole.polyak/Desktop/hub/repos/barcode-verification-service"
-alias wtc="/Users/cole.polyak/Desktop/hub/repos/walmart-tc-service"
-alias ros="/Users/cole.polyak/Desktop/hub/repos/receipt-ocr-service"
-alias som="/Users/cole.polyak/Desktop/hub/repos/synchronous-matching-lambda"
-alias trs="/Users/cole.polyak/Desktop/hub/repos/transaction-return-service"
-alias rdc="/Users/cole.polyak/Desktop/hub/repos/receipt-data-coordinator"
-alias prs="/Users/cole.polyak/Desktop/hub/repos/purchase-rating-service"
-alias acs="/Users/cole.polyak/Desktop/hub/repos/auto-credit-service"
-alias earnings="/Users/cole.polyak/Desktop/hub/repos/earnings-service"
+alias bvs="$REPO_BASE_PATH/barcode-verification-service"
+alias wtc="$REPO_BASE_PATH/walmart-tc-service"
+alias ros="$REPO_BASE_PATH/receipt-ocr-service"
+alias som="$REPO_BASE_PATH/synchronous-matching-lambda"
+alias trs="$REPO_BASE_PATH/transaction-return-service"
+alias rdc="$REPO_BASE_PATH/receipt-data-coordinator"
+alias prs="$REPO_BASE_PATH/purchase-rating-service"
+alias acs="$REPO_BASE_PATH/auto-credit-service"
+alias earnings="$REPO_BASE_PATH/earnings-service"
 alias aws-som="saml2aws exec --exec-profile staging-synchronous-matching-lambda -- "
 
 # General Aliases
 alias format-clip="jq '.Message' | jq -r '.' | jq ."
-alias repos="cd /Users/cole.polyak/Desktop/hub/repos"
+alias repos="cd /Users/cole.polyak/repos"
 alias tools="~/toolbox"
 alias check_receipt="python ~/toolbox/ibotta_scripts/check_receipt.py"
 
@@ -104,12 +110,12 @@ export AWS_REGION=$AWS_DEFAULT_REGION
 export GEM_REPO_LOGIN=$(keychain-environment-variable PRIVATE_PACKAGE_REPO_LOGIN)
 export NPM_REPO_LOGIN=$(keychain-environment-variable PRIVATE_PACKAGE_REPO_LOGIN)
 export MVN_REPO_LOGIN=$(keychain-environment-variable PRIVATE_PACKAGE_REPO_LOGIN)
-export MASTER_GENERATOR_LOGIN=$(keychain-environment-variable MASTER_GENERATOR_LOGIN)
+# export MASTER_GENERATOR_LOGIN=$(keychain-environment-variable MASTER_GENERATOR_LOGIN)
 
 # Services to check on start-up
-export EARNINGS=$(keychain-environment-variable EARNINGS)
-export ACS=$(keychain-environment-variable ACS)
-export PRS=$(keychain-environment-variable PRS)
+# export EARNINGS=$(keychain-environment-variable EARNINGS)
+# export ACS=$(keychain-environment-variable ACS)
+# export PRS=$(keychain-environment-variable PRS)
 
 # Kubernetes -- Staging is default environment.
 export KUBECONFIG=~/.kube/apollo
@@ -155,8 +161,8 @@ function build_and_promote() {
     gradle clean build
 
     echo "************** Deploying **************"
-    echo running saml2aws exec --exec-profile monolith -- /Users/cole.polyak/Desktop/hub/repos/travis-shared-config/deployment/publish_and_promote.sh $1 $2
-    saml2aws exec --exec-profile monolith -- /Users/cole.polyak/Desktop/hub/repos/travis-shared-config/deployment/publish_and_promote.sh $1 $2
+    echo running saml2aws exec --exec-profile monolith -- $REPO_BASE_PATH/travis-shared-config/deployment/publish_and_promote.sh $1 $2
+    saml2aws exec --exec-profile monolith -- $REPO_BASE_PATH/travis-shared-config/deployment/publish_and_promote.sh $1 $2
   fi
 }
 
@@ -165,12 +171,11 @@ function promote() {
     print "Please specify the service and commit hash using: \n"
     print "promote [service] git-[commit hash] [environment]"
   else
-    echo saml2aws exec --exec-profile monolith -- /Users/cole.polyak/Desktop/hub/repos/travis-shared-config/deployment/promote.sh $2 $3 $1
-    saml2aws exec --exec-profile monolith -- /Users/cole.polyak/Desktop/hub/repos/travis-shared-config/deployment/promote.sh $2 $1 $3
+    echo saml2aws exec --exec-profile monolith -- $REPO_BASE_PATH/travis-shared-config/deployment/promote.sh $2 $3 $1
+    saml2aws exec --exec-profile monolith -- $REPO_BASE_PATH/travis-shared-config/deployment/promote.sh $2 $1 $3
   fi
 }
 
-export REPO_BASE_PATH=~/Desktop/hub/repos
 alias deploy_production="deploy_production "
 
 function deploy_production() {
@@ -220,7 +225,7 @@ function reset_mono_stage() {
     print "Please specify the instance name using: \n"
     print "reset_mono_stage [instance]\n"
   else
-    cd /Users/cole.polyak/Desktop/hub/repos/infrastructure
+    cd $REPO_BASE_PATH/infrastructure
     print "\n\nTearing and Rolling instance: $1\n\n"
     saml2aws exec --exec-profile staging -- ibotta_cli sfn destroy $1
     saml2aws exec --exec-profile staging -- ibotta_cli sfn create $1 -f sparkleformation/development.rb
@@ -264,4 +269,4 @@ function thanks_for_your_contribution_detekt() {
 }
 
 
-python $DOTFILES/work/ping_services.py
+# python $DOTFILES/work/ping_services.py
