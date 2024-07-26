@@ -7,7 +7,7 @@ if [ "$HOST" = "six" ]; then
   source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 else
   # Ensuring we source p10k.
-  source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+  # source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
   ZSH_THEME="powerlevel10k/powerlevel10k"
 fi;
 
