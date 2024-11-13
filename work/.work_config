@@ -249,6 +249,13 @@ function reset_mono_stage() {
 }
 
 # ************************************
+#              Conduit
+# ************************************
+function conduit() {
+  eval "$(git rev-parse --show-toplevel)/scripts/conduit $@"
+}
+
+# ************************************
 #       Kubernetes Configuration
 # ************************************
 
