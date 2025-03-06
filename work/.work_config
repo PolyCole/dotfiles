@@ -34,6 +34,7 @@ print "$(python3 $DOTFILES/personal/get_startup_message.py)\n"
 #          Common Locations
 # ************************************
 export REPO_BASE_PATH=~/repos
+export PATH="$PATH:$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
 
 
 # ************************************
@@ -72,6 +73,9 @@ alias prs="$REPO_BASE_PATH/purchase-rating-service"
 alias acs="$REPO_BASE_PATH/auto-credit-service"
 alias earnings="$REPO_BASE_PATH/earnings-service"
 alias aws-som="saml2aws exec --exec-profile staging-synchronous-matching-lambda -- "
+
+# Granted/Assume ABAC Stuff
+alias assume=". assume"
 
 # General Aliases
 alias format-clip="jq '.Message' | jq -r '.' | jq ."
