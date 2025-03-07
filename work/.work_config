@@ -76,6 +76,7 @@ alias aws-som="saml2aws exec --exec-profile staging-synchronous-matching-lambda 
 
 # Granted/Assume ABAC Stuff
 alias assume=". assume"
+export GRANTED_ALIAS_CONFIGURED="true"
 
 # General Aliases
 alias format-clip="jq '.Message' | jq -r '.' | jq ."
