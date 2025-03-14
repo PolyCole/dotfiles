@@ -298,3 +298,4 @@ function thanks_for_your_contribution_detekt() {
 
 
 # python $DOTFILES/work/ping_services.py
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
