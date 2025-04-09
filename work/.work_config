@@ -54,9 +54,11 @@ alias ecrlogin="(saml2aws exec --exec-profile monolith -- aws ecr get-login-pass
 
 # DevEx Stuff
 alias nx="npx nx"
-alias cata="$REPO_BASE_PATH/ibotta-catalog"
-alias know="$REPO_BASE_PATH/tech-knowledge"
+alias catalog="$REPO_BASE_PATH/ibotta-catalog"
+alias tk="$REPO_BASE_PATH/tech-knowledge"
 alias hub="$REPO_BASE_PATH/enablement-data-hub"
+alias portal="$REPO_BASE_PATH/enablement-data-portal"
+alias cha="$REPO_BASE_PATH/consumer-hub-adapter"
 alias scripts="cat package.json| jq .scripts"
 
 # Microservice stuff.
