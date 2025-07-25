@@ -163,6 +163,17 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && . "$(brew --prefix)/opt/nvm/nvm.sh" # This loads nvm
 [ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
+# ************************************
+#           Git Shortcuts
+# ************************************
+function qc() {
+  if [ $# -eq 0 ]; then
+    echo "Please provide a commit message:"
+    echo "qc \"your commit message\""
+  else
+    git add -A && git commit -m "$1" && git push
+  fi
+}
 
 schedule() {
   print "\n***************************************"
@@ -300,4 +311,5 @@ function thanks_for_your_contribution_detekt() {
 
 
 # python $DOTFILES/work/ping_services.py
+
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
