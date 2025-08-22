@@ -269,10 +269,14 @@ function reset_mono_stage() {
 }
 
 # ************************************
-#              Conduit
+#                CLIs
 # ************************************
 function conduit() {
   eval "$(git rev-parse --show-toplevel)/scripts/conduit $@"
+}
+
+function fig() {
+  eval "$(git rev-parse --show-toplevel)/fig $@"
 }
 
 # ************************************
