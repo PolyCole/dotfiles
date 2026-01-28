@@ -35,6 +35,7 @@ print "$(python3 $DOTFILES/personal/get_startup_message.py)\n"
 # ************************************
 export REPO_BASE_PATH=~/repos
 export PATH="$PATH:$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
+export PATH="$PATH:/Users/cole.polyak/.local/bin"
 
 
 # ************************************
