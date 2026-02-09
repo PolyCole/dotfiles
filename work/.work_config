@@ -117,6 +117,11 @@ alias ssh-cole="ssh colep.dev.ibotta.com"
 # NPX Goodness
 alias clean="npx nx run-many --target=clean --all"
 
+# Agents & Wrangling of Cats
+alias beads-do-task="claude '@beads:task-agent (agent) Complete the first available task from the beads queue. After completing the task, stop executing.' --permission-mode acceptEdits"
+alias beads-fix-test="claude '@beads:task-agent (agent) Currently the tests for this repository are failing. Investigate and fix.' --permission-mode acceptEdits"
+
+
 # ************************************
 #       Environment Variables
 # ************************************
@@ -315,7 +320,6 @@ function thanks_for_your_contribution_detekt() {
   print "\n\n**That it then fixes on its own!**\n\n"
   git push
 }
-
 
 # python $DOTFILES/work/ping_services.py
 
