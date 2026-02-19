@@ -37,4 +37,7 @@ bd sync               # Sync with git
 - NEVER stop before pushing - that leaves work stranded locally
 - NEVER say "ready to push when you are" - YOU must push
 - If push fails, resolve and retry until it succeeds
+- Do not include "co-authored by" in your commit messages.
+- Do not write commit messages longer than a sentence.
+- Do not include more detail than necessary in commit messages, they should be short and to the point.
 
