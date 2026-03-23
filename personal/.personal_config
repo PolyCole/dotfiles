@@ -46,5 +46,5 @@ eval "$(rbenv init - zsh)"
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
 # Daily Prep Stuff
-alias prep-dev="cd ~/repos/prep && go build -o prep ./cmd/prep && ./prep --dev"
-alias prep="cd ~/repos/prep && go build -o prep ./cmd/prep && ./prep"
+alias prep-dev="cd ~/repos/prep && go install . && command prep --dev"
+alias prep="cd ~/repos/prep && go install . && command prep"

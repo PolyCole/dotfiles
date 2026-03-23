@@ -1,1 +1,9 @@
 VISION.md
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key
+.beads/backup/
+.beads/dolt-server.*
+.beads/*.lock
