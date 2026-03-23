@@ -2,39 +2,37 @@
 #          Cole's Dotfiles
 # ************************************
 
-# Checking for the existance of our dotfile repo.
 export DOTFILES="$HOME/repos/dotfiles"
-if [ ! -d "$DOTFILES" ]; then
-  RED='\033[0;31m'
-  NC='\033[0m'
 
-  echo "
-  ${NC}x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x
-      ${RED}Dotfile Directory not found!
-  ${NC}x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x
-  "
-  exit
-fi;
-
-# Begin sourcing things.
-source $DOTFILES/.zsh_config
-source $DOTFILES/common/.common_config
-
-
-# We'll decide on which specific configuration we want to run
-# based on the machine we're on. Things that I want to be common across
-# all my machines can simply be placed outside of this block.
-current_hostname=$(hostname -s)
-
-# Define the string you want to compare with
-compare_string="six"
-
-# Compare the two strings
-if [ "$current_hostname" = "$compare_string" ]; then
-    source $DOTFILES/personal/.personal_config
-else
-    source $DOTFILES/work/.work_config
+if [[ ! -d "$DOTFILES" ]]; then
+  echo "Dotfile directory not found: $DOTFILES"
+  return 1
 fi
 
+source "$DOTFILES/shell/init.zsh"
+source "$DOTFILES/shell/path.zsh"
+
+# Auto-load global modules
+for _mod in "$DOTFILES/modules/"*.zsh(N); do
+  source "$_mod"
+done
+
+# Load machine-specific config
+if [[ -n "$DOTFILES_MACHINE" && -d "$DOTFILES/machines/$DOTFILES_MACHINE" ]]; then
+  local _mdir="$DOTFILES/machines/$DOTFILES_MACHINE"
+  [[ -f "$_mdir/init.zsh"    ]] && source "$_mdir/init.zsh"
+  [[ -f "$_mdir/path.zsh"    ]] && source "$_mdir/path.zsh"
+  [[ -f "$_mdir/aliases.zsh" ]] && source "$_mdir/aliases.zsh"
+  for _mod in "$_mdir/modules/"*.zsh(N); do
+    source "$_mod"
+  done
+fi
+
+unset _mod _mdir
+
 # ls colors
-LS_COLORS=$LS_COLORS:'di=1;32:ex=4;31' ; export LS_COLORS
+LS_COLORS=$LS_COLORS:'di=1;32:ex=4;31'
+export LS_COLORS
+
+# Load discovery system last
+[[ -f "$DOTFILES/shell/dots.zsh" ]] && source "$DOTFILES/shell/dots.zsh"
