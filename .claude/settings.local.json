@@ -1,7 +1,28 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(bd close:*)",
+      "Bash(bd ready:*)",
+      "Bash(bd show:*)",
+      "Bash(xargs -I{} touch {}/.gitkeep)",
+      "Bash(for dir:*)",
+      "Bash(do touch:*)",
+      "Bash(done)",
+      "Bash(bd update:*)",
+      "Read(//Users/cole/**)",
+      "Bash(zsh --no-rcs -c 'source /Users/cole/repos/dotfiles/zshrc; echo \"DOTFILES_MACHINE=$DOTFILES_MACHINE\"; echo \"Boot OK\"' 2>&1)",
+      "Bash(bd dolt:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(bd dep:*)",
+      "Bash(git pull:*)",
+      "Bash(bd sync:*)",
+      "Bash(git push:*)",
+      "Bash(bd --help)",
+      "Bash(git stash:*)",
+      "Bash(bd list:*)",
+      "Bash(bd blocked:*)"
     ]
   }
 }
