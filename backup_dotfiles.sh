@@ -15,32 +15,32 @@ if [ "$HOST" = "six" ]; then
   # Grabbing Brewfile.
   cd ~
   brew bundle dump
-  cp Brewfile $DOTFILES/personal
+  cp Brewfile $DOTFILES/machines/personal
   rm Brewfile
 
   # Grabbing global python packages.
   cd ~
   python -m pip list >> python_packages
-  cp python_packages $DOTFILES/personal
+  cp python_packages $DOTFILES/machines/personal
   rm python_packages
 
-  cp $HOME/.gitconfig $DOTFILES/personal/gitconfig
+  cp $HOME/.gitconfig $DOTFILES/machines/personal/gitconfig
 else
   # Grabbing Brew Packages
   cd ~
   /usr/local/bin/brew bundle dump
-  cp Brewfile $DOTFILES/work
+  cp Brewfile $DOTFILES/machines/ibotta
   rm Brewfile
 
   # Grabbing some other dotfiles.
-  cp $HOME/.asdfrc $DOTFILES/work/asdfrc
-  cp $HOME/.gitconfig $DOTFILES/work/gitconfig
-  cp $HOME/.p10k.zsh $DOTFILES/work/p10k.zsh
-  cp $HOME/.linker_aliases $DOTFILES/work/linker_aliases
+  cp $HOME/.asdfrc $DOTFILES/machines/ibotta/asdfrc
+  cp $HOME/.gitconfig $DOTFILES/machines/ibotta/gitconfig
+  cp $HOME/.p10k.zsh $DOTFILES/machines/ibotta/p10k.zsh
+  cp $HOME/.linker_aliases $DOTFILES/machines/ibotta/linker_aliases
 
   # Grabbing globally installed npm packages
   npm -g list >> npm_list
-  cp npm_list $DOTFILES/work/npm_list
+  cp npm_list $DOTFILES/machines/ibotta/npm_list
   rm npm_list
 fi 
 
