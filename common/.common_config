@@ -23,13 +23,3 @@ week() {
 function message() {
     echo "$1" >> $DOTFILES/personal/messages.txt
 }
-
-# ************************************
-#            Advent of Code
-# ************************************
-
-alias aoc="advent-of-code "
-
-function advent-of-code() {
-  python $HOME/repos/AdventOfCode/template_aoc.py --day $1
-}
