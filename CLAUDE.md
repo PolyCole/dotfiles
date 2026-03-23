@@ -9,7 +9,6 @@ Personal dotfiles repository for shell configuration backup and synchronization 
 ## Structure
 
 - `common/` - Shared configuration files sourced across all machines
-  - `.common_config` - Aliases and shell functions (cat→bat, docker helpers, git utilities, weather, etc.)
   - `.toolbox_config` - Toolbox aliases and programmatic linker alias loading
   - `llm_instructions.md` - LLM prompting guidelines (Planner Mode, Debugger Mode)
   - `parker_claude_code_mode.md` - AI interaction directives (Forklift vs Weightlifting tasks, risk analysis, objective truth)
