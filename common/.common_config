@@ -9,11 +9,6 @@ alias python="python3"
 alias reload="source ~/.zshrc"
 alias 1:1="echo hello"
 
-# Crypto :)
-alias crypto="curl rate.sx"
-alias eth="curl rate.sx/eth"
-alias btc="curl rate.sx/btc"
-
 # ************************************
 #               MISC
 # ************************************
