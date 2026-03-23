@@ -7,9 +7,6 @@ alias lsa="ls -a"
 alias lsal="ls -al"
 alias python="python3"
 alias reload="source ~/.zshrc"
-alias repos="$HOME/repos"
-alias dotfiles="$DOTFILES"
-
 alias 1:1="echo hello"
 
 # Crypto :)
@@ -18,38 +15,8 @@ alias eth="curl rate.sx/eth"
 alias btc="curl rate.sx/btc"
 
 # ************************************
-#         FILE INTERACTIONS
-# ************************************
-
-alias a="a "
-alias o="o "
-
-# Opens the current (or specified) directory in file explorer.
-function o() {
-	if [ $# -eq 0 ]; then
-		open .;
-	else
-		open "$@";
-	fi;
-}
-
-# Opens the current (or specified) directory in atom text editor.
-function a() {
-	if [ $# -eq 0 ]; then
-		code .;
-	else
-		code "$@";
-	fi;
-}
-
-# ************************************
 #               MISC
 # ************************************
-
-# Create a new directory and enter it
-mkd() {
-	mkdir -p "$@" && cd "$_";
-}
 
 # Prints the current week of the year
 week() {
