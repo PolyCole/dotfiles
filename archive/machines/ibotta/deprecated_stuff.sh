@@ -1,3 +1,4 @@
+# Archived: 2026-02-17 — Never sourced, contains deprecated Argo/protobuf functions
 # ************************************
 #          Protocol Buffers
 # ************************************
