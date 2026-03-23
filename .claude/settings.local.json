@@ -23,7 +23,9 @@
       "Bash(git stash:*)",
       "Bash(bd list:*)",
       "Bash(bd blocked:*)",
-      "Bash(bd search:*)"
+      "Bash(bd search:*)",
+      "Bash(git rm:*)",
+      "Bash(ls:*)"
     ]
   }
 }
