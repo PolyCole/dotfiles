@@ -22,7 +22,8 @@
       "Bash(bd --help)",
       "Bash(git stash:*)",
       "Bash(bd list:*)",
-      "Bash(bd blocked:*)"
+      "Bash(bd blocked:*)",
+      "Bash(bd search:*)"
     ]
   }
 }
