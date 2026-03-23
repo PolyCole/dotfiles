@@ -16,3 +16,7 @@
 {"id":"int-29938983","kind":"field_change","created_at":"2026-03-23T03:19:53.178066Z","actor":"Cole Polyak","issue_id":"dots-9mm.4","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"Closed"}}
 {"id":"int-05726d90","kind":"field_change","created_at":"2026-03-23T03:20:23.188559Z","actor":"Cole Polyak","issue_id":"dots-e63.11","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
 {"id":"int-cd1871d0","kind":"field_change","created_at":"2026-03-23T03:21:47.689582Z","actor":"Cole Polyak","issue_id":"dots-e63.11","extra":{"field":"status","new_value":"open","old_value":"in_progress"}}
+{"id":"int-e42f9933","kind":"field_change","created_at":"2026-03-23T03:24:10.382979Z","actor":"Cole Polyak","issue_id":"dots-e63.11","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
+{"id":"int-33907486","kind":"field_change","created_at":"2026-03-23T03:27:37.850665Z","actor":"Cole Polyak","issue_id":"dots-e63.11","extra":{"field":"status","new_value":"open","old_value":"in_progress"}}
+{"id":"int-3946eccb","kind":"field_change","created_at":"2026-03-23T03:54:51.953398Z","actor":"Cole Polyak","issue_id":"dots-a7b.4","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
+{"id":"int-36aaf07b","kind":"field_change","created_at":"2026-03-23T03:55:20.722591Z","actor":"Cole Polyak","issue_id":"dots-a7b.4","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"Closed"}}
