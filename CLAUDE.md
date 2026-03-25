@@ -6,13 +6,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Personal dotfiles repository for shell configuration backup and synchronization across machines. Uses cron to automatically commit and push changes. Requires SSH-based GitHub access for cron compatibility.
 
-## Structure
-
-- `common/` - Shared configuration files sourced across all machines
-  - `.toolbox_config` - Toolbox aliases and programmatic linker alias loading
-  - `llm_instructions.md` - LLM prompting guidelines (Planner Mode, Debugger Mode)
-  - `parker_claude_code_mode.md` - AI interaction directives (Forklift vs Weightlifting tasks, risk analysis, objective truth)
-
 ## Key Shell Functions
 
 - `git-purge-dir/git-purge-file` - Removes files/directories from git history (uses filter-branch)
