@@ -1,10 +1,14 @@
+# machines/personal/modules/woog.zsh — Wooglin API & bot project aliases
+
 # Commands:
-# runserver -- starts the app
-# make -- makes the migrations
-# migrate -- applies migrations
-# test -- runs test
-# shell -- opens app shell
-# refresh-reqs -- re-loads requirements.txt
+#   runserver     - start the app (python manage.py runserver)
+#   make          - make the migrations (python manage.py makemigrations)
+#   migrate       - apply migrations (python manage.py migrate)
+#   test          - run tests (python manage.py test)
+#   shell         - open app shell (python manage.py shell)
+#   refresh-reqs  - reload requirements.txt
+#   woogapi       - cd to wooglin-api and activate venv
+#   woogbot       - cd to wooglin-bot and activate venv
 
 # Django Stuff
 alias runserver="python manage.py runserver"
