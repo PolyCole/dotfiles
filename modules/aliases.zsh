@@ -6,7 +6,7 @@
 #   reload     Re-source ~/.zshrc
 #   1:1        Print hello
 #   week       Print current week of the year
-#   message    Append a startup message to personal/messages.txt
+#   message    Append a startup message to machines/personal/messages.txt
 
 alias cat="bat"
 alias lsa="ls -a"
@@ -23,5 +23,5 @@ week() {
 # For my personal config, I maintain a list of startup messages.
 # I'd love to add to them regardless of what machine I'm on :)
 function message() {
-    echo "$1" >> $DOTFILES/personal/messages.txt
+    echo "$1" >> $DOTFILES/machines/personal/messages.txt
 }
