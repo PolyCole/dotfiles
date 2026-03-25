@@ -19,14 +19,7 @@ echo "
 $DOTFILES/bin/startup-message $DOTFILES/machines/personal/messages.txt
 
 source $DOTFILES/personal/.woog_config
-
-cronsch() {
-  print "\n***************************************"
-  print "🟢 Dotfiles -- M,T,W,R,F,S,S   @8:30 pm"
-  print "***************************************"
-}
-
-alias cosy="code /Users/cole/repos/Cosy"
+source $DOTFILES/machines/personal/aliases.zsh
 
 # Pyenv stuff.
 export PYENV_ROOT="$HOME/.pyenv"
@@ -45,6 +38,3 @@ eval "$(rbenv init - zsh)"
 # Go Stuff
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 
-# Daily Prep Stuff
-alias prep-dev="cd ~/repos/prep && go install . && command prep --dev"
-alias prep="cd ~/repos/prep && go install . && command prep"
