@@ -1,4 +1,5 @@
-import os 
+# Archived 2026-03-25: replaced by tools/startup-message Go binary
+import os
 import random
 import socket
 import re
@@ -14,7 +15,7 @@ else:
 def main():
     messages = get_messages()
     selected_message = messages[random.randint(0, len(messages) - 1)]
-    print_message(get_lines(selected_message)) 
+    print_message(get_lines(selected_message))
 
 def get_messages():
     file = open(f"{os.environ['HOME']}/repos/dotfiles/personal/messages.txt", "r")
@@ -23,7 +24,7 @@ def get_messages():
     for line in file:
         if line != '':
             arr.append(line.strip())
-    
+
     return arr
 
 def get_lines(message):
@@ -50,4 +51,3 @@ def print_message(lines):
 
 if __name__ == "__main__":
     main()
-
