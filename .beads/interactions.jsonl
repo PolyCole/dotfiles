@@ -86,3 +86,5 @@
 {"id":"int-19cd8888","kind":"field_change","created_at":"2026-03-25T23:40:01.785155Z","actor":"Cole Polyak","issue_id":"dots-usa.4","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"Moved .woog_config content to machines/personal/modules/woog.zsh with # Commands: header block."}}
 {"id":"int-67a61435","kind":"field_change","created_at":"2026-03-25T23:40:16.764846Z","actor":"Cole Polyak","issue_id":"dots-usa.5","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
 {"id":"int-26986d70","kind":"field_change","created_at":"2026-03-25T23:41:24.485146Z","actor":"Cole Polyak","issue_id":"dots-usa.5","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"Closed"}}
+{"id":"int-52f71d8c","kind":"field_change","created_at":"2026-03-25T23:42:04.133413Z","actor":"Cole Polyak","issue_id":"dots-usa.6","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
+{"id":"int-abd13eca","kind":"field_change","created_at":"2026-03-25T23:42:59.467721Z","actor":"Cole Polyak","issue_id":"dots-usa.6","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"Closed"}}

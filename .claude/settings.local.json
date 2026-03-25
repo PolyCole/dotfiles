@@ -33,7 +33,17 @@
       "Bash(git mv:*)",
       "Bash(go run:*)",
       "Bash(go build:*)",
-      "Bash(make startup-message:*)"
+      "Bash(make startup-message:*)",
+      "Bash(find /Users/cole/repos/dotfiles -name *.txt)",
+      "Bash(/Users/cole/repos/dotfiles/bin/startup-message /Users/cole/repos/dotfiles/personal/messages.txt)",
+      "Bash(for i:*)",
+      "Bash(do)",
+      "Bash(find /Users/cole/repos/dotfiles -name *.zshrc -o -name zshrc -o -name .zshrc)",
+      "Bash(find /Users/cole/repos/dotfiles -name loader* -o -name source*)",
+      "Bash(xxd /Users/cole/repos/dotfiles/machines/personal/init.zsh)",
+      "Bash(git -C /Users/cole/repos/dotfiles mv /Users/cole/repos/dotfiles/personal/Brewfile /Users/cole/repos/dotfiles/machines/personal/Brewfile)",
+      "Bash(git -C /Users/cole/repos/dotfiles mv /Users/cole/repos/dotfiles/personal/gitconfig /Users/cole/repos/dotfiles/machines/personal/gitconfig)",
+      "Bash(git:*)"
     ]
   }
 }
