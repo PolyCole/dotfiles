@@ -1,0 +1,36 @@
+# Commands:
+# runserver -- starts the app
+# make -- makes the migrations
+# migrate -- applies migrations
+# test -- runs test
+# shell -- opens app shell
+# refresh-reqs -- re-loads requirements.txt
+
+# Django Stuff
+alias runserver="python manage.py runserver"
+alias migrate="python manage.py migrate"
+alias test="python manage.py test"
+alias shell="python manage.py shell"
+alias refresh-reqs="rm requirements.txt && pip freeze >> requirements.txt"
+
+woog-commands() {
+  print "\n*******************************************"
+  print "runserver -- starts the app"
+  print "make -- makes the migrations"
+  print "migrate -- applies migrations"
+  print "test -- runs test"
+  print "shell -- opens app shell"
+  print "refresh-reqs -- re-loads requirements.txt"
+  print "******************************************\n"
+
+}
+
+woogapi() {
+  cd ~/repos/wooglin-api
+  source venv/bin/activate
+}
+
+woogbot() {
+  cd ~/repos/wooglin-bot
+  source venv/bin/activate
+}
