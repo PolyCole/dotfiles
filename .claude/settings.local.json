@@ -43,7 +43,11 @@
       "Bash(xxd /Users/cole/repos/dotfiles/machines/personal/init.zsh)",
       "Bash(git -C /Users/cole/repos/dotfiles mv /Users/cole/repos/dotfiles/personal/Brewfile /Users/cole/repos/dotfiles/machines/personal/Brewfile)",
       "Bash(git -C /Users/cole/repos/dotfiles mv /Users/cole/repos/dotfiles/personal/gitconfig /Users/cole/repos/dotfiles/machines/personal/gitconfig)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal zsh -c 'source shell/dots.zsh; dots > /dev/null; echo \"\"overview exit: $?\"\"')",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal zsh -c 'source shell/dots.zsh; dots git > /dev/null; echo \"\"group exit: $?\"\"')",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal zsh -c 'source shell/dots.zsh; dots --all > /dev/null; echo \"\"all exit: $?\"\"')",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal zsh -c 'source shell/dots.zsh; dots --search docker > /dev/null; echo \"\"search exit: $?\"\"')"
     ]
   }
 }
