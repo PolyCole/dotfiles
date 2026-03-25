@@ -19,24 +19,3 @@ echo "
 
 $DOTFILES/bin/startup-message $DOTFILES/machines/personal/messages.txt
 
-# ---------------------------------------------------------------------------
-# Environment variables
-# ---------------------------------------------------------------------------
-
-# Pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-
-# Rust
-source "$HOME/.cargo/env"
-
-# LaTeX
-export PATH="/usr/local/texlive/2025/bin/universal-darwin:$PATH"
-
-# Ruby
-eval "$(rbenv init - zsh)"
-
-# Go
-export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
