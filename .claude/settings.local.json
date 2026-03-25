@@ -30,7 +30,10 @@
       "Bash(grep -r \"source.*modules\\\\|\\\\..*modules\" /Users/cole/repos/dotfiles/ --include=*.zsh)",
       "Bash(find /Users/cole/repos/dotfiles -name *.zshrc -o -name .zshrc)",
       "Bash(find /Users/cole/repos/dotfiles -name zshrc*)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(go run:*)",
+      "Bash(go build:*)",
+      "Bash(make startup-message:*)"
     ]
   }
 }
