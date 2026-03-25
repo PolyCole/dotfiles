@@ -25,7 +25,11 @@
       "Bash(bd blocked:*)",
       "Bash(bd search:*)",
       "Bash(git rm:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(find ~/repos/dotfiles -name *work*config*)",
+      "Bash(grep -r \"source.*modules\\\\|\\\\..*modules\" /Users/cole/repos/dotfiles/ --include=*.zsh)",
+      "Bash(find /Users/cole/repos/dotfiles -name *.zshrc -o -name .zshrc)",
+      "Bash(find /Users/cole/repos/dotfiles -name zshrc*)"
     ]
   }
 }
