@@ -1,3 +1,6 @@
+# modules/web.zsh
+# Web and HTTP utilities for weather and status lookups
+
 # Commands:
 #   weather [location]   Fetch weather from wttr.in (defaults to Denver)
 #   status-dog <code>    Open HTTP status dog for given status code

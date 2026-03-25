@@ -1,3 +1,6 @@
+# modules/docker.zsh
+# Docker utilities for container management and cleanup
+
 # Commands:
 #   containers       List running containers (ID and image)
 #   murderdocker     Aggressively prune all Docker resources

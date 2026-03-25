@@ -1,3 +1,6 @@
+# modules/aliases.zsh
+# General-purpose aliases and miscellaneous shell utilities
+
 # Commands:
 #   cat        → bat (syntax-highlighted cat)
 #   lsa        List all files including hidden

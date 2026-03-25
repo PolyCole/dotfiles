@@ -1,3 +1,6 @@
+# modules/git.zsh
+# Git utilities for history manipulation and commit management
+
 # Commands:
 #   git-purge-dir <dir>    Remove directory from repo history (filter-branch)
 #   git-purge-file <file>  Remove file from repo history (filter-branch)

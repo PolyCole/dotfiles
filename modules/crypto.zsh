@@ -1,3 +1,6 @@
+# modules/crypto.zsh
+# Cryptocurrency price lookup aliases
+
 # Commands:
 #   crypto         Show cryptocurrency overview (rate.sx)
 #   eth            Show Ethereum price

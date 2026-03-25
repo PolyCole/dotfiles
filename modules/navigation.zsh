@@ -1,3 +1,6 @@
+# modules/navigation.zsh
+# Filesystem navigation and directory management utilities
+
 # Commands:
 #   o [path]       Open current or specified directory in Finder
 #   a [path]       Open current or specified directory in VS Code
