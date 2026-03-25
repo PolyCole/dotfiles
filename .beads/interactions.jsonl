@@ -61,3 +61,5 @@
 {"id":"int-ba81459c","kind":"field_change","created_at":"2026-03-25T23:10:18.643929Z","actor":"Cole Polyak","issue_id":"dots-e63.8","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
 {"id":"int-6f02d787","kind":"field_change","created_at":"2026-03-25T23:11:27.494145Z","actor":"Cole Polyak","issue_id":"dots-e63.8","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"Extracted oncall aliases into machines/ibotta/modules/oncall.zsh with Commands header block."}}
 {"id":"int-9ed8ff66","kind":"field_change","created_at":"2026-03-25T23:12:05.049953Z","actor":"Cole Polyak","issue_id":"dots-e63.9","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
+{"id":"int-0e775ec8","kind":"field_change","created_at":"2026-03-25T23:15:23.748857Z","actor":"Cole Polyak","issue_id":"dots-e63.9","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"completed by Claude Code"}}
+{"id":"int-a0549551","kind":"field_change","created_at":"2026-03-25T23:15:24.753255Z","actor":"Cole Polyak","issue_id":"dots-e63.11","extra":{"field":"status","new_value":"in_progress","old_value":"open"}}
