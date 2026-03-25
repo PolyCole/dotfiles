@@ -18,7 +18,7 @@ ${COLOR} |______/|_______/    |__/  |__/  |__/  ${NC}
 ${COLOR}                                        ${NC}
 "
 
-print "$(python3 $DOTFILES/personal/get_startup_message.py)\n"
+$DOTFILES/bin/startup-message $DOTFILES/machines/ibotta/messages.txt
 
 # ---------------------------------------------------------------------------
 # Common locations

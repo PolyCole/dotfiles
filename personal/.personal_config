@@ -16,7 +16,7 @@ echo "
         ${COLOR}                            ${NC}
 "
 
-print "$(python3 $DOTFILES/personal/get_startup_message.py)\n"
+$DOTFILES/bin/startup-message $DOTFILES/machines/personal/messages.txt
 
 source $DOTFILES/personal/.woog_config
 
