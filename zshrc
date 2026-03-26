@@ -16,30 +16,31 @@ if [ ! -d "$DOTFILES" ]; then
   exit
 fi;
 
-# Begin sourcing things.
-source $DOTFILES/.zsh_config
-source $DOTFILES/common/.common_config
+# Core shell bootstrap: machine detection, oh-my-zsh, p10k
+source $DOTFILES/shell/init.zsh
 
+# Universal PATH modifications
+source $DOTFILES/shell/path.zsh
 
-# We'll decide on which specific configuration we want to run
-# based on the machine we're on. Things that I want to be common across
-# all my machines can simply be placed outside of this block.
-if (( $(hostname -s) != six )); then
-  source $DOTFILES/work/.work_config
-else
-  source $DOTFILES/personal/.personal_config
-fi;
+# dots discovery system
+source $DOTFILES/shell/dots.zsh
+
+# Shared modules (available on all machines)
+for _m in $DOTFILES/modules/*.zsh(N); do
+  source "$_m"
+done
+unset _m
+
+# Machine-specific config
+if [[ -n "$DOTFILES_MACHINE" ]]; then
+  [[ -f "$DOTFILES/machines/$DOTFILES_MACHINE/path.zsh" ]]    && source "$DOTFILES/machines/$DOTFILES_MACHINE/path.zsh"
+  [[ -f "$DOTFILES/machines/$DOTFILES_MACHINE/init.zsh" ]]    && source "$DOTFILES/machines/$DOTFILES_MACHINE/init.zsh"
+  [[ -f "$DOTFILES/machines/$DOTFILES_MACHINE/aliases.zsh" ]] && source "$DOTFILES/machines/$DOTFILES_MACHINE/aliases.zsh"
+  for _m in $DOTFILES/machines/$DOTFILES_MACHINE/modules/*.zsh(N); do
+    source "$_m"
+  done
+  unset _m
+fi
 
 # ls colors
 LS_COLORS=$LS_COLORS:'di=1;32:ex=4;31' ; export LS_COLORS
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
-
-# Added by Antigravity
-export PATH="/Users/cole/.antigravity/antigravity/bin:$PATH"
-
-# Created by `pipx` on 2025-12-14 21:03:00
-export PATH="$PATH:/Users/cole/.local/bin"
