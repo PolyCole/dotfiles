@@ -88,7 +88,26 @@
       "Bash(ln -sf /Users/cole/repos/dotfiles/zshrc /Users/cole/.zshrc)",
       "Bash(bd create:*)",
       "Bash(bd epic:*)",
-      "Bash(go test:*)"
+      "Bash(go test:*)",
+      "Bash(go get:*)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles go run ./cmd/dots/)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles go run ./cmd/dots/ git)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles go run ./cmd/dots/ --all)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles go run ./cmd/dots/ --search git)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles go run ./cmd/dots/ --search xyznotfound)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles go run ./cmd/dots/ --search docker)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles go run ./cmd/dots/ navigation)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles go run ./cmd/dots/ --search open)",
+      "Bash(bd comments:*)",
+      "Bash(bd memories:*)",
+      "Bash(make dots:*)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal /Users/cole/repos/dotfiles/bin/dots 2>&1)",
+      "Bash(make clean:*)",
+      "Bash(make all:*)",
+      "Bash(DOTFILES=$PWD DOTFILES_MACHINE=personal bin/dots)",
+      "Bash(DOTFILES=$PWD DOTFILES_MACHINE=personal bin/dots git)",
+      "Bash(DOTFILES=$PWD DOTFILES_MACHINE=personal bin/dots --search \"git\")",
+      "Bash(DOTFILES=$PWD DOTFILES_MACHINE=personal bin/dots --all)"
     ]
   }
 }
