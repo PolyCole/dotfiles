@@ -126,7 +126,7 @@ const banner = ` ██████████         ███████   
 func RenderOverview(w io.Writer, modules []Module) {
 	// Banner
 	bannerStyle := lipgloss.NewStyle().Foreground(colorGroupName)
-	fmt.Fprintf(w, "%s\n", bannerStyle.Render(banner))
+	fmt.Fprintf(w, "\n\n%s\n\n", bannerStyle.Render(banner))
 	subtitle := styleDim.Render("Don't Overthink This Shit")
 	fmt.Fprintf(w, "%s\n\n", subtitle)
 
