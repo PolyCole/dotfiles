@@ -47,7 +47,13 @@
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal zsh -c 'source shell/dots.zsh; dots > /dev/null; echo \"\"overview exit: $?\"\"')",
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal zsh -c 'source shell/dots.zsh; dots git > /dev/null; echo \"\"group exit: $?\"\"')",
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal zsh -c 'source shell/dots.zsh; dots --all > /dev/null; echo \"\"all exit: $?\"\"')",
-      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal zsh -c 'source shell/dots.zsh; dots --search docker > /dev/null; echo \"\"search exit: $?\"\"')"
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal zsh -c 'source shell/dots.zsh; dots --search docker > /dev/null; echo \"\"search exit: $?\"\"')",
+      "Bash(for f:*)",
+      "Bash(do echo:*)",
+      "Read(//Users/cole/repos/dotfiles/**)",
+      "Bash(find machines/ -name *.zsh -path */modules/*)",
+      "Bash(grep -rn \"toolbox_config\\\\|common/\" /Users/cole/repos/dotfiles/ --include=*.zsh --include=*.sh --include=*.zshrc)",
+      "Bash(grep -rn \"toolbox_config\\\\|common/\" /Users/cole/repos/dotfiles/ --include=*.zsh --include=*.sh --include=*.zshrc --include=*.bash*)"
     ]
   }
 }
