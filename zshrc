@@ -2,6 +2,9 @@
 #          Cole's Dotfiles
 # ************************************
 
+# Disable p10k instant prompt — startup banner intentionally outputs during init
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+
 # Checking for the existance of our dotfile repo.
 export DOTFILES="$HOME/repos/dotfiles"
 if [ ! -d "$DOTFILES" ]; then

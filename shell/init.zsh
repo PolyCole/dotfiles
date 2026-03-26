@@ -21,13 +21,6 @@ unset _hostname
 [[ -f "$HOME/.linker_aliases" ]] && source "$HOME/.linker_aliases"
 
 # ---------------------------------------------------------------------------
-# p10k instant prompt (must be near top, before any output)
-# ---------------------------------------------------------------------------
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# ---------------------------------------------------------------------------
 # oh-my-zsh
 # ---------------------------------------------------------------------------
 export ZSH="$HOME/.oh-my-zsh"

@@ -31,9 +31,10 @@ func main() {
 	}
 
 	width := termWidth()
+	leftPad := envInt("PADDING", 0)
 	msg := messages[rand.Intn(len(messages))]
-	lines := wordWrap(msg, width/2)
-	printCentered(lines, width)
+	lines := wordWrap(msg, width)
+	printCentered(lines, width, leftPad)
 }
 
 // parseMessages splits on blank lines. If no blank lines exist, each line is its own message.
@@ -81,6 +82,15 @@ func termWidth() int {
 	return 80
 }
 
+func envInt(key string, fallback int) int {
+	if v := os.Getenv(key); v != "" {
+		if n, err := strconv.Atoi(v); err == nil {
+			return n
+		}
+	}
+	return fallback
+}
+
 func wordWrap(text string, width int) []string {
 	var lines []string
 	var current strings.Builder
@@ -103,12 +113,13 @@ func wordWrap(text string, width int) []string {
 	return lines
 }
 
-func printCentered(lines []string, width int) {
+func printCentered(lines []string, width int, leftPad int) {
+	prefix := strings.Repeat(" ", leftPad)
 	for _, line := range lines {
 		padding := (width - len(line)) / 2
 		if padding < 0 {
 			padding = 0
 		}
-		fmt.Printf("%s%s%s%s\n", strings.Repeat(" ", padding), colorCyan, line, colorReset)
+		fmt.Printf("%s%s%s%s%s\n", prefix, strings.Repeat(" ", padding), colorCyan, line, colorReset)
 	}
 }

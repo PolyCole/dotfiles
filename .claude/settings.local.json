@@ -83,7 +83,11 @@
       "Bash(bd hooks:*)",
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal zsh /Users/cole/repos/dotfiles/hooks/runner.zsh post-merge)",
       "Bash(echo \"exit: $?\")",
-      "Bash(zsh -c \"source /Users/cole/repos/dotfiles/modules/hooks.zsh && echo 'module loaded ok'\")"
+      "Bash(zsh -c \"source /Users/cole/repos/dotfiles/modules/hooks.zsh && echo 'module loaded ok'\")",
+      "Bash(cp /Users/cole/.zshrc /Users/cole/.zshrc.backup)",
+      "Bash(ln -sf /Users/cole/repos/dotfiles/zshrc /Users/cole/.zshrc)",
+      "Bash(bd create:*)",
+      "Bash(bd epic:*)"
     ]
   }
 }
