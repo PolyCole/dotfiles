@@ -2,14 +2,14 @@
 # General-purpose aliases and miscellaneous shell utilities
 
 # Commands:
-#   cat        → bat (syntax-highlighted cat)
-#   lsa        List all files including hidden
-#   lsal       List all files in long format
-#   python     → python3
-#   reload     Re-source ~/.zshrc
-#   1:1        Print hello
-#   week       Print current week of the year
-#   message    Append a startup message to machines/personal/messages.txt
+#   cat        - bat (syntax-highlighted cat)
+#   lsa        - List all files including hidden
+#   lsal       - List all files in long format
+#   python     - Alias to python3
+#   reload     - Re-source ~/.zshrc
+#   1:1        - Print hello
+#   week       - Print current week of the year
+#   message    - Append a startup message to machines/personal/messages.txt
 
 alias cat="bat"
 alias lsa="ls -a"

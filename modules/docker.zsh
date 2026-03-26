@@ -2,8 +2,8 @@
 # Docker utilities for container management and cleanup
 
 # Commands:
-#   containers       List running containers (ID and image)
-#   murderdocker     Aggressively prune all Docker resources
+#   containers       - List running containers (ID and image)
+#   murderdocker     - Aggressively prune all Docker resources
 
 alias containers="docker ps --format \"table {{.ID}} \t{{.Image}}\""
 

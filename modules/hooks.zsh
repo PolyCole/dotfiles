@@ -2,7 +2,7 @@
 # Git hooks management via the DOTS composable hooks system
 
 # Commands:
-#   dots-hooks-install    Install git hooks globally using core.hooksPath
+#   dots-hooks-install    - Install git hooks globally using core.hooksPath
 
 # Installs the DOTS git hook system globally.
 # Sets git's core.hooksPath to ~/.git-hooks and writes thin dispatcher

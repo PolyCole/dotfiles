@@ -2,11 +2,11 @@
 # Filesystem navigation and directory management utilities
 
 # Commands:
-#   o [path]       Open current or specified directory in Finder
-#   a [path]       Open current or specified directory in VS Code
-#   mkd <dir>      Create directory and cd into it
-#   repos          Alias to ~/repos
-#   dotfiles       Alias to $DOTFILES
+#   o [path]       - Open current or specified directory in Finder
+#   a [path]       - Open current or specified directory in VS Code
+#   mkd <dir>      - Create directory and cd into it
+#   repos          - Alias to ~/repos
+#   dotfiles       - Alias to $DOTFILES
 
 alias repos="$HOME/repos"
 alias dotfiles="$DOTFILES"

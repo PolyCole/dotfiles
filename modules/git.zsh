@@ -2,9 +2,9 @@
 # Git utilities for history manipulation and commit management
 
 # Commands:
-#   git-purge-dir <dir>    Remove directory from repo history (filter-branch)
-#   git-purge-file <file>  Remove file from repo history (filter-branch)
-#   git-amend <message>    Amend previous commit with new message
+#   git-purge-dir <dir>    - Remove directory from repo history (filter-branch)
+#   git-purge-file <file>  - Remove file from repo history (filter-branch)
+#   git-amend <message>    - Amend previous commit with new message
 
 # Purges a directory from a git repository, including the repo's history.
 git-purge-dir() {
