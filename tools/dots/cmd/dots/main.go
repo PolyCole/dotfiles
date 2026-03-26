@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/mattn/go-isatty"
+
 	"dots"
 )
 
@@ -35,6 +37,23 @@ func main() {
 	modules := dots.ParseFiles(paths)
 
 	args := os.Args[1:]
+
+	// -i flag or no args on a TTY launches interactive mode
+	if len(args) == 1 && args[0] == "-i" {
+		if err := dots.RunInteractive(modules); err != nil {
+			fmt.Fprintln(os.Stderr, "dots:", err)
+			os.Exit(1)
+		}
+		return
+	}
+
+	if len(args) == 0 && isatty.IsTerminal(os.Stdout.Fd()) {
+		if err := dots.RunInteractive(modules); err != nil {
+			fmt.Fprintln(os.Stderr, "dots:", err)
+			os.Exit(1)
+		}
+		return
+	}
 
 	switch {
 	case len(args) == 0:
