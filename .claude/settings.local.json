@@ -77,7 +77,13 @@
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=ibotta zsh -c 'source shell/dots.zsh && dots --search purge && dots --search docker && dots --search weather')",
       "Bash(echo \"HOST: $HOST\")",
       "Bash(echo \"HOSTNAME: $HOSTNAME\")",
-      "Bash(bash backup_dotfiles.sh 2>&1)"
+      "Bash(bash backup_dotfiles.sh 2>&1)",
+      "Bash(1 echo:*)",
+      "Bash(chmod +x /Users/cole/repos/dotfiles/hooks/runner.zsh /Users/cole/repos/dotfiles/hooks/pre-commit/beads.sh /Users/cole/repos/dotfiles/hooks/pre-commit/trufflehog.sh /Users/cole/repos/dotfiles/hooks/post-checkout/beads.sh /Users/cole/repos/dotfiles/hooks/post-merge/beads.sh /Users/cole/repos/dotfiles/hooks/pre-push/beads.sh /Users/cole/repos/dotfiles/hooks/prepare-commit-msg/beads.sh)",
+      "Bash(bd hooks:*)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal zsh /Users/cole/repos/dotfiles/hooks/runner.zsh post-merge)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(zsh -c \"source /Users/cole/repos/dotfiles/modules/hooks.zsh && echo 'module loaded ok'\")"
     ]
   }
 }
