@@ -29,8 +29,8 @@ func TestRenderOverview_ContainsGroupNames(t *testing.T) {
 	if !strings.Contains(out, "2") {
 		t.Error("overview should show command count 2 for git")
 	}
-	if !strings.Contains(out, "D.O.T.S.") {
-		t.Error("overview should contain title")
+	if !strings.Contains(out, "Don't Overthink This Shit") {
+		t.Error("overview should contain subtitle")
 	}
 }
 

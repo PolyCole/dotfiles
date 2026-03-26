@@ -113,15 +113,22 @@ func renderCmdName(name string) string {
 	return sb.String()
 }
 
+const banner = ` ██████████         ███████       ███████████     █████████
+░░███░░░░███      ███░░░░░███    ░█░░░███░░░█    ███░░░░░███
+ ░███   ░░███    ███     ░░███   ░   ░███  ░    ░███    ░░░
+ ░███    ░███   ░███      ░███       ░███       ░░█████████
+ ░███    ░███   ░███      ░███       ░███        ░░░░░░░░███
+ ░███    ███    ░░███     ███        ░███        ███    ░███
+ ██████████   ██ ░░░███████░   ██    █████    ██░░█████████
+░░░░░░░░░░   ░░    ░░░░░░░    ░░    ░░░░░    ░░  ░░░░░░░░░  `
+
 // RenderOverview writes the overview (dots with no args) to w.
 func RenderOverview(w io.Writer, modules []Module) {
-	// Title
-	title := lipgloss.NewStyle().
-		Foreground(colorGroupName).
-		Bold(true).
-		Render("D.O.T.S.")
+	// Banner
+	bannerStyle := lipgloss.NewStyle().Foreground(colorGroupName)
+	fmt.Fprintf(w, "%s\n", bannerStyle.Render(banner))
 	subtitle := styleDim.Render("Don't Overthink This Shit")
-	fmt.Fprintf(w, "%s  %s\n\n", title, subtitle)
+	fmt.Fprintf(w, "%s\n\n", subtitle)
 
 	// Find longest group name for alignment
 	maxLen := 0
