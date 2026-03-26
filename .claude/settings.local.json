@@ -87,7 +87,8 @@
       "Bash(cp /Users/cole/.zshrc /Users/cole/.zshrc.backup)",
       "Bash(ln -sf /Users/cole/repos/dotfiles/zshrc /Users/cole/.zshrc)",
       "Bash(bd create:*)",
-      "Bash(bd epic:*)"
+      "Bash(bd epic:*)",
+      "Bash(go test:*)"
     ]
   }
 }
