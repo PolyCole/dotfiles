@@ -53,7 +53,28 @@
       "Read(//Users/cole/repos/dotfiles/**)",
       "Bash(find machines/ -name *.zsh -path */modules/*)",
       "Bash(grep -rn \"toolbox_config\\\\|common/\" /Users/cole/repos/dotfiles/ --include=*.zsh --include=*.sh --include=*.zshrc)",
-      "Bash(grep -rn \"toolbox_config\\\\|common/\" /Users/cole/repos/dotfiles/ --include=*.zsh --include=*.sh --include=*.zshrc --include=*.bash*)"
+      "Bash(grep -rn \"toolbox_config\\\\|common/\" /Users/cole/repos/dotfiles/ --include=*.zsh --include=*.sh --include=*.zshrc --include=*.bash*)",
+      "Bash(zsh -n shell/init.zsh shell/path.zsh shell/dots.zsh zshrc)",
+      "Bash(echo \"Exit: $?\")",
+      "Bash(zsh -n \"$f\")",
+      "Bash(DOTFILES=\"/Users/cole/repos/dotfiles\" DOTFILES_MACHINE=ibotta zsh -c '\necho \"=== File existence checks for DOTFILES_MACHINE=ibotta ===\"\n\nfiles=\\(\n  \"$DOTFILES/shell/init.zsh\"\n  \"$DOTFILES/shell/path.zsh\"\n  \"$DOTFILES/shell/dots.zsh\"\n\\)\nfor f in \"${files[@]}\"; do\n  [[ -f \"$f\" ]] && echo \"OK: $f\" || echo \"MISSING: $f\"\ndone\n\nfor f in \"$DOTFILES/modules/\"*.zsh\\(N\\); do\n  echo \"OK module: ${f:t}\"\ndone\n\nmdir=\"$DOTFILES/machines/ibotta\"\nfor f in init.zsh path.zsh aliases.zsh; do\n  [[ -f \"$mdir/$f\" ]] && echo \"OK ibotta/$f\" || echo \"MISSING ibotta/$f\"\ndone\nfor f in \"$mdir/modules/\"*.zsh\\(N\\); do\n  echo \"OK ibotta/module: ${f:t}\"\ndone\n' 2>&1)",
+      "Bash(DOTFILES=\"/Users/cole/repos/dotfiles\" DOTFILES_MACHINE=ibotta zsh -c 'source /Users/cole/repos/dotfiles/machines/ibotta/path.zsh')",
+      "Bash(DOTFILES=\"/Users/cole/repos/dotfiles\" DOTFILES_MACHINE=ibotta zsh -x -c 'source /Users/cole/repos/dotfiles/machines/ibotta/path.zsh')",
+      "Bash(DOTFILES=\"/Users/cole/repos/dotfiles\" DOTFILES_MACHINE=ibotta zsh -c '\nsource /Users/cole/repos/dotfiles/shell/dots.zsh\ndots\n' 2>&1)",
+      "Bash(DOTFILES=\"/Users/cole/repos/dotfiles\" DOTFILES_MACHINE=unknown zsh -c '\nsource /Users/cole/repos/dotfiles/shell/dots.zsh\ndots\n' 2>&1)",
+      "Bash(source shell/init.zsh)",
+      "Bash(dots --all)",
+      "Bash(zsh -c 'source /Users/cole/repos/dotfiles/shell/init.zsh && dots --all')",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles zsh -c 'source /Users/cole/repos/dotfiles/shell/init.zsh && dots --all' 2>&1)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles zsh -c 'source /Users/cole/repos/dotfiles/shell/dots.zsh && dots --all' 2>&1)",
+      "Bash(grep -A 50 \"# Commands:\" /Users/cole/repos/dotfiles/modules/*.zsh)",
+      "Bash(grep -A 20 \"# Commands:\" /Users/cole/repos/dotfiles/machines/personal/modules/*.zsh)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal zsh -c 'source /Users/cole/repos/dotfiles/shell/dots.zsh && dots --all' 2>&1)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=unknown zsh -c 'source shell/dots.zsh && dots --search purge')",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=unknown zsh -c 'source shell/dots.zsh && dots --search docker')",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=unknown zsh -c 'source shell/dots.zsh && dots --search weather')",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=ibotta zsh -c 'source shell/dots.zsh && dots --search deploy')",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=ibotta zsh -c 'source shell/dots.zsh && dots --search purge && dots --search docker && dots --search weather')"
     ]
   }
 }
