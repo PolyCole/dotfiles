@@ -74,7 +74,10 @@
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=unknown zsh -c 'source shell/dots.zsh && dots --search docker')",
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=unknown zsh -c 'source shell/dots.zsh && dots --search weather')",
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=ibotta zsh -c 'source shell/dots.zsh && dots --search deploy')",
-      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=ibotta zsh -c 'source shell/dots.zsh && dots --search purge && dots --search docker && dots --search weather')"
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=ibotta zsh -c 'source shell/dots.zsh && dots --search purge && dots --search docker && dots --search weather')",
+      "Bash(echo \"HOST: $HOST\")",
+      "Bash(echo \"HOSTNAME: $HOSTNAME\")",
+      "Bash(bash backup_dotfiles.sh 2>&1)"
     ]
   }
 }
