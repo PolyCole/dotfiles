@@ -122,11 +122,47 @@ const banner = ` ██████████         ███████   
  ██████████   ██ ░░░███████░   ██    █████    ██░░█████████
 ░░░░░░░░░░   ░░    ░░░░░░░    ░░    ░░░░░    ░░  ░░░░░░░░░  `
 
+// patchworkPalette is a set of colors for the banner's patchwork effect.
+// Each █ block gets a color based on its position, creating a quilt-like look.
+var patchworkPalette = []lipgloss.Color{
+	"#7DCFFF", // bright cyan
+	"#9ECE6A", // green
+	"#BB9AF7", // lavender
+	"#7AA2F7", // blue
+	"#E0AF68", // amber
+	"#F7768E", // pink
+	"#FF9E64", // orange
+	"#73DACA", // teal
+	"#B4F9F8", // mint
+	"#C0CAF5", // periwinkle
+}
+
+// renderPatchworkBanner colors each █ block character with a different color
+// from the palette, while ░ characters get a dim treatment.
+func renderPatchworkBanner() string {
+	var sb strings.Builder
+	colorIdx := 0
+	dimStyle := lipgloss.NewStyle().Foreground(colorDim)
+
+	for _, ch := range banner {
+		switch ch {
+		case '█':
+			style := lipgloss.NewStyle().Foreground(patchworkPalette[colorIdx%len(patchworkPalette)])
+			sb.WriteString(style.Render(string(ch)))
+			colorIdx++
+		case '░':
+			sb.WriteString(dimStyle.Render(string(ch)))
+		default:
+			sb.WriteRune(ch)
+		}
+	}
+	return sb.String()
+}
+
 // RenderOverview writes the overview (dots with no args) to w.
 func RenderOverview(w io.Writer, modules []Module) {
-	// Banner
-	bannerStyle := lipgloss.NewStyle().Foreground(colorGroupName)
-	fmt.Fprintf(w, "\n\n%s\n\n", bannerStyle.Render(banner))
+	// Banner with patchwork coloring
+	fmt.Fprintf(w, "\n\n%s\n\n", renderPatchworkBanner())
 	subtitle := styleDim.Render("Don't Overthink This Shit")
 	fmt.Fprintf(w, "%s\n\n", subtitle)
 
