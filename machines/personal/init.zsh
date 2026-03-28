@@ -20,5 +20,6 @@ echo "${_indent}${COLOR}                            ${NC}"
 echo ""
 
 COLUMNS=28 PADDING=16 $DOTFILES/bin/startup-message $DOTFILES/machines/personal/messages.txt
+echo ""
 unset _indent
 

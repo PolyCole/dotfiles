@@ -8,3 +8,6 @@ bin/
 .beads/backup/
 .beads/dolt-server.*
 .beads/*.lock
+
+# Compiled binaries
+tools/dots/dots

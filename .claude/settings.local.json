@@ -107,7 +107,13 @@
       "Bash(DOTFILES=$PWD DOTFILES_MACHINE=personal bin/dots)",
       "Bash(DOTFILES=$PWD DOTFILES_MACHINE=personal bin/dots git)",
       "Bash(DOTFILES=$PWD DOTFILES_MACHINE=personal bin/dots --search \"git\")",
-      "Bash(DOTFILES=$PWD DOTFILES_MACHINE=personal bin/dots --all)"
+      "Bash(DOTFILES=$PWD DOTFILES_MACHINE=personal bin/dots --all)",
+      "Bash(go vet:*)",
+      "Bash(make install-dots:*)",
+      "Bash(cp tools/dots/dots bin/dots)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles /Users/cole/repos/dotfiles/bin/dots)",
+      "Bash(cp dots:*)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles ./dots)"
     ]
   }
 }
