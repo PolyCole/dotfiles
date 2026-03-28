@@ -3,6 +3,7 @@ package dots
 import (
 	"fmt"
 	"io"
+	"math/rand"
 	"regexp"
 	"strings"
 
@@ -122,24 +123,32 @@ const banner = ` ██████████         ███████   
  ██████████   ██ ░░░███████░   ██    █████    ██░░█████████
 ░░░░░░░░░░   ░░    ░░░░░░░    ░░    ░░░░░    ░░  ░░░░░░░░░  `
 
-// patchworkPalette is a set of colors for the banner's patchwork effect.
-// Each █ block gets a color based on its position, creating a quilt-like look.
+// patchworkPalette is a set of bright colors for the banner's patchwork effect.
 var patchworkPalette = []lipgloss.Color{
-	"#7DCFFF", // bright cyan
-	"#9ECE6A", // green
-	"#BB9AF7", // lavender
-	"#7AA2F7", // blue
-	"#E0AF68", // amber
-	"#F7768E", // pink
-	"#FF9E64", // orange
-	"#73DACA", // teal
-	"#B4F9F8", // mint
-	"#C0CAF5", // periwinkle
+	"#50E3FF", // electric cyan
+	"#69FF69", // neon green
+	"#D4A0FF", // bright lavender
+	"#5CB3FF", // vivid blue
+	"#FFD866", // bright gold
+	"#FF6E8A", // hot pink
+	"#FFB454", // bright orange
+	"#47FFCF", // electric teal
+	"#AFFFFF", // bright mint
+	"#FF75D8", // magenta
+	"#BEFF6E", // lime
+	"#FFA3A3", // coral
 }
 
-// renderPatchworkBanner colors each █ block character with a different color
-// from the palette, while ░ characters get a dim treatment.
+// renderPatchworkBanner colors each █ block character with a randomly shuffled
+// color from the palette, creating a unique quilt pattern on every run.
 func renderPatchworkBanner() string {
+	// Shuffle palette so every invocation looks different
+	palette := make([]lipgloss.Color, len(patchworkPalette))
+	copy(palette, patchworkPalette)
+	rand.Shuffle(len(palette), func(i, j int) {
+		palette[i], palette[j] = palette[j], palette[i]
+	})
+
 	var sb strings.Builder
 	colorIdx := 0
 	dimStyle := lipgloss.NewStyle().Foreground(colorDim)
@@ -147,7 +156,7 @@ func renderPatchworkBanner() string {
 	for _, ch := range banner {
 		switch ch {
 		case '█':
-			style := lipgloss.NewStyle().Foreground(patchworkPalette[colorIdx%len(patchworkPalette)])
+			style := lipgloss.NewStyle().Foreground(palette[colorIdx%len(palette)])
 			sb.WriteString(style.Render(string(ch)))
 			colorIdx++
 		case '░':
