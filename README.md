@@ -67,18 +67,13 @@ Modules from `modules/*.zsh` are always loaded. If `$DOTFILES_MACHINE` is set, `
 
 To deprecate a command, remove it from the module and its `# Commands:` entry. If you want to keep it for historical reference, move the file (or relevant portion) to `archive/`. Files in `archive/` are never sourced.
 
-## Cron Backup
+## Syncing Changes
 
-`backup_dotfiles.sh` snapshots machine-specific files (Brewfile, gitconfig, etc.) and commits/pushes any changes to `main`.
+Changes are committed and pushed manually or via git tooling. If you previously used `backup_dotfiles.sh` as a cron job, remove that entry from your crontab:
 
 ```bash
-# Example crontab entry
-0 * * * * $HOME/repos/dotfiles/backup_dotfiles.sh
+crontab -e  # remove the backup_dotfiles.sh line
 ```
-
-**Requirements for cron compatibility:**
-1. Define `PATH` explicitly in the crontab — cron does not inherit the shell environment.
-2. Use SSH-based GitHub access — credential helpers don't work in cron context.
 
 ## Go Startup Message
 

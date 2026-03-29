@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Purpose
 
-Personal dotfiles repository for shell configuration, synchronized across machines. Uses cron to automatically commit and push changes. Requires SSH-based GitHub access for cron compatibility.
+Personal dotfiles repository for shell configuration, synchronized across machines. Requires SSH-based GitHub access for push compatibility.
 
 ## Directory Structure
 

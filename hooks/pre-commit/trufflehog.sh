@@ -7,4 +7,4 @@ if ! command -v trufflehog >/dev/null 2>&1; then
     exit 0
 fi
 
-trufflehog git file://. --since-commit HEAD --staged --fail
+trufflehog git file://. --since-commit HEAD --fail
