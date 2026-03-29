@@ -64,6 +64,11 @@ func main() {
 			os.Exit(1)
 		}
 
+	case args[0] == "sync" && len(args) >= 2 && args[1] == "status":
+		if err := dots.RunSyncStatus(os.Stdout, dotfiles, machine); err != nil {
+			os.Exit(1)
+		}
+
 	default:
 		// dots <group>
 		group := args[0]
