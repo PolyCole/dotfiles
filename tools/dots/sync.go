@@ -35,16 +35,29 @@ type SyncConfig struct {
 	Target string `yaml:"target"`
 }
 
+// SyncSnapshot represents a single snapshot entry in sync.yml.
+// Command is the shell command whose output is captured; Dest is the
+// dotfiles-relative path where that output is written.
+type SyncSnapshot struct {
+	Command string `yaml:"command"`
+	Dest    string `yaml:"dest"`
+}
+
 // SyncManifest represents the full sync.yml file.
 type SyncManifest struct {
-	Configs []SyncConfig `yaml:"configs"`
+	Configs   []SyncConfig   `yaml:"configs"`
+	Snapshots []SyncSnapshot `yaml:"snapshots"`
 }
 
 // LoadSyncManifest reads and parses a sync.yml file.
+// Returns a descriptive error when the file is missing or malformed.
 func LoadSyncManifest(path string) (*SyncManifest, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
-		return nil, err
+		if os.IsNotExist(err) {
+			return nil, fmt.Errorf("sync manifest not found: %s", path)
+		}
+		return nil, fmt.Errorf("cannot read sync manifest %s: %w", path, err)
 	}
 	var m SyncManifest
 	if err := yaml.Unmarshal(data, &m); err != nil {
