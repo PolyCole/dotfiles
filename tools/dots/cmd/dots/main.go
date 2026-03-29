@@ -59,6 +59,11 @@ func main() {
 		}
 		dots.RenderSearch(os.Stdout, modules, term)
 
+	case args[0] == "sync" && len(args) >= 2 && args[1] == "link":
+		if err := dots.RunSyncLink(os.Stdout, dotfiles, machine); err != nil {
+			os.Exit(1)
+		}
+
 	default:
 		// dots <group>
 		group := args[0]
