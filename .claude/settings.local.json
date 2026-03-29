@@ -118,7 +118,8 @@
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal /Users/cole/repos/dotfiles/bin/dots)",
       "Bash(crontab -l)",
       "Bash(bd delete:*)",
-      "Bash(trufflehog:*)"
+      "Bash(trufflehog:*)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal /tmp/dots_test sync link)"
     ]
   }
 }
