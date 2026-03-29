@@ -1,0 +1,28 @@
+# sync.yml - ibotta machines (hostnames matching ^[A-Z]{1}[A-Z0-9-]+$)
+# Managed by dots sync subsystem. See tools/dots/ for implementation.
+
+configs:
+  - source: machines/ibotta/gitconfig
+    target: ~/.gitconfig
+
+  - source: machines/ibotta/asdfrc
+    target: ~/.asdfrc
+
+  - source: machines/ibotta/p10k.zsh
+    target: ~/.p10k.zsh
+
+  # linker_aliases: generated file, aliases may be stale - review before restoring.
+  # These aliases reference scripts (generate_linker.sh, open_in_admin.sh, etc.)
+  # that may no longer exist or have moved. Verify each before re-enabling sync.
+  - source: machines/ibotta/linker_aliases
+    target: ~/.linker_aliases
+
+  - source: zshrc
+    target: ~/.zshrc
+
+snapshots:
+  - command: brew bundle dump --force --file=-
+    dest: machines/ibotta/Brewfile
+
+  - command: npm -g list
+    dest: machines/ibotta/npm_list
