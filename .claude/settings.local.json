@@ -113,7 +113,12 @@
       "Bash(cp tools/dots/dots bin/dots)",
       "Bash(DOTFILES=/Users/cole/repos/dotfiles /Users/cole/repos/dotfiles/bin/dots)",
       "Bash(cp dots:*)",
-      "Bash(DOTFILES=/Users/cole/repos/dotfiles ./dots)"
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles ./dots)",
+      "Bash(cd:*)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal /Users/cole/repos/dotfiles/bin/dots)",
+      "Bash(crontab -l)",
+      "Bash(bd delete:*)",
+      "Bash(trufflehog:*)"
     ]
   }
 }
