@@ -59,28 +59,45 @@ func main() {
 		}
 		dots.RenderSearch(os.Stdout, modules, term)
 
-	case args[0] == "sync" && len(args) >= 2 && args[1] == "link":
-		if err := dots.RunSyncLink(os.Stdout, dotfiles, machine); err != nil {
-			os.Exit(1)
+	case args[0] == "sync":
+		sub := ""
+		if len(args) >= 2 {
+			sub = args[1]
 		}
-
-	case args[0] == "sync" && len(args) >= 2 && args[1] == "status":
-		if err := dots.RunSyncStatus(os.Stdout, dotfiles, machine); err != nil {
-			os.Exit(1)
-		}
-
-	case args[0] == "sync" && len(args) >= 2 && args[1] == "now":
-		if err := dots.RunSyncNow(os.Stdout, dotfiles, machine); err != nil {
-			os.Exit(1)
-		}
-
-	case args[0] == "sync" && len(args) >= 2 && args[1] == "install":
-		if err := dots.RunSyncInstall(os.Stdout, dotfiles, machine); err != nil {
-			os.Exit(1)
-		}
-
-	case args[0] == "sync" && len(args) >= 2 && args[1] == "uninstall":
-		if err := dots.RunSyncUninstall(os.Stdout); err != nil {
+		switch sub {
+		case "", "status":
+			if err := dots.RunSyncStatus(os.Stdout, dotfiles, machine); err != nil {
+				os.Exit(1)
+			}
+		case "link":
+			if err := dots.RunSyncLink(os.Stdout, dotfiles, machine); err != nil {
+				os.Exit(1)
+			}
+		case "now":
+			if err := dots.RunSyncNow(os.Stdout, dotfiles, machine); err != nil {
+				os.Exit(1)
+			}
+		case "install":
+			if err := dots.RunSyncInstall(os.Stdout, dotfiles, machine); err != nil {
+				os.Exit(1)
+			}
+		case "uninstall":
+			if err := dots.RunSyncUninstall(os.Stdout); err != nil {
+				os.Exit(1)
+			}
+		case "--help", "-h":
+			fmt.Fprintln(os.Stdout, "Usage: dots sync [subcommand]")
+			fmt.Fprintln(os.Stdout, "")
+			fmt.Fprintln(os.Stdout, "Manage dotfile synchronization via launchd.")
+			fmt.Fprintln(os.Stdout, "")
+			fmt.Fprintln(os.Stdout, "Subcommands:")
+			fmt.Fprintln(os.Stdout, "  status      Show sync daemon status and last run info (default)")
+			fmt.Fprintln(os.Stdout, "  install     Install and start the launchd sync agent")
+			fmt.Fprintln(os.Stdout, "  uninstall   Stop and remove the launchd sync agent")
+			fmt.Fprintln(os.Stdout, "  now         Run a sync immediately")
+			fmt.Fprintln(os.Stdout, "  link        Re-link dotfiles to their targets")
+		default:
+			fmt.Fprintf(os.Stderr, "dots sync: unknown subcommand %q. Run 'dots sync --help' to see available subcommands.\n", sub)
 			os.Exit(1)
 		}
 
