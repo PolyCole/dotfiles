@@ -29,6 +29,23 @@ var (
 	styleSyncPath  = lipgloss.NewStyle().Foreground(colorSyncPath)
 )
 
+// SyncModule returns a synthetic Module describing the built-in sync subcommands.
+// It is injected into the module list at startup so that 'dots' overview and
+// 'dots sync' detail both surface the sync commands.
+func SyncModule() Module {
+	return Module{
+		Name:        "sync",
+		Description: "Manage dotfile synchronization via launchd",
+		Commands: []Command{
+			{Name: "dots sync status", Description: "Show sync daemon status and last run info (default)"},
+			{Name: "dots sync install", Description: "Install and start the launchd sync agent"},
+			{Name: "dots sync uninstall", Description: "Stop and remove the launchd sync agent"},
+			{Name: "dots sync now", Description: "Run a sync immediately"},
+			{Name: "dots sync link", Description: "Re-link dotfiles to their targets"},
+		},
+	}
+}
+
 // SyncConfig represents a single config entry in sync.yml.
 type SyncConfig struct {
 	Source string `yaml:"source"`

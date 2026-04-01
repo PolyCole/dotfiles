@@ -34,6 +34,9 @@ func main() {
 
 	modules := dots.ParseFiles(paths)
 
+	// Inject the built-in sync module so it appears in the overview.
+	modules = append(modules, dots.SyncModule())
+
 	args := os.Args[1:]
 
 	// -i flag explicitly launches interactive mode
