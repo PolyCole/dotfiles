@@ -74,6 +74,16 @@ func main() {
 			os.Exit(1)
 		}
 
+	case args[0] == "sync" && len(args) >= 2 && args[1] == "install":
+		if err := dots.RunSyncInstall(os.Stdout, dotfiles, machine); err != nil {
+			os.Exit(1)
+		}
+
+	case args[0] == "sync" && len(args) >= 2 && args[1] == "uninstall":
+		if err := dots.RunSyncUninstall(os.Stdout); err != nil {
+			os.Exit(1)
+		}
+
 	default:
 		// dots <group>
 		group := args[0]
