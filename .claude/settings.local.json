@@ -119,7 +119,16 @@
       "Bash(crontab -l)",
       "Bash(bd delete:*)",
       "Bash(trufflehog:*)",
-      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal /tmp/dots_test sync link)"
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal /tmp/dots_test sync link)",
+      "Bash(launchctl list:*)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal /Users/cole/repos/dotfiles/bin/dots sync status 2>&1)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles /Users/cole/repos/dotfiles/bin/dots sync status 2>&1)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=\"\" /Users/cole/repos/dotfiles/bin/dots sync status 2>&1)",
+      "Bash(make)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal /Users/cole/repos/dotfiles/bin/dots sync install --help)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal /Users/cole/repos/dotfiles/bin/dots sync uninstall 2>&1)",
+      "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal ./cmd/dots/dots-test)",
+      "Bash(rm -f ./cmd/dots/dots-test)"
     ]
   }
 }
