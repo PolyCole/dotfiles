@@ -128,7 +128,8 @@
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal /Users/cole/repos/dotfiles/bin/dots sync install --help)",
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal /Users/cole/repos/dotfiles/bin/dots sync uninstall 2>&1)",
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal ./cmd/dots/dots-test)",
-      "Bash(rm -f ./cmd/dots/dots-test)"
+      "Bash(rm -f ./cmd/dots/dots-test)",
+      "Bash(head -20 /Users/cole/repos/dotfiles/machines/ibotta/modules/*.zsh)"
     ]
   }
 }
