@@ -10,3 +10,23 @@ dots() {
     return 1
   fi
 }
+
+# Tab completion — group names come from the binary so new modules complete
+# automatically.
+_dots() {
+  local -a _groups
+  _groups=(${(f)"$(dots --groups 2>/dev/null)"})
+
+  if (( CURRENT == 2 )); then
+    compadd -- $_groups edit doctor --all --search -i
+  elif (( CURRENT == 3 )); then
+    case "$words[2]" in
+      sync) compadd -- status link now install uninstall ;;
+      edit) compadd -- ${_groups:#sync} ;;
+    esac
+  fi
+}
+
+if (( $+functions[compdef] )); then
+  compdef _dots dots
+fi
