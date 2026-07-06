@@ -11,4 +11,4 @@
 [credential]
 	helper = store
 [core]
-	hooksPath = /Users/cole/.git-hooks
+	hooksPath = /tmp/claude-0/-home-user-dotfiles/b53ae3d4-fcc4-572d-8b81-b3a60fb40a52/scratchpad/fakehome2/.git-hooks

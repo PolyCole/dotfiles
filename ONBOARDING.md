@@ -38,6 +38,10 @@ Everything that was in `.work_config` and `.common_config` has been extracted in
 
 ## Setup Steps
 
+> **Shortcut:** `./install.sh` performs steps 2–4 and 7 in one idempotent
+> command (build, symlinks, git hooks). The manual steps below remain for
+> reference and troubleshooting.
+
 ### 1. Pull the branch
 
 ```bash

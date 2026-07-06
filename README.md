@@ -44,24 +44,35 @@ Machine directories are named after logical profiles, not hostnames. Machine det
 
 Each machine directory may contain: `init.zsh`, `path.zsh`, `aliases.zsh`, `gitconfig`, `Brewfile`, and a `modules/` subdirectory for machine-specific modules.
 
+## Setup
+
+One command bootstraps a fresh machine (builds binaries, links configs, installs hooks — idempotent, safe to re-run):
+
+```bash
+git clone git@github.com:PolyCole/dotfiles.git ~/repos/dotfiles
+cd ~/repos/dotfiles && ./install.sh
+```
+
 ## The `dots` Command
 
-`dots` surfaces available commands by parsing `# Commands:` blocks from all loaded modules.
+`dots` surfaces available commands by parsing `# Commands:` blocks from all loaded modules. Tab completion for groups and subcommands is built in.
 
 ```bash
 dots                      # Overview: all groups and command counts
 dots <group>              # Detail for one group (e.g. dots git)
 dots --all                # Every command across all groups
 dots --search <term>      # Search command descriptions
+dots edit <group>         # Open a group's module file in $EDITOR
+dots doctor               # Lint modules, sync.yml, and hooks.conf for drift
 ```
 
 Modules from `modules/*.zsh` are always loaded. If `$DOTFILES_MACHINE` is set, `machines/$DOTFILES_MACHINE/modules/*.zsh` is also loaded.
 
 ## Adding Commands
 
-1. Add a function or alias to an existing module (or create a new `.zsh` file in `modules/`).
-2. Update the `# Commands:` block near the top of the file with a description.
-3. Run `dots` to verify the command appears.
+1. Run `dots edit <group>` (or create a new `.zsh` file in `modules/`).
+2. Add the function or alias, and a matching entry in the `# Commands:` block.
+3. Run `dots doctor` — it flags commands that are documented but not defined, and vice versa.
 
 ## Deprecating / Archiving Commands
 
@@ -82,10 +93,12 @@ The `dots sync` subsystem manages config symlinks and periodic snapshots, driven
 ```bash
 dots sync status          # Launchd job state, symlink health, snapshot ages
 dots sync link            # Create/update symlinks declared in sync.yml
-dots sync now             # Pull, snapshot, commit, and push immediately
+dots sync now             # Pull, rebuild binaries, snapshot, commit, and push
 dots sync install         # Install the launchd agent (runs daily at 09:00)
 dots sync uninstall       # Remove the launchd agent
 ```
+
+When a sync pulls new commits it rebuilds `bin/dots` and `bin/startup-message`, so machines never run stale binaries. If an unattended sync fails, a macOS notification is sent instead of the failure vanishing into the log.
 
 If you previously used `backup_dotfiles.sh` as a cron job, remove that entry from your crontab (`crontab -e`).
 

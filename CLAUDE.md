@@ -62,6 +62,8 @@ dots                      # Overview: all groups and command counts
 dots <group>              # Detail for one group (e.g. dots git)
 dots --all                # Every command across all groups
 dots --search <term>      # Search command descriptions
+dots edit <group>         # Open a group's module file in $EDITOR
+dots doctor               # Lint modules, sync.yml, and hooks.conf for drift
 ```
 
 It loads modules from `modules/*.zsh` and, if `$DOTFILES_MACHINE` is set, also from `machines/$DOTFILES_MACHINE/modules/*.zsh`.
@@ -70,7 +72,7 @@ It loads modules from `modules/*.zsh` and, if `$DOTFILES_MACHINE` is set, also f
 
 ## Git Hooks
 
-`dots-hooks-install` (in `modules/hooks.zsh`) sets a global `core.hooksPath` with dispatchers that call `hooks/runner.zsh`. Which scripts run per hook type is declared in each machine's `hooks.conf`; the scripts live in `hooks/<hook-type>/<name>.sh`.
+`dots-hooks-install` (in `modules/hooks.zsh`) sets a global `core.hooksPath` with dispatchers that call `hooks/runner.zsh`. Which scripts run per hook type is declared in each machine's `hooks.conf`; the scripts live in `hooks/<hook-type>/<name>.sh`. After the configured scripts, the runner chains to the current repository's own `.git/hooks/<hook-type>` if present, so per-repo hooks keep working.
 
 ## Environment Variables
 

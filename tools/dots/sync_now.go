@@ -11,12 +11,23 @@ import (
 	"time"
 )
 
-// RunSyncNow performs the full sync cycle:
-//  1. git pull --rebase
-//  2. run each snapshot command and write output to dest
-//  3. verify config symlinks (warn on broken)
-//  4. if changes exist, commit and push; otherwise exit cleanly
+// RunSyncNow performs the full sync cycle and sends a desktop notification
+// on failure so unattended launchd runs don't fail silently.
 func RunSyncNow(w io.Writer, dotfiles, machine string) error {
+	err := runSyncNow(w, dotfiles, machine)
+	if err != nil {
+		notifySyncFailure(err.Error())
+	}
+	return err
+}
+
+// runSyncNow is the sync cycle itself:
+//  1. git pull --rebase
+//  2. rebuild binaries if the pull brought new commits
+//  3. run each snapshot command and write output to dest
+//  4. verify config symlinks (warn on broken)
+//  5. if changes exist, commit and push; otherwise exit cleanly
+func runSyncNow(w io.Writer, dotfiles, machine string) error {
 	if machine == "" {
 		fmt.Fprintln(w, styleSyncErr.Render("error:"), styleDim.Render("DOTFILES_MACHINE is not set — cannot determine which sync.yml to use"))
 		return fmt.Errorf("DOTFILES_MACHINE is not set")
@@ -31,11 +42,16 @@ func RunSyncNow(w io.Writer, dotfiles, machine string) error {
 
 	// ── Step 1: git pull --rebase ─────────────────────────────────────────
 	fmt.Fprintf(w, "%s\n", styleGroupHeader.Render("pull"))
+	headBefore := gitHead(dotfiles)
 	if err := runGitPullRebase(w, dotfiles); err != nil {
 		return err
 	}
 
-	// ── Step 2: load manifest ─────────────────────────────────────────────
+	// ── Step 2: rebuild binaries if the pull brought new commits ─────────
+	fmt.Fprintf(w, "\n%s\n", styleGroupHeader.Render("build"))
+	rebuildIfChanged(w, dotfiles, headBefore)
+
+	// ── Step 3: load manifest ─────────────────────────────────────────────
 	manifestPath := filepath.Join(dotfiles, "machines", machine, "sync.yml")
 	manifest, err := LoadSyncManifest(manifestPath)
 	if err != nil {
@@ -43,15 +59,15 @@ func RunSyncNow(w io.Writer, dotfiles, machine string) error {
 		return err
 	}
 
-	// ── Step 3: run snapshots ─────────────────────────────────────────────
+	// ── Step 4: run snapshots ─────────────────────────────────────────────
 	fmt.Fprintf(w, "\n%s\n", styleGroupHeader.Render("snapshots"))
 	runSnapshots(w, dotfiles, manifest)
 
-	// ── Step 4: verify symlinks ───────────────────────────────────────────
+	// ── Step 5: verify symlinks ───────────────────────────────────────────
 	fmt.Fprintf(w, "\n%s\n", styleGroupHeader.Render("symlinks"))
 	checkSymlinksNow(w, dotfiles, manifest)
 
-	// ── Step 5: commit and push if dirty ─────────────────────────────────
+	// ── Step 6: commit and push if dirty ─────────────────────────────────
 	fmt.Fprintf(w, "\n%s\n", styleGroupHeader.Render("commit"))
 	if err := commitAndPush(w, dotfiles); err != nil {
 		return err
@@ -59,6 +75,42 @@ func RunSyncNow(w io.Writer, dotfiles, machine string) error {
 
 	fmt.Fprintln(w)
 	return nil
+}
+
+// gitHead returns the current HEAD commit, or "" if it cannot be determined.
+func gitHead(dotfiles string) string {
+	out, err := exec.Command("git", "-C", dotfiles, "rev-parse", "HEAD").Output()
+	if err != nil {
+		return ""
+	}
+	return strings.TrimSpace(string(out))
+}
+
+// rebuildIfChanged runs 'make all' when the pull moved HEAD, so machines
+// don't keep running stale binaries after upstream tool changes.
+// Build failures warn but do not abort the sync.
+func rebuildIfChanged(w io.Writer, dotfiles, headBefore string) {
+	if headBefore != "" && gitHead(dotfiles) == headBefore {
+		fmt.Fprintf(w, "  %s\n", styleSyncSkip.Render("no new commits — binaries up to date"))
+		return
+	}
+
+	cmd := exec.Command("make", "all")
+	cmd.Dir = dotfiles
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &out
+	if err := cmd.Run(); err != nil {
+		fmt.Fprintf(w, "  %s  %s\n",
+			styleSyncWarn.Render("warn "),
+			styleDim.Render("make all failed: "+err.Error()),
+		)
+		if msg := strings.TrimSpace(out.String()); msg != "" {
+			fmt.Fprintf(w, "         %s\n", styleDim.Render(msg))
+		}
+		return
+	}
+	fmt.Fprintf(w, "  %s\n", styleSyncOK.Render("rebuilt bin/dots and bin/startup-message"))
 }
 
 // runGitPullRebase runs git pull --rebase in dotfiles.

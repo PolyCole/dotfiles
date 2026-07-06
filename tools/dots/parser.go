@@ -23,6 +23,9 @@ type Module struct {
 	Description string
 	// Commands are the entries extracted from the # Commands: block.
 	Commands []Command
+	// Path is the absolute path of the module file. Empty for synthetic
+	// modules like the built-in sync group.
+	Path string
 }
 
 // ParseFiles parses each .zsh file at the given paths and returns a slice of
@@ -100,6 +103,7 @@ func parseFile(path string) (Module, error) {
 		Name:        name,
 		Description: description,
 		Commands:    commands,
+		Path:        path,
 	}, scanner.Err()
 }
 
