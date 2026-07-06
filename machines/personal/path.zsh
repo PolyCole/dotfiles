@@ -1,17 +1,20 @@
 # machines/personal/path.zsh — personal machine PATH and tool initialisation
+# Each tool init is guarded so a machine missing that tool doesn't error at startup.
 
 # ---------------------------------------------------------------------------
 # pyenv
 # ---------------------------------------------------------------------------
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
+if [[ -d "$PYENV_ROOT" ]]; then
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+fi
 
 # ---------------------------------------------------------------------------
 # Rust / Cargo
 # ---------------------------------------------------------------------------
-source "$HOME/.cargo/env"
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
 # ---------------------------------------------------------------------------
 # LaTeX
@@ -21,7 +24,7 @@ export PATH="/usr/local/texlive/2025/bin/universal-darwin:$PATH"
 # ---------------------------------------------------------------------------
 # rbenv
 # ---------------------------------------------------------------------------
-eval "$(rbenv init - zsh)"
+command -v rbenv >/dev/null && eval "$(rbenv init - zsh)"
 
 # ---------------------------------------------------------------------------
 # Go
@@ -38,9 +41,9 @@ export NVM_DIR="$HOME/.nvm"
 # ---------------------------------------------------------------------------
 # Antigravity
 # ---------------------------------------------------------------------------
-export PATH="/Users/cole/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 # ---------------------------------------------------------------------------
 # pipx
 # ---------------------------------------------------------------------------
-export PATH="$PATH:/Users/cole/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"

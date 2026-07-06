@@ -31,7 +31,7 @@ schedule() {
 # ---------------------------------------------------------------------------
 # Repo / tool navigation
 # ---------------------------------------------------------------------------
-alias repos="cd /Users/cole.polyak/repos"
+alias repos="cd $HOME/repos"
 alias tools="~/toolbox"
 
 # ---------------------------------------------------------------------------
@@ -62,10 +62,3 @@ alias clean="npx nx run-many --target=clean --all"
 # Granted/Assume ABAC
 # ---------------------------------------------------------------------------
 alias assume=". assume"
-
-# ---------------------------------------------------------------------------
-# Linker aliases (programmatically generated)
-# ---------------------------------------------------------------------------
-if [ -f $HOME/.linker_aliases ]; then
-  . $HOME/.linker_aliases
-fi

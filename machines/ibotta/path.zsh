@@ -3,7 +3,6 @@
 # ---------------------------------------------------------------------------
 # Core PATH additions
 # ---------------------------------------------------------------------------
-export PATH="$PATH:$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
 export PATH="$PATH:$HOME/.local/bin"
 
 # Toolbox scripts
@@ -17,11 +16,12 @@ path+=("$HOME/npm/bin")
 # ---------------------------------------------------------------------------
 # rbenv
 # ---------------------------------------------------------------------------
-if which rbenv > /dev/null; then eval "$(rbenv init - zsh)"; fi
+command -v rbenv >/dev/null && eval "$(rbenv init - zsh)"
 
 # ---------------------------------------------------------------------------
 # NVM
 # ---------------------------------------------------------------------------
+# $HOMEBREW_PREFIX is set by 'brew shellenv' in shell/path.zsh
 export NVM_DIR="$HOME/.nvm"
-[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && . "$(brew --prefix)/opt/nvm/nvm.sh"
-[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"
+[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && . "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+[ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"
