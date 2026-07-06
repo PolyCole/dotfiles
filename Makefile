@@ -1,4 +1,4 @@
-.PHONY: all startup-message dots clean
+.PHONY: all startup-message dots test clean
 
 all: startup-message dots
 
@@ -7,6 +7,9 @@ startup-message:
 
 dots:
 	cd tools/dots && go build -o ../../bin/dots ./cmd/dots
+
+test:
+	cd tools/dots && go vet ./... && go test ./...
 
 clean:
 	rm -f bin/startup-message bin/dots

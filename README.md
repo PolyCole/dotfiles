@@ -67,21 +67,34 @@ Modules from `modules/*.zsh` are always loaded. If `$DOTFILES_MACHINE` is set, `
 
 To deprecate a command, remove it from the module and its `# Commands:` entry. If you want to keep it for historical reference, move the file (or relevant portion) to `archive/`. Files in `archive/` are never sourced.
 
+## Adding a New Machine
+
+1. Create `machines/<profile>/` with any of: `init.zsh`, `path.zsh`, `aliases.zsh`, `modules/`, `sync.yml`, `hooks.conf`.
+2. Add a detection case for its hostname in `shell/init.zsh`.
+3. Run `dots sync link` to symlink its configs, and `dots sync install` for automated sync.
+
+Until a machine is recognized, it falls back to the `unknown` profile, which prints instructions instead of failing.
+
 ## Syncing Changes
 
-Changes are committed and pushed manually or via git tooling. If you previously used `backup_dotfiles.sh` as a cron job, remove that entry from your crontab:
+The `dots sync` subsystem manages config symlinks and periodic snapshots, driven by each machine's `sync.yml`:
 
 ```bash
-crontab -e  # remove the backup_dotfiles.sh line
+dots sync status          # Launchd job state, symlink health, snapshot ages
+dots sync link            # Create/update symlinks declared in sync.yml
+dots sync now             # Pull, snapshot, commit, and push immediately
+dots sync install         # Install the launchd agent (runs daily at 09:00)
+dots sync uninstall       # Remove the launchd agent
 ```
 
-## Go Startup Message
+If you previously used `backup_dotfiles.sh` as a cron job, remove that entry from your crontab (`crontab -e`).
 
-`tools/startup-message/` is a Go program that prints a message at shell startup. Build it with:
+## Building the Binaries
+
+`bin/` is gitignored — build the Go tools once per machine:
 
 ```bash
-make            # builds bin/startup-message
-make clean      # removes the binary
+make            # builds bin/startup-message and bin/dots
+make test       # vet + tests for the dots tool
+make clean      # removes the binaries
 ```
-
-The binary is committed to `bin/` so it's available immediately without requiring a Go toolchain on the target machine.
