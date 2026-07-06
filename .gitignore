@@ -11,3 +11,7 @@ bin/
 
 # Compiled binaries
 tools/dots/dots
+tools/startup-message/startup-message
+
+# macOS
+.DS_Store
