@@ -62,6 +62,27 @@ func main() {
 		}
 		dots.RenderSearch(os.Stdout, modules, term)
 
+	// --groups prints bare group names, one per line — used by zsh completion
+	case args[0] == "--groups":
+		for _, m := range modules {
+			fmt.Println(m.Name)
+		}
+
+	case args[0] == "doctor":
+		if err := dots.RunDoctor(os.Stdout, dotfiles); err != nil {
+			os.Exit(1)
+		}
+
+	case args[0] == "edit":
+		if len(args) < 2 {
+			fmt.Fprintln(os.Stderr, "Usage: dots edit <group>")
+			os.Exit(1)
+		}
+		if err := dots.RunEdit(modules, args[1]); err != nil {
+			fmt.Fprintln(os.Stderr, "dots edit:", err)
+			os.Exit(1)
+		}
+
 	case args[0] == "sync":
 		sub := ""
 		if len(args) >= 2 {

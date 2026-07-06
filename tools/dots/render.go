@@ -201,6 +201,8 @@ func RenderOverview(w io.Writer, modules []Module) {
 		"dots <group>          — detail for one group",
 		"dots --all            — every command across all groups",
 		"dots --search <term>  — search command descriptions",
+		"dots edit <group>     — open a group's module in $EDITOR",
+		"dots doctor           — lint modules, sync.yml, and hooks.conf",
 	}
 	for _, h := range hints {
 		fmt.Fprintf(w, "  %s\n", styleHint.Render(h))
