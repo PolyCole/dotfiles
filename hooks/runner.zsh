@@ -43,8 +43,9 @@ while IFS= read -r line; do
         continue
     fi
 
-    sh "$script" "$@"
-    exit_code=$?
+    # '|| exit_code=$?' keeps set -e from aborting before we can report the failure
+    exit_code=0
+    sh "$script" "$@" || exit_code=$?
 
     if [[ $exit_code -ne 0 ]]; then
         echo "Hook $conf_script ($hook_type) failed with exit code $exit_code" >&2

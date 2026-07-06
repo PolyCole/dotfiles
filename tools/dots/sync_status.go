@@ -19,12 +19,19 @@ func launchdPlistPath() string {
 	return filepath.Join(home, "Library", "LaunchAgents", launchdLabel+".plist")
 }
 
+// syncLogPath returns the log file the launchd job writes to.
+// Shared by install (which sets it in the plist) and status (which reads it).
+func syncLogPath() string {
+	home, _ := os.UserHomeDir()
+	return filepath.Join(home, ".dotfiles-sync.log")
+}
+
 // launchdStatus holds information retrieved from launchctl.
 type launchdStatus struct {
-	installed   bool
-	loaded      bool
+	installed    bool
+	loaded       bool
 	lastExitCode string // "-" if never run
-	pid         string // "-" if not running
+	pid          string // "-" if not running
 }
 
 // queryLaunchd checks plist existence and queries launchctl list.
@@ -56,38 +63,65 @@ func queryLaunchd() launchdStatus {
 	}
 }
 
-// readPlistInterval attempts to extract the StartInterval (seconds) from the plist.
-// Returns 0 if it cannot be parsed.
-func readPlistInterval() int {
-	plist := launchdPlistPath()
-	data, err := os.ReadFile(plist)
-	if err != nil {
-		return 0
-	}
-	content := string(data)
-	// Look for <key>StartInterval</key>\n...<integer>N</integer>
-	idx := strings.Index(content, "<key>StartInterval</key>")
+// intAfterKey extracts the first <integer> value following <key>name</key> in s.
+func intAfterKey(s, name string) (int, bool) {
+	idx := strings.Index(s, "<key>"+name+"</key>")
 	if idx == -1 {
-		return 0
+		return 0, false
 	}
-	after := content[idx+len("<key>StartInterval</key>"):]
+	after := s[idx:]
 	start := strings.Index(after, "<integer>")
 	end := strings.Index(after, "</integer>")
 	if start == -1 || end == -1 || end <= start {
-		return 0
+		return 0, false
 	}
 	var n int
-	fmt.Sscanf(strings.TrimSpace(after[start+len("<integer>"):end]), "%d", &n)
+	if _, err := fmt.Sscanf(strings.TrimSpace(after[start+len("<integer>"):end]), "%d", &n); err != nil {
+		return 0, false
+	}
+	return n, true
+}
+
+// readPlistInterval attempts to extract the StartInterval (seconds) from the plist.
+// Returns 0 if it cannot be parsed.
+func readPlistInterval() int {
+	data, err := os.ReadFile(launchdPlistPath())
+	if err != nil {
+		return 0
+	}
+	n, _ := intAfterKey(string(data), "StartInterval")
 	return n
 }
 
-// readLastRunFromLog attempts to read the last run timestamp from a log file.
-// The log file is expected to be at ~/Library/Logs/dotfiles-sync.log and each
-// entry starts with a RFC3339 timestamp.
+// readPlistCalendar extracts the StartCalendarInterval Hour/Minute from the
+// plist — the schedule format 'dots sync install' actually writes.
+func readPlistCalendar() (hour, minute int, ok bool) {
+	data, err := os.ReadFile(launchdPlistPath())
+	if err != nil {
+		return 0, 0, false
+	}
+	content := string(data)
+	idx := strings.Index(content, "<key>StartCalendarInterval</key>")
+	if idx == -1 {
+		return 0, 0, false
+	}
+	section := content[idx:]
+	if end := strings.Index(section, "</dict>"); end != -1 {
+		section = section[:end]
+	}
+	hour, hourOK := intAfterKey(section, "Hour")
+	minute, minOK := intAfterKey(section, "Minute")
+	if !hourOK && !minOK {
+		return 0, 0, false
+	}
+	return hour, minute, true
+}
+
+// readLastRunFromLog attempts to read the last run timestamp from the sync
+// log file. Each 'dots sync now' run logs a line starting with an RFC3339
+// timestamp.
 func readLastRunFromLog() (time.Time, bool) {
-	home, _ := os.UserHomeDir()
-	logPath := filepath.Join(home, "Library", "Logs", "dotfiles-sync.log")
-	data, err := os.ReadFile(logPath)
+	data, err := os.ReadFile(syncLogPath())
 	if err != nil {
 		return time.Time{}, false
 	}
@@ -115,9 +149,9 @@ func readLastRunFromLog() (time.Time, bool) {
 
 // symlinkStatus describes the state of a managed config's symlink.
 type symlinkStatus struct {
-	source  string
-	target  string
-	state   string // "correct", "missing", "broken", "conflict"
+	source string
+	target string
+	state  string // "correct", "missing", "broken", "conflict"
 }
 
 // checkSymlinks inspects each config entry in the manifest.
@@ -281,6 +315,16 @@ func RunSyncStatus(w io.Writer, dotfiles, machine string) error {
 	interval := readPlistInterval()
 	if !status.loaded {
 		fmt.Fprintf(w, "  %s\n", styleDim.Render("n/a — job not loaded"))
+	} else if hour, minute, ok := readPlistCalendar(); ok {
+		now := time.Now()
+		next := time.Date(now.Year(), now.Month(), now.Day(), hour, minute, 0, 0, now.Location())
+		if !next.After(now) {
+			next = next.Add(24 * time.Hour)
+		}
+		fmt.Fprintf(w, "  %s  %s\n",
+			styleSyncPath.Render(next.Format("2006-01-02 15:04:05")),
+			styleDim.Render(fmt.Sprintf("(daily at %02d:%02d)", hour, minute)),
+		)
 	} else if interval > 0 && hasLastRun {
 		next := lastRun.Add(time.Duration(interval) * time.Second)
 		if time.Now().After(next) {
@@ -305,7 +349,7 @@ func RunSyncStatus(w io.Writer, dotfiles, machine string) error {
 		}
 		fmt.Fprintf(w, "  %s  %s\n", styleSyncPath.Render(intervalStr), styleDim.Render("(no prior run to compute next)"))
 	} else {
-		fmt.Fprintf(w, "  %s\n", styleDim.Render("schedule unknown (no StartInterval in plist)"))
+		fmt.Fprintf(w, "  %s\n", styleDim.Render("schedule unknown (no schedule found in plist)"))
 	}
 
 	// ── Sections 4 & 5 require a manifest ────────────────────────────────

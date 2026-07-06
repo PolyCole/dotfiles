@@ -6,7 +6,8 @@
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 
 # Checking for the existance of our dotfile repo.
-export DOTFILES="$HOME/repos/dotfiles"
+# Respect a pre-set $DOTFILES so alternate clone locations work.
+export DOTFILES="${DOTFILES:-$HOME/repos/dotfiles}"
 if [ ! -d "$DOTFILES" ]; then
   RED='\033[0;31m'
   NC='\033[0m'
@@ -16,7 +17,8 @@ if [ ! -d "$DOTFILES" ]; then
       ${RED}Dotfile Directory not found!
   ${NC}x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x
   "
-  exit
+  # 'exit' here would kill the terminal — this file is sourced.
+  return
 fi;
 
 # Core shell bootstrap: machine detection, oh-my-zsh, p10k

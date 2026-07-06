@@ -8,6 +8,7 @@ elif [[ -x /usr/local/bin/brew ]]; then
 fi
 
 # Homebrew coreutils (GNU tools without 'g' prefix)
-if [[ -d "$(brew --prefix)/opt/coreutils/libexec/gnubin" ]] 2>/dev/null; then
-  export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+# $HOMEBREW_PREFIX is set by 'brew shellenv' above — avoids slow 'brew --prefix' subshells
+if [[ -n "$HOMEBREW_PREFIX" && -d "$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin" ]]; then
+  export PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
 fi

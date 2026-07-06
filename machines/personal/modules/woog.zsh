@@ -2,7 +2,6 @@
 
 # Commands:
 #   runserver     - start the app (python manage.py runserver)
-#   make          - make the migrations (python manage.py makemigrations)
 #   migrate       - apply migrations (python manage.py migrate)
 #   test          - run tests (python manage.py test)
 #   shell         - open app shell (python manage.py shell)

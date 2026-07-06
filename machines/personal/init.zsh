@@ -19,7 +19,11 @@ echo "${_indent}${COLOR}      |___/ |_| /_/\\_\\      ${NC}"
 echo "${_indent}${COLOR}                            ${NC}"
 echo ""
 
-COLUMNS=28 PADDING=16 $DOTFILES/bin/startup-message $DOTFILES/machines/personal/messages.txt
+if [[ -x "$DOTFILES/bin/startup-message" ]]; then
+  COLUMNS=28 PADDING=16 $DOTFILES/bin/startup-message $DOTFILES/machines/personal/messages.txt
+else
+  echo "startup-message binary not found — run 'make all' in \$DOTFILES" >&2
+fi
 echo ""
 unset _indent
 

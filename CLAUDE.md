@@ -12,8 +12,17 @@ Personal dotfiles repository for shell configuration, synchronized across machin
 shell/        Core shell startup files (init.zsh, path.zsh, dots.zsh)
 modules/      Shared zsh modules loaded on all machines
 machines/     Machine-specific configuration directories
-tools/        Standalone utility programs (e.g. startup-message in Go)
+hooks/        Machine-composable git hooks (runner.zsh + per-type scripts)
+tools/        Standalone Go programs (dots, startup-message)
+bin/          Compiled binaries (gitignored — built via 'make all')
 archive/      Deprecated configs kept for reference, not sourced
+```
+
+## Build & Test
+
+```bash
+make all      # build bin/dots and bin/startup-message
+make test     # go vet + go test for tools/dots
 ```
 
 ### modules/
@@ -56,6 +65,12 @@ dots --search <term>      # Search command descriptions
 ```
 
 It loads modules from `modules/*.zsh` and, if `$DOTFILES_MACHINE` is set, also from `machines/$DOTFILES_MACHINE/modules/*.zsh`.
+
+`dots sync` (status/link/now/install/uninstall) manages config symlinks and snapshots declared in each machine's `sync.yml`, optionally on a daily launchd schedule.
+
+## Git Hooks
+
+`dots-hooks-install` (in `modules/hooks.zsh`) sets a global `core.hooksPath` with dispatchers that call `hooks/runner.zsh`. Which scripts run per hook type is declared in each machine's `hooks.conf`; the scripts live in `hooks/<hook-type>/<name>.sh`.
 
 ## Environment Variables
 

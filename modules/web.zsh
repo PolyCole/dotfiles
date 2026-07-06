@@ -19,7 +19,7 @@ function status-dog() {
   if [ $# -ne 1 ]; then
     print "Please specify the error code you're looking up using:\n"
     print "status-dog [errorcode]"
-    exit 0
+    return 1
   fi;
 
 	open "https://httpstatusdogs.com/$1"

@@ -8,12 +8,15 @@ configs:
   - source: zshrc
     target: ~/.zshrc
 
-  - source: machines/personal/ssh_config
-    target: ~/.ssh/config
+  # ssh_config: re-enable once machines/personal/ssh_config actually exists
+  # in the repo — a missing source errors on every 'dots sync link' run.
+  # - source: machines/personal/ssh_config
+  #   target: ~/.ssh/config
 
 snapshots:
   - command: brew bundle dump --force --file=-
     dest: machines/personal/Brewfile
 
-  - command: python -m pip list
+  # python3, not python: snapshots run under plain sh, no shell aliases
+  - command: python3 -m pip list
     dest: machines/personal/python_packages

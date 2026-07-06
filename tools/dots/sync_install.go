@@ -109,7 +109,7 @@ func RunSyncInstall(w io.Writer, dotfiles, machine string) error {
 		Dotfiles: dotfiles,
 		Machine:  machine,
 		Home:     home,
-		LogPath:  filepath.Join(home, ".dotfiles-sync.log"),
+		LogPath:  syncLogPath(),
 	}
 
 	var buf bytes.Buffer

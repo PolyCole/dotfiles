@@ -211,13 +211,13 @@ Snapshots defined in `machines/ibotta/sync.yml`:
 ### Shared (all machines)
 | Module | What it provides |
 |--------|-----------------|
-| `aliases` | General aliases (ll, la, src, etc.) |
-| `git` | Git utilities (gca, gp, nuke, stash helpers) |
-| `docker` | Docker shortcuts (dps, dex, etc.) |
-| `navigation` | Directory nav (mkcd, up, etc.) |
-| `web` | URL/HTTP utilities |
-| `crypto` | Crypto price checks |
-| `advent` | Advent of Code helpers |
+| `aliases` | General aliases (cat→bat, reload, week, message) |
+| `git` | Git utilities (git-purge-dir, git-purge-file, git-amend) |
+| `docker` | Docker shortcuts (containers, murderdocker) |
+| `navigation` | Directory nav (o, a, mkd, repos, dotfiles) |
+| `web` | HTTP utilities (weather, status-dog) |
+| `crypto` | Crypto price checks (crypto, eth, btc) |
+| `advent` | Advent of Code helpers (aoc) |
 | `hooks` | Git hooks management (dots-hooks-install) |
 
 ### Ibotta-specific

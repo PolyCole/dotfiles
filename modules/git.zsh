@@ -11,7 +11,7 @@ git-purge-dir() {
   if [ $# -ne 1 ]; then
     print "Please specify the directory to purge using: \n"
     print "git-purge-dir [directory]\n"
-    exit 0
+    return 1
   fi;
 
   git filter-branch --tree-filter "rm -rf $1" --prune-empty HEAD
@@ -28,12 +28,12 @@ git-purge-file() {
   if [ $# -ne 1 ]; then
     print "Please specify the file to purge using: \n"
     print "git-purge-file [filename]\n"
-    exit 0
+    return 1
   fi;
 
   git filter-branch --tree-filter "rm -f $1" --prune-empty HEAD
   git for-each-ref --format="%(refname)" refs/original/ | xargs -n 1 git update-ref -d
-  echo $1/ >> .gitignore
+  echo $1 >> .gitignore
   git add .gitignore
   git commit -m "Removing $1 from git history."
   git gc

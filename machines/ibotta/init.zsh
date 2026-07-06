@@ -18,7 +18,11 @@ ${COLOR} |______/|_______/    |__/  |__/  |__/  ${NC}
 ${COLOR}                                        ${NC}
 "
 
-$DOTFILES/bin/startup-message $DOTFILES/machines/ibotta/messages.txt
+if [[ -x "$DOTFILES/bin/startup-message" ]]; then
+  $DOTFILES/bin/startup-message $DOTFILES/machines/ibotta/messages.txt
+else
+  echo "startup-message binary not found — run 'make all' in \$DOTFILES" >&2
+fi
 
 # ---------------------------------------------------------------------------
 # Common locations
