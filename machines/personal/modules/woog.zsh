@@ -8,6 +8,7 @@
 #   refresh-reqs  - reload requirements.txt
 #   woogapi       - cd to wooglin-api and activate venv
 #   woogbot       - cd to wooglin-bot and activate venv
+#   woog-commands - print this command list
 
 # Django Stuff
 alias runserver="python manage.py runserver"
