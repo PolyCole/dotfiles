@@ -22,10 +22,12 @@ func RunSyncNow(w io.Writer, dotfiles, machine string) error {
 		return fmt.Errorf("DOTFILES_MACHINE is not set")
 	}
 
-	fmt.Fprintf(w, "\n%s  %s\n\n",
+	fmt.Fprintf(w, "\n%s  %s\n",
 		styleSyncLabel.Render("dots sync now"),
 		styleDim.Render("— "+machine),
 	)
+	// RFC3339 timestamp so 'dots sync status' can read the last run from the log
+	fmt.Fprintf(w, "%s\n\n", styleDim.Render(time.Now().Format(time.RFC3339)))
 
 	// ── Step 1: git pull --rebase ─────────────────────────────────────────
 	fmt.Fprintf(w, "%s\n", styleGroupHeader.Render("pull"))
