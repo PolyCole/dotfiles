@@ -6,40 +6,71 @@ tap "homebrew/services"
 tap "jesseduffield/lazydocker"
 tap "romkatv/powerlevel10k"
 tap "skyscanner/tools"
+# Nuke a whole AWS account and delete all its resources
 brew "aws-nuke"
+# C parser in Python
 brew "pycparser"
+# C Foreign Function Interface for Python
 brew "cffi"
+# Cryptographic recipes and primitives for Python
 brew "cryptography"
+# CLI tool to build, test, debug, and deploy Serverless applications using AWS SAM
 brew "aws-sam-cli"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Memory upgrade for your coding agent
 brew "beads"
+# Cross-platform make
 brew "cmake"
+# Interpreted, interactive, object-oriented programming language
 brew "python@3.11"
+# Scanner for secrets and sensitive data in code
 brew "ggshield"
+# GitHub command-line tool
 brew "gh"
+# Validating, recursive, caching DNS resolver
 brew "unbound"
+# GNU Transport Layer Security (TLS) Library
 brew "gnutls"
+# GNU Privacy Guard (OpenPGP)
 brew "gnupg"
+# Library access to GnuPG
 brew "gpgme"
+# Lightweight and flexible command-line JSON processor
 brew "jq"
+# Compression/decompression library aiming for high speed
 brew "snappy"
+# Key-value storage library with ordered mapping
 brew "leveldb"
+# Next-gen compiler infrastructure
 brew "llvm"
+# Mongrel of mail user agents (part elm, pine, mush, mh, etc.)
 brew "mutt"
+# AI coding agent, built for the terminal
 brew "opencode"
+# Python package management tool
 brew "poetry"
+# Object-relational database system
 brew "postgresql@14", restart_service: :changed
+# Theme for zsh
 brew "powerlevel10k"
+# Python version management
 brew "pyenv"
+# Ruby version manager
 brew "rbenv"
+# Safe, concurrent, practical language
 brew "rust"
+# Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Find and verify credentials
 brew "trufflehog"
+# Command-line interface for Vercel
+brew "vercel-cli"
+# Tool for creating isolated virtual python environments
 brew "virtualenv"
-brew "hashicorp/tap/terraform"
-brew "jesseduffield/lazydocker/lazydocker"
-brew "skyscanner/tools/turbolift"
+# Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Full TeX Live distribution without GUI applications
 cask "mactex-no-gui"
 vscode "42crunch.vscode-openapi"
 vscode "christian-kohler.path-intellisense"
@@ -92,3 +123,4 @@ vscode "vue.volar"
 vscode "wesbos.theme-cobalt2"
 go "github.com/PolyCole/factory"
 go "github.com/polycole/prep"
+npm "corepack"

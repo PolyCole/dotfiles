@@ -150,7 +150,8 @@
       "Bash(env)",
       "mcp__claude_ai_Atlassian__search",
       "mcp__claude_ai_Atlassian__getConfluencePage",
-      "Bash(bd version *)"
+      "Bash(bd version *)",
+      "Bash(make test *)"
     ]
   }
 }

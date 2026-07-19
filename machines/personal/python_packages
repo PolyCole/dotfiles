@@ -1,0 +1,10 @@
+Package      Version
+------------ --------
+certifi      2024.2.2
+cffi         1.16.0
+cryptography 42.0.5
+gpg          1.23.2
+pip          24.0
+pycparser    2.21
+setuptools   69.1.1
+wheel        0.42.0
