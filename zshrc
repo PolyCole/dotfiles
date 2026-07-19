@@ -49,3 +49,4 @@ fi
 
 # ls colors
 LS_COLORS=$LS_COLORS:'di=1;32:ex=4;31' ; export LS_COLORS
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
