@@ -149,7 +149,8 @@
       "Bash(assume ops-staging:DomainEngineer --exec -- kubectl -n argo get svc,deploy,ingress)",
       "Bash(env)",
       "mcp__claude_ai_Atlassian__search",
-      "mcp__claude_ai_Atlassian__getConfluencePage"
+      "mcp__claude_ai_Atlassian__getConfluencePage",
+      "Bash(bd version *)"
     ]
   }
 }
