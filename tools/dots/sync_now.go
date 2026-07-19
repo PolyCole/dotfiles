@@ -113,9 +113,12 @@ func rebuildIfChanged(w io.Writer, dotfiles, headBefore string) {
 	fmt.Fprintf(w, "  %s\n", styleSyncOK.Render("rebuilt bin/dots and bin/startup-message"))
 }
 
-// runGitPullRebase runs git pull --rebase in dotfiles.
+// runGitPullRebase runs git pull --rebase in dotfiles. --autostash lets the
+// pull succeed when the working tree is dirty (common on a repo you actively
+// edit): local changes are stashed before the rebase and reapplied after, so
+// the later commit step still picks them up.
 func runGitPullRebase(w io.Writer, dotfiles string) error {
-	cmd := exec.Command("git", "-C", dotfiles, "pull", "--rebase")
+	cmd := exec.Command("git", "-C", dotfiles, "pull", "--rebase", "--autostash")
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	cmd.Stderr = &out
