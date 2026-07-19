@@ -1,0 +1,22 @@
+# sync.yml - personal machine (hostname: six)
+# Managed by dots sync subsystem. See tools/dots/ for implementation.
+
+configs:
+  - source: machines/personal/gitconfig
+    target: ~/.gitconfig
+
+  - source: zshrc
+    target: ~/.zshrc
+
+  # ssh_config: re-enable once machines/personal/ssh_config actually exists
+  # in the repo — a missing source errors on every 'dots sync link' run.
+  # - source: machines/personal/ssh_config
+  #   target: ~/.ssh/config
+
+snapshots:
+  - command: brew bundle dump --force --file=-
+    dest: machines/personal/Brewfile
+
+  # python3, not python: snapshots run under plain sh, no shell aliases
+  - command: python3 -m pip list
+    dest: machines/personal/python_packages

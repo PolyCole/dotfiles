@@ -2,8 +2,12 @@
 #          Cole's Dotfiles
 # ************************************
 
+# Disable p10k instant prompt — startup banner intentionally outputs during init
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
+
 # Checking for the existance of our dotfile repo.
-export DOTFILES="$HOME/repos/dotfiles"
+# Respect a pre-set $DOTFILES so alternate clone locations work.
+export DOTFILES="${DOTFILES:-$HOME/repos/dotfiles}"
 if [ ! -d "$DOTFILES" ]; then
   RED='\033[0;31m'
   NC='\033[0m'
@@ -13,27 +17,34 @@ if [ ! -d "$DOTFILES" ]; then
       ${RED}Dotfile Directory not found!
   ${NC}x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x.x
   "
-  exit
+  # 'exit' here would kill the terminal — this file is sourced.
+  return
 fi;
 
-# Begin sourcing things.
-source $DOTFILES/.zsh_config
-source $DOTFILES/common/.common_config
+# Core shell bootstrap: machine detection, oh-my-zsh, p10k
+source $DOTFILES/shell/init.zsh
 
+# Universal PATH modifications
+source $DOTFILES/shell/path.zsh
 
-# We'll decide on which specific configuration we want to run
-# based on the machine we're on. Things that I want to be common across
-# all my machines can simply be placed outside of this block.
-current_hostname=$(hostname -s)
+# dots discovery system
+source $DOTFILES/shell/dots.zsh
 
-# Define the string you want to compare with
-compare_string="six"
+# Shared modules (available on all machines)
+for _m in $DOTFILES/modules/*.zsh(N); do
+  source "$_m"
+done
+unset _m
 
-# Compare the two strings
-if [ "$current_hostname" = "$compare_string" ]; then
-    source $DOTFILES/personal/.personal_config
-else
-    source $DOTFILES/work/.work_config
+# Machine-specific config
+if [[ -n "$DOTFILES_MACHINE" ]]; then
+  [[ -f "$DOTFILES/machines/$DOTFILES_MACHINE/path.zsh" ]]    && source "$DOTFILES/machines/$DOTFILES_MACHINE/path.zsh"
+  [[ -f "$DOTFILES/machines/$DOTFILES_MACHINE/init.zsh" ]]    && source "$DOTFILES/machines/$DOTFILES_MACHINE/init.zsh"
+  [[ -f "$DOTFILES/machines/$DOTFILES_MACHINE/aliases.zsh" ]] && source "$DOTFILES/machines/$DOTFILES_MACHINE/aliases.zsh"
+  for _m in $DOTFILES/machines/$DOTFILES_MACHINE/modules/*.zsh(N); do
+    source "$_m"
+  done
+  unset _m
 fi
 
 # ls colors
