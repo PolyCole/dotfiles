@@ -20,6 +20,7 @@
 #   cha       - cd to consumer-hub-adapter
 #   scripts   - show package.json scripts via jq
 #   nx        - shortcut for npx nx
+#   conduit   - run scripts/conduit from the current git repo root
 
 # ---------------------------------------------------------------------------
 # Monolith
@@ -38,6 +39,12 @@ alias hub="$REPO_BASE_PATH/enablement-data-hub"
 alias portal="$REPO_BASE_PATH/enablement-data-portal"
 alias cha="$REPO_BASE_PATH/consumer-hub-adapter"
 alias scripts="cat package.json| jq .scripts"
+
+conduit() {
+  local root
+  root="$(git rev-parse --show-toplevel)" || return 1
+  "$root/scripts/conduit" "$@"
+}
 
 # ---------------------------------------------------------------------------
 # Microservices
