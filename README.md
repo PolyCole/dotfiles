@@ -1,12 +1,8 @@
-# Dotfiles
-
-Personal shell configuration, synchronized across machines via cron.
-
-## Philosophy: D.O.T.S.
+# Cole's Dotfiles
 
 ![D.O.T.S.](assets/dots.png)
 
-**Don't Overthink This Shit.** Commands live in self-documenting modules, discoverable via the `dots` command. The system is intentionally simple — no framework, no magic, just zsh files with structured comment blocks.
+Commands live in self-documenting modules, discoverable via the `dots` command. The system is intentionally simple, just zsh files with structured comment blocks.
 
 ## Directory Structure
 
