@@ -59,6 +59,42 @@ func TestFormatAge_SingularDay(t *testing.T) {
 	}
 }
 
+// ── parsePlistDictValue ─────────────────────────────────────────────────────
+
+// launchctl list <label> prints a property-list dictionary, not a
+// tab-separated line. These cases mirror that real output.
+const launchctlDictOutput = `{
+	"StandardOutPath" = "/Users/x/.dotfiles-sync.log";
+	"Label" = "com.dotfiles.sync";
+	"OnDemand" = true;
+	"LastExitStatus" = 0;
+	"PID" = 4321;
+	"Program" = "/Users/x/repos/dotfiles/bin/dots";
+};`
+
+func TestParsePlistDictValue_LastExitStatus(t *testing.T) {
+	if got := parsePlistDictValue(launchctlDictOutput, "LastExitStatus"); got != "0" {
+		t.Errorf("expected exit status %q, got %q", "0", got)
+	}
+}
+
+func TestParsePlistDictValue_PID(t *testing.T) {
+	if got := parsePlistDictValue(launchctlDictOutput, "PID"); got != "4321" {
+		t.Errorf("expected pid %q, got %q", "4321", got)
+	}
+}
+
+func TestParsePlistDictValue_Missing(t *testing.T) {
+	// PID is absent when the job is not currently running.
+	noPID := `{
+	"Label" = "com.dotfiles.sync";
+	"LastExitStatus" = 0;
+};`
+	if got := parsePlistDictValue(noPID, "PID"); got != "-" {
+		t.Errorf("expected %q for absent key, got %q", "-", got)
+	}
+}
+
 // ── checkSymlinks ──────────────────────────────────────────────────────────
 
 func TestCheckSymlinks_Correct(t *testing.T) {

@@ -45,22 +45,38 @@ func queryLaunchd() launchdStatus {
 		return launchdStatus{installed: installed, loaded: false, lastExitCode: "-", pid: "-"}
 	}
 
-	// Parse the launchctl list output (tab-separated: PID, LastExitStatus, Label)
-	// Single-line format: <pid>\t<exit>\t<label>
-	line := strings.TrimSpace(string(out))
-	parts := strings.Fields(line)
-	pid := "-"
-	exitCode := "-"
-	if len(parts) >= 2 {
-		pid = parts[0]
-		exitCode = parts[1]
-	}
+	// 'launchctl list <label>' prints a property-list dictionary, e.g.
+	//   "LastExitStatus" = 0;
+	//   "PID" = 1234;
+	// PID is only present while the job is actually running.
 	return launchdStatus{
 		installed:    installed,
 		loaded:       true,
-		lastExitCode: exitCode,
-		pid:          pid,
+		lastExitCode: parsePlistDictValue(string(out), "LastExitStatus"),
+		pid:          parsePlistDictValue(string(out), "PID"),
 	}
+}
+
+// parsePlistDictValue extracts the value from a `"key" = value;` line in the
+// dictionary that 'launchctl list <label>' prints. Returns "-" if absent.
+func parsePlistDictValue(out, key string) string {
+	needle := `"` + key + `"`
+	for _, line := range strings.Split(out, "\n") {
+		line = strings.TrimSpace(line)
+		if !strings.HasPrefix(line, needle) {
+			continue
+		}
+		eq := strings.Index(line, "=")
+		if eq == -1 {
+			return "-"
+		}
+		val := strings.TrimSpace(strings.TrimSuffix(strings.TrimSpace(line[eq+1:]), ";"))
+		if val == "" {
+			return "-"
+		}
+		return val
+	}
+	return "-"
 }
 
 // intAfterKey extracts the first <integer> value following <key>name</key> in s.
