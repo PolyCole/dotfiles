@@ -69,7 +69,7 @@ func runSyncNow(w io.Writer, dotfiles, machine string) error {
 
 	// ── Step 6: commit and push if dirty ─────────────────────────────────
 	fmt.Fprintf(w, "\n%s\n", styleGroupHeader.Render("commit"))
-	if err := commitAndPush(w, dotfiles); err != nil {
+	if err := commitAndPush(w, dotfiles, machine); err != nil {
 		return err
 	}
 
@@ -216,7 +216,8 @@ func checkSymlinksNow(w io.Writer, dotfiles string, manifest *SyncManifest) {
 }
 
 // commitAndPush checks git status; if dirty, stages all, commits, and pushes.
-func commitAndPush(w io.Writer, dotfiles string) error {
+// machine names the profile in the commit subject.
+func commitAndPush(w io.Writer, dotfiles, machine string) error {
 	// Check for changes
 	statusCmd := exec.Command("git", "-C", dotfiles, "status", "--porcelain")
 	var statusOut bytes.Buffer
@@ -231,6 +232,9 @@ func commitAndPush(w io.Writer, dotfiles string) error {
 		return nil
 	}
 
+	// Build the subject before staging, while status still names the paths.
+	msg := commitSubject(machine, parseStatusPaths(statusOut.String()))
+
 	// Stage all changes
 	addCmd := exec.Command("git", "-C", dotfiles, "add", "--all")
 	var addOut bytes.Buffer
@@ -241,7 +245,6 @@ func commitAndPush(w io.Writer, dotfiles string) error {
 	}
 
 	// Commit
-	msg := "sync: " + time.Now().Format("2006-01-02")
 	commitCmd := exec.Command("git", "-C", dotfiles, "commit", "--no-verify", "-m", msg)
 	var commitOut bytes.Buffer
 	commitCmd.Stdout = &commitOut

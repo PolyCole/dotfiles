@@ -109,7 +109,7 @@ func TestCommitAndPush_CleanRepo(t *testing.T) {
 	makeGitRepo(t, dotfiles)
 
 	var buf bytes.Buffer
-	if err := commitAndPush(&buf, dotfiles); err != nil {
+	if err := commitAndPush(&buf, dotfiles, "personal"); err != nil {
 		t.Fatalf("unexpected error on clean repo: %v", err)
 	}
 	if !strings.Contains(buf.String(), "nothing to commit") {
@@ -148,7 +148,7 @@ func TestCommitAndPush_DirtyRepo(t *testing.T) {
 	}
 
 	var buf bytes.Buffer
-	if err := commitAndPush(&buf, local); err != nil {
+	if err := commitAndPush(&buf, local, "personal"); err != nil {
 		t.Fatalf("commitAndPush failed: %v\noutput: %s", err, buf.String())
 	}
 	out := buf.String()
