@@ -1,4 +1,4 @@
-# machines/ibotta/modules/kubernetes.zsh — Kubernetes cluster context switching
+# machines/ibotta/modules/k8s.zsh — Kubernetes cluster context switching
 
 # Commands:
 #   kubeconfig-nancy  - Switch to the nancy staging cluster (~/.kube/nancy)

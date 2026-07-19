@@ -229,7 +229,7 @@ Snapshots defined in `machines/ibotta/sync.yml`:
 |--------|-----------------|
 | `aws` | AWS/SAML2 auth, MFA helpers |
 | `deploy` | Deployment workflows, PR management |
-| `kubernetes` | Cluster context switching |
+| `k8s` | Cluster context switching |
 | `oncall` | On-call runbook aliases |
 | `services` | Microservice navigation (cd-to shortcuts) |
 
