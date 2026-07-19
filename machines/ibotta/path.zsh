@@ -47,11 +47,16 @@ unset __conda_setup
 # ---------------------------------------------------------------------------
 # Antigravity
 # ---------------------------------------------------------------------------
-export PATH="/Users/cole.polyak/.antigravity/antigravity/bin:$PATH"
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 # ---------------------------------------------------------------------------
 # bun
 # ---------------------------------------------------------------------------
-[ -s "/Users/cole.polyak/.bun/_bun" ] && source "/Users/cole.polyak/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# ---------------------------------------------------------------------------
+# libpq (Postgres client tools — keg-only, not linked into PATH by brew)
+# ---------------------------------------------------------------------------
+export PATH="$HOMEBREW_PREFIX/opt/libpq/bin:$PATH"
