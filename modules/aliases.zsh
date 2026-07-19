@@ -7,7 +7,6 @@
 #   lsal       - List all files in long format
 #   python     - Alias to python3
 #   reload     - Re-source ~/.zshrc
-#   1:1        - Print hello
 #   week       - Print current week of the year
 #   message    - Append a startup message to machines/personal/messages.txt
 
@@ -16,7 +15,6 @@ alias lsa="ls -a"
 alias lsal="ls -al"
 alias python="python3"
 alias reload="source ~/.zshrc"
-alias 1:1="echo hello"
 
 # Prints the current week of the year
 week() {
