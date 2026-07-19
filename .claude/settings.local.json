@@ -129,7 +129,27 @@
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal /Users/cole/repos/dotfiles/bin/dots sync uninstall 2>&1)",
       "Bash(DOTFILES=/Users/cole/repos/dotfiles DOTFILES_MACHINE=personal ./cmd/dots/dots-test)",
       "Bash(rm -f ./cmd/dots/dots-test)",
-      "Bash(head -20 /Users/cole/repos/dotfiles/machines/ibotta/modules/*.zsh)"
+      "Bash(head -20 /Users/cole/repos/dotfiles/machines/ibotta/modules/*.zsh)",
+      "Bash(ln -sf ~/repos/dotfiles/zshrc ~/.zshrc)",
+      "Bash(zsh:*)",
+      "Bash(kubectl version *)",
+      "Bash(argo version *)",
+      "Bash(assume --version)",
+      "Read(//Users/cole.polyak/.kube/**)",
+      "Bash(kubectl config *)",
+      "Read(//Users/cole.polyak/.aws/**)",
+      "Bash(assume ops-staging:enablement --exec -- aws sts get-caller-identity)",
+      "Bash(assume ops-staging:enablement --exec -- kubectl --kubeconfig ~/.kube/apollo get ns)",
+      "Bash(assume ops-staging:enablement --exec -- aws eks get-token --cluster-name nancy --region us-east-1)",
+      "Bash(assume ops-staging:enablement --exec -- bash -c 'aws eks describe-cluster --name nancy --region us-east-1 --query cluster.arn --output text')",
+      "Bash(assume ops-staging:DomainEngineer --exec -- kubectl get ns)",
+      "Bash(assume ops-staging:developer-experience --exec -- kubectl get ns)",
+      "Bash(assume ops-staging:DomainEngineer --exec -- argo list)",
+      "Bash(assume ops-staging:DomainEngineer --exec -- argo list -n argo)",
+      "Bash(assume ops-staging:DomainEngineer --exec -- kubectl -n argo get svc,deploy,ingress)",
+      "Bash(env)",
+      "mcp__claude_ai_Atlassian__search",
+      "mcp__claude_ai_Atlassian__getConfluencePage"
     ]
   }
 }
