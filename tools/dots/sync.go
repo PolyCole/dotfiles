@@ -30,11 +30,13 @@ var (
 )
 
 // SyncModule returns a synthetic Module describing the built-in sync subcommands.
-// It is injected into the module list at startup so that 'dots' overview and
-// 'dots sync' detail both surface the sync commands.
+// It is injected into the module list at startup so 'dots' overview and
+// 'dots backup' detail both surface the sync commands. The group is named
+// "backup" rather than "sync" so it doesn't collide with the reserved
+// 'dots sync' subcommand (which would shadow 'dots sync' group detail).
 func SyncModule() Module {
 	return Module{
-		Name:        "sync",
+		Name:        "backup",
 		Description: "Manage dotfile synchronization via launchd",
 		Commands: []Command{
 			{Name: "dots sync status", Description: "Show sync daemon status and last run info (default)"},
