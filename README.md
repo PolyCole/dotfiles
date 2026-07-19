@@ -94,7 +94,7 @@ The `dots sync` subsystem manages config symlinks and periodic snapshots, driven
 dots sync status          # Launchd job state, symlink health, snapshot ages
 dots sync link            # Create/update symlinks declared in sync.yml
 dots sync now             # Pull, rebuild binaries, snapshot, commit, and push
-dots sync install         # Install the launchd agent (runs daily at 09:00)
+dots sync install         # Rebuild binaries and install the launchd agent (runs daily at 09:00)
 dots sync uninstall       # Remove the launchd agent
 ```
 

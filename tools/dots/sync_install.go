@@ -80,6 +80,9 @@ func RunSyncInstall(w io.Writer, dotfiles, machine string) error {
 	// Check for existing crontab entry
 	warnCrontab(w)
 
+	// Rebuild binaries first so the launchd job never loads a stale binary.
+	buildBinaries(w, dotfiles)
+
 	// Resolve the dots binary (the running executable)
 	dotsBin, err := os.Executable()
 	if err != nil {
@@ -191,6 +194,25 @@ func RunSyncUninstall(w io.Writer) error {
 	fmt.Fprintf(w, "\n  %s\n", styleDim.Render("symlinks were not removed — run 'dots sync link' to re-apply"))
 	fmt.Fprintln(w)
 	return nil
+}
+
+// buildBinaries runs 'make all' so a fresh install never loads a stale binary.
+// A build failure warns but does not abort the install — matching the
+// non-fatal philosophy of rebuildIfChanged in the sync cycle.
+func buildBinaries(w io.Writer, dotfiles string) {
+	cmd := exec.Command("make", "all")
+	cmd.Dir = dotfiles
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &out
+	if err := cmd.Run(); err != nil {
+		fmt.Fprintf(w, "  %s  %s\n", styleSyncWarn.Render("warn "), styleDim.Render("make all failed: "+err.Error()))
+		if msg := strings.TrimSpace(out.String()); msg != "" {
+			fmt.Fprintf(w, "         %s\n", styleDim.Render(msg))
+		}
+		return
+	}
+	fmt.Fprintf(w, "  %s  %s\n", styleSyncOK.Render("build"), styleDim.Render("rebuilt bin/dots and bin/startup-message"))
 }
 
 // warnCrontab prints a warning if a crontab entry related to dotfiles sync exists.
