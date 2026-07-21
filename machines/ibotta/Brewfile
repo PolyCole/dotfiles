@@ -175,9 +175,9 @@ brew "yarn"
 brew "yq"
 # Code intelligence tool that builds semantic knowledge graphs from source code
 brew "aovestdipaperino/tap/tokensave", trusted: true
+cask "gh-depmerge"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# HTML to PDF renderer
 cask "wkhtmltopdf"
 vscode "42crunch.vscode-openapi"
 vscode "bierner.markdown-mermaid"
