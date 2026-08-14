@@ -17,6 +17,9 @@ function qc() {
   fi
 }
 
+# Comment "@dependabot rebase" on every open dependabot PR in the current repo
+alias dependabot-rebase='gh pr list --author "app/dependabot" --state open --json number -q ".[].number" | xargs -I{} gh pr comment {} --body "@dependabot rebase"'
+
 # ---------------------------------------------------------------------------
 # Schedule reminder
 # ---------------------------------------------------------------------------
