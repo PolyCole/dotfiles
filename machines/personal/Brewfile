@@ -22,6 +22,8 @@ brew "bat"
 brew "beads"
 # Cross-platform make
 brew "cmake"
+# Multi-agent workspace manager
+brew "gastown"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.11"
 # Scanner for secrets and sensitive data in code
@@ -60,6 +62,8 @@ brew "pyenv"
 brew "rbenv"
 # Safe, concurrent, practical language
 brew "rust"
+# Terminal multiplexer
+brew "tmux"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Find and verify credentials
