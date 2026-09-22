@@ -49,3 +49,6 @@ fi
 
 # ls colors
 LS_COLORS=$LS_COLORS:'di=1;32:ex=4;31' ; export LS_COLORS
+
+# bun completions
+[ -s "/private/tmp/claude-502/-Users-cole-polyak-repos-turbos-upa-weirdness/3f83125b-04c9-4b58-ba83-e33c7fa8d0e3/scratchpad/bun142/_bun" ] && source "/private/tmp/claude-502/-Users-cole-polyak-repos-turbos-upa-weirdness/3f83125b-04c9-4b58-ba83-e33c7fa8d0e3/scratchpad/bun142/_bun"
