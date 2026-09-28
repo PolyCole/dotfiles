@@ -7,4 +7,7 @@ if ! command -v trufflehog >/dev/null 2>&1; then
     exit 0
 fi
 
-trufflehog git file://. --since-commit HEAD --fail
+# --branch HEAD: without it, --since-commit also walks other local branches'
+# history, so old findings elsewhere in the repo block every commit.
+# Staged changes are still scanned (reported as "Commit: Staged").
+trufflehog git file://. --since-commit HEAD --branch HEAD --fail
