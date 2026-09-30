@@ -60,8 +60,6 @@ brew "powerlevel10k"
 brew "pyenv"
 # Ruby version manager
 brew "rbenv"
-# Safe, concurrent, practical language
-brew "rust"
 # Terminal multiplexer
 brew "tmux"
 # Display directories as trees (with optional color/HTML output)
