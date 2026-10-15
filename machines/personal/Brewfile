@@ -66,8 +66,6 @@ brew "tmux"
 brew "tree"
 # Find and verify credentials
 brew "trufflehog"
-# Command-line interface for Vercel
-brew "vercel"
 # Tool for creating isolated virtual python environments
 brew "virtualenv"
 # Terminal emulator that uses platform-native UI and GPU acceleration
