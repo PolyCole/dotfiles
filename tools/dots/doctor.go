@@ -179,7 +179,7 @@ func checkLocalState(dotfiles string) []doctorIssue {
 	}
 	if status := queryLaunchd(); launchdFailed(status) {
 		issues = append(issues, doctorIssue{"warn", "launchd",
-			fmt.Sprintf("%s last exit code %s — if %s has no entry for the last scheduled run, launchd couldn't start the job (check System Settings → General → Login Items)",
+			fmt.Sprintf("%s last exit code %s — if %s has no entry for the last scheduled run, launchd couldn't start the job; run: dots sync install",
 				launchdLabel, status.lastExitCode, logPath)})
 	}
 	if info, err := os.Stat(filepath.Join(dotfiles, ".beads")); err == nil && info.Mode().Perm()&0o077 != 0 {

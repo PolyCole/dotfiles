@@ -1,6 +1,7 @@
 package dots
 
 import (
+	"bytes"
 	"os"
 	"path/filepath"
 	"strings"
@@ -320,5 +321,18 @@ func TestDecodeWaitStatus(t *testing.T) {
 		if got := decodeWaitStatus(raw); got != want {
 			t.Errorf("decodeWaitStatus(%q) = %q, want %q", raw, got, want)
 		}
+	}
+}
+
+// The plist must launch via /bin/sh: launchd pins the job to its executable's
+// signature, and ad-hoc-signed bin/dots changes on every rebuild.
+func TestPlistTemplate_LaunchesViaShell(t *testing.T) {
+	var buf bytes.Buffer
+	if err := plistTmpl.Execute(&buf, plistData{DotsBin: "/x/bin/dots"}); err != nil {
+		t.Fatal(err)
+	}
+	want := "<string>/bin/sh</string>\n\t\t<string>-c</string>\n\t\t<string>exec \"$0\" sync now</string>\n\t\t<string>/x/bin/dots</string>"
+	if !strings.Contains(buf.String(), want) {
+		t.Errorf("plist ProgramArguments should wrap dots in /bin/sh, got:\n%s", buf.String())
 	}
 }

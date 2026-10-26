@@ -14,6 +14,11 @@ import (
 const plistLabel = "com.dotfiles.sync"
 const plistFilename = "com.dotfiles.sync.plist"
 
+// plistTmpl launches dots through /bin/sh rather than directly. launchd
+// pins a background item to its executable's code signature, and bin/dots
+// is ad-hoc signed, so every rebuild (including the one sync does after a
+// pull) changes it and launchd refuses to start the job with exit 78
+// (EX_CONFIG). /bin/sh's signature never changes; sh then execs dots.
 var plistTmpl = template.Must(template.New("plist").Parse(`<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -22,9 +27,10 @@ var plistTmpl = template.Must(template.New("plist").Parse(`<?xml version="1.0" e
 	<string>{{.Label}}</string>
 	<key>ProgramArguments</key>
 	<array>
+		<string>/bin/sh</string>
+		<string>-c</string>
+		<string>exec "$0" sync now</string>
 		<string>{{.DotsBin}}</string>
-		<string>sync</string>
-		<string>now</string>
 	</array>
 	<key>EnvironmentVariables</key>
 	<dict>

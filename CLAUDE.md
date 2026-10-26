@@ -78,7 +78,7 @@ Each machine runs `dots sync now` daily at 09:00 via launchd (label `com.dotfile
 - **Log:** `~/.dotfiles-sync.log`, appended per run. Each run starts with `dots sync now — <machine>` plus an RFC3339 timestamp and ends with `result: ok`, `result: skipped (offline)` or `result: failed: …`.
 - **Offline at wake:** launchd runs a missed job when the laptop wakes, often before the network is up. The pull retries for ~2.5 minutes, then the run is skipped without a failure notification.
 - **Push races:** if the other machine pushed first, the push is rebased and retried once. Any commit still unpushed goes out on the next run, because the sync pushes whenever `main` is ahead, not only when it just committed.
-- **launchd exit 78 (EX_CONFIG) with no log entry** means launchd couldn't start the job (`dots` never ran). Check System Settings → General → Login Items, then `launchctl kickstart -k gui/$(id -u)/com.dotfiles.sync` and watch the log.
+- **launchd exit 78 (EX_CONFIG) with no log entry** means launchd refused to start the job. launchd pins a background item to its executable's code signature, and ad-hoc-signed `bin/dots` changes on every rebuild, so the plist runs `/bin/sh -c 'exec "$0" sync now' <bin/dots>` instead. An older plist that runs `bin/dots` directly breaks after the first rebuild (`launchctl print gui/$(id -u)/com.dotfiles.sync` shows `needs LWCR update`). Run `dots sync install` to regenerate and reload it.
 - **`.beads has permissions 0755` warnings** on every git command: `chmod 700 .beads` (per checkout; git doesn't track it).
 
 ## Git Hooks

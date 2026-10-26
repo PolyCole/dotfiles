@@ -234,7 +234,9 @@ func aheadBehind(dotfiles string) (ahead, behind int, err error) {
 }
 
 // launchdFailed reports whether launchd recorded a non-zero exit for the job.
-// 78 (EX_CONFIG) with no matching log entry means launchd couldn't start it.
+// 78 (EX_CONFIG) with no matching log entry means launchd couldn't start it,
+// typically because the plist predates the /bin/sh wrapper and bin/dots was
+// rebuilt; 'dots sync install' fixes that.
 func launchdFailed(status launchdStatus) bool {
 	return status.loaded && status.lastExitCode != "-" && status.lastExitCode != "0"
 }
@@ -385,7 +387,7 @@ func RunSyncStatus(w io.Writer, dotfiles, machine string) error {
 		fmt.Fprintf(w, "  %s  %s %s\n",
 			styleSyncErr.Render("last exit"),
 			styleSyncPath.Render(status.lastExitCode),
-			styleDim.Render("— if the log has no entry for the last scheduled run, launchd couldn't start the job"),
+			styleDim.Render("— if the log has no entry for the last scheduled run, launchd couldn't start the job; run: dots sync install"),
 		)
 	}
 
