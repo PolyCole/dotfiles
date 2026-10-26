@@ -306,3 +306,19 @@ func TestRunSyncStatus_NotInstalledMessage(t *testing.T) {
 		t.Error("output should contain some launchd status ('installed', 'not installed', or 'loaded')")
 	}
 }
+
+func TestDecodeWaitStatus(t *testing.T) {
+	cases := map[string]string{
+		"0":     "0",
+		"19968": "78",
+		"256":   "1",
+		"9":     "signal 9",
+		"-15":   "signal 15",
+		"-":     "-",
+	}
+	for raw, want := range cases {
+		if got := decodeWaitStatus(raw); got != want {
+			t.Errorf("decodeWaitStatus(%q) = %q, want %q", raw, got, want)
+		}
+	}
+}

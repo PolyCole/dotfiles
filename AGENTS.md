@@ -12,6 +12,10 @@ bd close <id>         # Complete work
 bd sync               # Sync with git
 ```
 
+## Sync and Pull Errors
+
+Machines auto-commit and push to `main` daily via `dots sync now`. For pull/push errors or a stale sync, run `dots sync status` and `dots doctor`, and read `~/.dotfiles-sync.log`. See "Sync Troubleshooting" in CLAUDE.md.
+
 ## Landing the Plane (Session Completion)
 
 **When ending a work session**, you MUST complete ALL steps below. Work is NOT complete until `git push` succeeds.

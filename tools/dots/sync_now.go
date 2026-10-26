@@ -2,6 +2,7 @@ package dots
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -11,14 +12,34 @@ import (
 	"time"
 )
 
+// syncResultPrefix starts the last line of every run in the log, so
+// 'dots sync status' and 'dots doctor' can report how the last run ended.
+const syncResultPrefix = "result: "
+
+// pullRetryDelays spaces out pull retries when GitHub is unreachable.
+// launchd runs a missed 09:00 job the moment the laptop wakes, usually
+// before Wi-Fi or VPN is back, so the first attempt often fails.
+var pullRetryDelays = []time.Duration{15 * time.Second, 30 * time.Second, 45 * time.Second, 60 * time.Second}
+
+// errOffline marks a run skipped because GitHub stayed unreachable.
+// It is not a failure: the next scheduled run catches up.
+var errOffline = errors.New("github unreachable")
+
 // RunSyncNow performs the full sync cycle and sends a desktop notification
 // on failure so unattended launchd runs don't fail silently.
 func RunSyncNow(w io.Writer, dotfiles, machine string) error {
 	err := runSyncNow(w, dotfiles, machine)
-	if err != nil {
+	switch {
+	case errors.Is(err, errOffline):
+		fmt.Fprintf(w, "\n%s\n\n", styleSyncSkip.Render(syncResultPrefix+"skipped (offline)"))
+		return nil
+	case err != nil:
+		fmt.Fprintf(w, "\n%s\n\n", styleSyncErr.Render(syncResultPrefix+"failed: "+err.Error()))
 		notifySyncFailure(err.Error())
+		return err
 	}
-	return err
+	fmt.Fprintf(w, "\n%s\n\n", styleSyncOK.Render(syncResultPrefix+"ok"))
+	return nil
 }
 
 // runSyncNow is the sync cycle itself:
@@ -26,7 +47,7 @@ func RunSyncNow(w io.Writer, dotfiles, machine string) error {
 //  2. rebuild binaries if the pull brought new commits
 //  3. run each snapshot command and write output to dest
 //  4. verify config symlinks (warn on broken)
-//  5. if changes exist, commit and push; otherwise exit cleanly
+//  5. commit if dirty, then push if ahead of upstream
 func runSyncNow(w io.Writer, dotfiles, machine string) error {
 	if machine == "" {
 		fmt.Fprintln(w, styleSyncErr.Render("error:"), styleDim.Render("DOTFILES_MACHINE is not set — cannot determine which sync.yml to use"))
@@ -67,14 +88,13 @@ func runSyncNow(w io.Writer, dotfiles, machine string) error {
 	fmt.Fprintf(w, "\n%s\n", styleGroupHeader.Render("symlinks"))
 	checkSymlinksNow(w, dotfiles, manifest)
 
-	// ── Step 6: commit and push if dirty ─────────────────────────────────
+	// ── Step 6: commit if dirty, push if ahead ───────────────────────────
 	fmt.Fprintf(w, "\n%s\n", styleGroupHeader.Render("commit"))
-	if err := commitAndPush(w, dotfiles, machine); err != nil {
+	if err := commitIfDirty(w, dotfiles, machine); err != nil {
 		return err
 	}
-
-	fmt.Fprintln(w)
-	return nil
+	fmt.Fprintf(w, "\n%s\n", styleGroupHeader.Render("push"))
+	return pushIfAhead(w, dotfiles)
 }
 
 // gitHead returns the current HEAD commit, or "" if it cannot be determined.
@@ -117,16 +137,35 @@ func rebuildIfChanged(w io.Writer, dotfiles, headBefore string) {
 // pull succeed when the working tree is dirty (common on a repo you actively
 // edit): local changes are stashed before the rebase and reapplied after, so
 // the later commit step still picks them up.
+// Network failures are retried per pullRetryDelays; if GitHub is still
+// unreachable after the last retry, it returns errOffline.
 func runGitPullRebase(w io.Writer, dotfiles string) error {
-	cmd := exec.Command("git", "-C", dotfiles, "pull", "--rebase", "--autostash")
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	cmd.Stderr = &out
-	if err := cmd.Run(); err != nil {
-		fmt.Fprintf(w, "  %s  %s\n", styleSyncErr.Render("error"), styleDim.Render(out.String()))
-		return fmt.Errorf("git pull --rebase failed: %w", err)
+	for attempt := 0; ; attempt++ {
+		cmd := exec.Command("git", "-C", dotfiles, "pull", "--rebase", "--autostash")
+		var out bytes.Buffer
+		cmd.Stdout = &out
+		cmd.Stderr = &out
+		err := cmd.Run()
+		if err == nil {
+			printPullResult(w, strings.TrimSpace(out.String()))
+			return nil
+		}
+		if !isNetworkError(out.String()) {
+			fmt.Fprintf(w, "  %s  %s\n", styleSyncErr.Render("error"), styleDim.Render(out.String()))
+			return fmt.Errorf("git pull --rebase failed: %w", err)
+		}
+		if attempt == len(pullRetryDelays) {
+			fmt.Fprintf(w, "  %s  %s\n", styleSyncSkip.Render("offline"),
+				styleDim.Render(fmt.Sprintf("github unreachable after %d attempts — skipping this run", attempt+1)))
+			return errOffline
+		}
+		fmt.Fprintf(w, "  %s  %s\n", styleSyncWarn.Render("retry"),
+			styleDim.Render(fmt.Sprintf("github unreachable — retrying in %s", pullRetryDelays[attempt])))
+		time.Sleep(pullRetryDelays[attempt])
 	}
-	outStr := strings.TrimSpace(out.String())
+}
+
+func printPullResult(w io.Writer, outStr string) {
 	if outStr == "Current branch main is up to date." || strings.Contains(outStr, "up to date") {
 		fmt.Fprintf(w, "  %s\n", styleSyncSkip.Render("already up to date"))
 	} else if outStr != "" {
@@ -134,7 +173,27 @@ func runGitPullRebase(w io.Writer, dotfiles string) error {
 	} else {
 		fmt.Fprintf(w, "  %s\n", styleSyncOK.Render("pulled"))
 	}
-	return nil
+}
+
+// networkErrorMarkers are git/ssh messages meaning GitHub couldn't be reached
+// at all, as opposed to auth or merge failures, which should not be retried.
+var networkErrorMarkers = []string{
+	"Could not resolve hostname",
+	"Could not resolve host",
+	"connect to host",
+	"Network is unreachable",
+	"Operation timed out",
+	"Connection timed out",
+	"Connection reset",
+}
+
+func isNetworkError(out string) bool {
+	for _, m := range networkErrorMarkers {
+		if strings.Contains(out, m) {
+			return true
+		}
+	}
+	return false
 }
 
 // runSnapshots executes each snapshot command and writes output to dest.
@@ -215,9 +274,9 @@ func checkSymlinksNow(w io.Writer, dotfiles string, manifest *SyncManifest) {
 	}
 }
 
-// commitAndPush checks git status; if dirty, stages all, commits, and pushes.
+// commitIfDirty checks git status; if dirty, stages all and commits.
 // machine names the profile in the commit subject.
-func commitAndPush(w io.Writer, dotfiles, machine string) error {
+func commitIfDirty(w io.Writer, dotfiles, machine string) error {
 	// Check for changes
 	statusCmd := exec.Command("git", "-C", dotfiles, "status", "--porcelain")
 	var statusOut bytes.Buffer
@@ -254,17 +313,47 @@ func commitAndPush(w io.Writer, dotfiles, machine string) error {
 		return fmt.Errorf("git commit failed: %w", err)
 	}
 	fmt.Fprintf(w, "  %s  %s\n", styleSyncOK.Render("commit"), styleDim.Render(msg))
+	return nil
+}
 
-	// Push
-	pushCmd := exec.Command("git", "-C", dotfiles, "push")
-	var pushOut bytes.Buffer
-	pushCmd.Stdout = &pushOut
-	pushCmd.Stderr = &pushOut
-	if err := pushCmd.Run(); err != nil {
-		fmt.Fprintf(w, "  %s  %s\n", styleSyncErr.Render("error"), styleDim.Render("git push failed: "+strings.TrimSpace(pushOut.String())))
+// pushIfAhead pushes whenever HEAD has commits upstream lacks — not only
+// after this run committed — so a commit stranded by an earlier failed push
+// goes out on the next run. A rejected push (another machine pushed first)
+// gets one pull --rebase and a retry.
+func pushIfAhead(w io.Writer, dotfiles string) error {
+	ahead, _, err := aheadBehind(dotfiles)
+	if err != nil {
+		fmt.Fprintf(w, "  %s  %s\n", styleSyncErr.Render("error"), styleDim.Render("cannot compare with upstream: "+err.Error()))
+		return fmt.Errorf("cannot compare with upstream: %w", err)
+	}
+	if ahead == 0 {
+		fmt.Fprintf(w, "  %s\n", styleSyncSkip.Render("nothing to push"))
+		return nil
+	}
+
+	out, err := gitPush(dotfiles)
+	if err != nil && strings.Contains(out, "[rejected]") {
+		fmt.Fprintf(w, "  %s  %s\n", styleSyncWarn.Render("retry"), styleDim.Render("push rejected — remote moved; rebasing and retrying"))
+		headBefore := gitHead(dotfiles)
+		if err := runGitPullRebase(w, dotfiles); err != nil {
+			return err
+		}
+		rebuildIfChanged(w, dotfiles, headBefore)
+		out, err = gitPush(dotfiles)
+	}
+	if err != nil {
+		fmt.Fprintf(w, "  %s  %s\n", styleSyncErr.Render("error"), styleDim.Render("git push failed: "+out))
 		return fmt.Errorf("git push failed: %w", err)
 	}
-	fmt.Fprintf(w, "  %s\n", styleSyncOK.Render("pushed"))
-
+	fmt.Fprintf(w, "  %s  %s\n", styleSyncOK.Render("pushed"), styleDim.Render(fmt.Sprintf("%d commit(s)", ahead)))
 	return nil
+}
+
+func gitPush(dotfiles string) (string, error) {
+	cmd := exec.Command("git", "-C", dotfiles, "push")
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &out
+	err := cmd.Run()
+	return strings.TrimSpace(out.String()), err
 }

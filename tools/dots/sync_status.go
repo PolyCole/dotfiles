@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -52,8 +53,26 @@ func queryLaunchd() launchdStatus {
 	return launchdStatus{
 		installed:    installed,
 		loaded:       true,
-		lastExitCode: parsePlistDictValue(string(out), "LastExitStatus"),
+		lastExitCode: decodeWaitStatus(parsePlistDictValue(string(out), "LastExitStatus")),
 		pid:          parsePlistDictValue(string(out), "PID"),
+	}
+}
+
+// decodeWaitStatus turns the raw wait status 'launchctl list <label>'
+// reports as LastExitStatus (e.g. 19968) into an exit code ("78") or
+// signal ("signal 9"). Non-numeric values pass through unchanged.
+func decodeWaitStatus(raw string) string {
+	n, err := strconv.Atoi(raw)
+	if err != nil {
+		return raw
+	}
+	switch {
+	case n < 0:
+		return fmt.Sprintf("signal %d", -n)
+	case n&0x7f != 0:
+		return fmt.Sprintf("signal %d", n&0x7f)
+	default:
+		return strconv.Itoa(n >> 8)
 	}
 }
 
@@ -144,23 +163,80 @@ func readLastRunFromLog() (time.Time, bool) {
 	// Scan lines in reverse to find last timestamp
 	lines := strings.Split(strings.TrimSpace(string(data)), "\n")
 	for i := len(lines) - 1; i >= 0; i-- {
-		line := strings.TrimSpace(lines[i])
-		if line == "" {
-			continue
-		}
-		// Try parsing first 20+ chars as a timestamp
-		for _, layout := range []string{time.RFC3339, "2006-01-02T15:04:05", "2006-01-02 15:04:05"} {
-			prefix := line
-			if len(prefix) > len(layout) {
-				prefix = prefix[:len(layout)]
-			}
-			t, err := time.Parse(layout, prefix)
-			if err == nil {
-				return t, true
-			}
+		if t, ok := parseLogTimestamp(lines[i]); ok {
+			return t, true
 		}
 	}
 	return time.Time{}, false
+}
+
+func parseLogTimestamp(line string) (time.Time, bool) {
+	line = strings.TrimSpace(line)
+	if line == "" {
+		return time.Time{}, false
+	}
+	// Try parsing first 20+ chars as a timestamp
+	for _, layout := range []string{time.RFC3339, "2006-01-02T15:04:05", "2006-01-02 15:04:05"} {
+		prefix := line
+		if len(prefix) > len(layout) {
+			prefix = prefix[:len(layout)]
+		}
+		if t, err := time.Parse(layout, prefix); err == nil {
+			return t, true
+		}
+	}
+	return time.Time{}, false
+}
+
+// readLastResultFromLog returns how the last run ended ("ok",
+// "skipped (offline)", "failed: …"). ok is false when the last run has no
+// result line — it predates result logging or died before finishing.
+func readLastResultFromLog() (string, bool) {
+	data, err := os.ReadFile(syncLogPath())
+	if err != nil {
+		return "", false
+	}
+	return lastResultFromLog(string(data))
+}
+
+func lastResultFromLog(log string) (string, bool) {
+	lines := strings.Split(strings.TrimSpace(log), "\n")
+	for i := len(lines) - 1; i >= 0; i-- {
+		if idx := strings.Index(lines[i], syncResultPrefix); idx != -1 {
+			// Strip any trailing ANSI reset left by styling.
+			res := lines[i][idx+len(syncResultPrefix):]
+			if esc := strings.Index(res, "\x1b"); esc != -1 {
+				res = res[:esc]
+			}
+			return strings.TrimSpace(res), true
+		}
+		if _, ok := parseLogTimestamp(lines[i]); ok {
+			return "", false // reached the start of the last run
+		}
+	}
+	return "", false
+}
+
+// aheadBehind counts commits HEAD has that its upstream lacks, and vice
+// versa, using local refs only (no fetch).
+func aheadBehind(dotfiles string) (ahead, behind int, err error) {
+	cmd := exec.Command("git", "-C", dotfiles, "rev-list", "--left-right", "--count", "HEAD...@{upstream}")
+	var out, stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	if err := cmd.Run(); err != nil {
+		return 0, 0, fmt.Errorf("%s", strings.TrimSpace(stderr.String()))
+	}
+	if _, err := fmt.Sscanf(out.String(), "%d %d", &ahead, &behind); err != nil {
+		return 0, 0, fmt.Errorf("cannot parse rev-list output %q", out.String())
+	}
+	return ahead, behind, nil
+}
+
+// launchdFailed reports whether launchd recorded a non-zero exit for the job.
+// 78 (EX_CONFIG) with no matching log entry means launchd couldn't start it.
+func launchdFailed(status launchdStatus) bool {
+	return status.loaded && status.lastExitCode != "-" && status.lastExitCode != "0"
 }
 
 // symlinkStatus describes the state of a managed config's symlink.
@@ -305,6 +381,13 @@ func RunSyncStatus(w io.Writer, dotfiles, machine string) error {
 	} else {
 		fmt.Fprintf(w, "  %s         %s\n", styleSyncOK.Render("loaded"), styleSyncPath.Render(plistPath))
 	}
+	if launchdFailed(status) {
+		fmt.Fprintf(w, "  %s  %s %s\n",
+			styleSyncErr.Render("last exit"),
+			styleSyncPath.Render(status.lastExitCode),
+			styleDim.Render("— if the log has no entry for the last scheduled run, launchd couldn't start the job"),
+		)
+	}
 
 	// ── Section 2: last run ───────────────────────────────────────────────
 	fmt.Fprintf(w, "\n%s\n", styleGroupHeader.Render("last run"))
@@ -315,6 +398,17 @@ func RunSyncStatus(w io.Writer, dotfiles, machine string) error {
 			styleSyncOK.Render(lastRun.Format("2006-01-02 15:04:05")),
 			styleDim.Render("("+formatAge(lastRun)+")"),
 		)
+		result, ok := readLastResultFromLog()
+		switch {
+		case !ok:
+			fmt.Fprintf(w, "  %s\n", styleDim.Render("result unknown — see "+syncLogPath()))
+		case result == "ok":
+			fmt.Fprintf(w, "  %s\n", styleSyncOK.Render(result))
+		case strings.HasPrefix(result, "skipped"):
+			fmt.Fprintf(w, "  %s\n", styleSyncSkip.Render(result))
+		default:
+			fmt.Fprintf(w, "  %s  %s\n", styleSyncErr.Render(result), styleDim.Render("see "+syncLogPath()))
+		}
 	} else if status.loaded && status.lastExitCode != "-" {
 		fmt.Fprintf(w, "  %s  %s %s\n",
 			styleDim.Render("unknown"),
@@ -368,7 +462,23 @@ func RunSyncStatus(w io.Writer, dotfiles, machine string) error {
 		fmt.Fprintf(w, "  %s\n", styleDim.Render("schedule unknown (no schedule found in plist)"))
 	}
 
-	// ── Sections 4 & 5 require a manifest ────────────────────────────────
+	// ── Section 4: git ────────────────────────────────────────────────────
+	fmt.Fprintf(w, "\n%s\n", styleGroupHeader.Render("git"))
+	if ahead, behind, err := aheadBehind(dotfiles); err != nil {
+		fmt.Fprintf(w, "  %s  %s\n", styleSyncWarn.Render("unknown"), styleDim.Render(err.Error()))
+	} else {
+		if ahead == 0 && behind == 0 {
+			fmt.Fprintf(w, "  %s\n", styleSyncOK.Render("in sync with upstream (as of last fetch)"))
+		}
+		if ahead > 0 {
+			fmt.Fprintf(w, "  %s  %s\n", styleSyncWarn.Render(fmt.Sprintf("%d unpushed", ahead)), styleDim.Render("the next sync pushes these"))
+		}
+		if behind > 0 {
+			fmt.Fprintf(w, "  %s  %s\n", styleSyncWarn.Render(fmt.Sprintf("%d behind", behind)), styleDim.Render("the next sync pulls these"))
+		}
+	}
+
+	// ── Sections 5 & 6 require a manifest ────────────────────────────────
 	if machine == "" {
 		fmt.Fprintf(w, "\n%s\n", styleDim.Render("DOTFILES_MACHINE not set — skipping config and snapshot status"))
 		return nil
@@ -381,7 +491,7 @@ func RunSyncStatus(w io.Writer, dotfiles, machine string) error {
 		return nil
 	}
 
-	// ── Section 4: managed configs ────────────────────────────────────────
+	// ── Section 5: managed configs ────────────────────────────────────────
 	fmt.Fprintf(w, "\n%s\n", styleGroupHeader.Render("managed configs"))
 
 	symlinks := checkSymlinks(dotfiles, manifest)
@@ -419,7 +529,7 @@ func RunSyncStatus(w io.Writer, dotfiles, machine string) error {
 		}
 	}
 
-	// ── Section 5: snapshots ──────────────────────────────────────────────
+	// ── Section 6: snapshots ──────────────────────────────────────────────
 	fmt.Fprintf(w, "\n%s\n", styleGroupHeader.Render("snapshots"))
 
 	snapshots := querySnapshotTimes(dotfiles, manifest)

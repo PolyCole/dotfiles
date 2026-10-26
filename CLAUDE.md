@@ -70,6 +70,17 @@ It loads modules from `modules/*.zsh` and, if `$DOTFILES_MACHINE` is set, also f
 
 `dots sync` (status/link/now/install/uninstall) manages config symlinks and snapshots declared in each machine's `sync.yml`, optionally on a daily launchd schedule.
 
+## Sync Troubleshooting
+
+Each machine runs `dots sync now` daily at 09:00 via launchd (label `com.dotfiles.sync`, plist in `~/Library/LaunchAgents/`). A run pulls with rebase, rebuilds `bin/` if HEAD moved, writes snapshots (Brewfile, npm list, etc.), commits with an emoji subject like `🍺 ibotta: brew packages`, and pushes straight to `main`. Both machines push to the same branch, so expect auto-commits interleaved with manual ones.
+
+- **Start here:** `dots sync status` (last run and its result, launchd exit code, unpushed/behind count) and `dots doctor` (adds warnings for unpushed commits, a failed last sync, launchd failures, `.beads` permissions).
+- **Log:** `~/.dotfiles-sync.log`, appended per run. Each run starts with `dots sync now — <machine>` plus an RFC3339 timestamp and ends with `result: ok`, `result: skipped (offline)` or `result: failed: …`.
+- **Offline at wake:** launchd runs a missed job when the laptop wakes, often before the network is up. The pull retries for ~2.5 minutes, then the run is skipped without a failure notification.
+- **Push races:** if the other machine pushed first, the push is rebased and retried once. Any commit still unpushed goes out on the next run, because the sync pushes whenever `main` is ahead, not only when it just committed.
+- **launchd exit 78 (EX_CONFIG) with no log entry** means launchd couldn't start the job (`dots` never ran). Check System Settings → General → Login Items, then `launchctl kickstart -k gui/$(id -u)/com.dotfiles.sync` and watch the log.
+- **`.beads has permissions 0755` warnings** on every git command: `chmod 700 .beads` (per checkout; git doesn't track it).
+
 ## Git Hooks
 
 `dots-hooks-install` (in `modules/hooks.zsh`) sets a global `core.hooksPath` with dispatchers that call `hooks/runner.zsh`. Which scripts run per hook type is declared in each machine's `hooks.conf`; the scripts live in `hooks/<hook-type>/<name>.sh`. After the configured scripts, the runner chains to the current repository's own `.git/hooks/<hook-type>` if present, so per-repo hooks keep working.

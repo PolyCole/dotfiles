@@ -162,9 +162,37 @@ func checkHooksConfs(dotfiles string) []doctorIssue {
 	return issues
 }
 
+// checkLocalState reports this machine's sync health: unpushed commits, a
+// failed last sync, a launchd job that exited non-zero, and .beads
+// permissions loose enough that bd warns on every git operation. All are
+// warns — they describe this checkout, not the repo, so they never gate CI.
+func checkLocalState(dotfiles string) []doctorIssue {
+	var issues []doctorIssue
+	logPath := syncLogPath()
+
+	if ahead, _, err := aheadBehind(dotfiles); err == nil && ahead > 0 {
+		issues = append(issues, doctorIssue{"warn", "git",
+			fmt.Sprintf("%d commit(s) not pushed to upstream — a sync push may have failed; see %s", ahead, logPath)})
+	}
+	if result, ok := readLastResultFromLog(); ok && strings.HasPrefix(result, "failed") {
+		issues = append(issues, doctorIssue{"warn", logPath, "last sync " + result})
+	}
+	if status := queryLaunchd(); launchdFailed(status) {
+		issues = append(issues, doctorIssue{"warn", "launchd",
+			fmt.Sprintf("%s last exit code %s — if %s has no entry for the last scheduled run, launchd couldn't start the job (check System Settings → General → Login Items)",
+				launchdLabel, status.lastExitCode, logPath)})
+	}
+	if info, err := os.Stat(filepath.Join(dotfiles, ".beads")); err == nil && info.Mode().Perm()&0o077 != 0 {
+		issues = append(issues, doctorIssue{"warn", ".beads",
+			fmt.Sprintf("permissions %#o — bd warns on every git operation; run: chmod 700 .beads", info.Mode().Perm())})
+	}
+	return issues
+}
+
 // RunDoctor lints the whole repo: every module (all machines, not just the
 // active one), every sync.yml, and every hooks.conf. Errors mean something
-// is broken or misleading; warns are drift worth knowing about.
+// is broken or misleading; warns are drift worth knowing about. It also
+// reports this machine's sync health as warns (see checkLocalState).
 // Returns a non-nil error when any error-severity issue is found, so it can
 // gate CI.
 func RunDoctor(w io.Writer, dotfiles string) error {
@@ -180,6 +208,7 @@ func RunDoctor(w io.Writer, dotfiles string) error {
 	}
 	issues = append(issues, checkSyncManifests(dotfiles)...)
 	issues = append(issues, checkHooksConfs(dotfiles)...)
+	issues = append(issues, checkLocalState(dotfiles)...)
 
 	errors, warns := 0, 0
 	for _, issue := range issues {
