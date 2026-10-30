@@ -1,3 +1,4 @@
+tap "aovestdipaperino/tap"
 tap "aws/tap"
 tap "gitguardian/tap"
 tap "hashicorp/tap"
@@ -68,6 +69,8 @@ brew "tree"
 brew "trufflehog"
 # Tool for creating isolated virtual python environments
 brew "virtualenv"
+# Code intelligence tool that builds semantic knowledge graphs from source code
+brew "aovestdipaperino/tap/tokensave", trusted: true
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
 # Full TeX Live distribution without GUI applications
