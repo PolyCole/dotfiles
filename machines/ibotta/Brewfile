@@ -111,6 +111,8 @@ brew "jq"
 brew "openjdk"
 # Ruby implementation in pure Java
 brew "jruby"
+# Handy way to save and run project-specific commands
+brew "just"
 # Statically typed programming language for the JVM
 brew "kotlin"
 # Kubernetes command-line interface
@@ -135,6 +137,8 @@ brew "nghttp2"
 brew "nvm"
 # AI coding agent, built for the terminal
 brew "opencode"
+# Fast, disk space efficient package manager
+brew "pnpm"
 # Python package management tool
 brew "poetry"
 # Framework for managing multi-language pre-commit hooks
