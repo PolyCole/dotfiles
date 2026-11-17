@@ -181,7 +181,7 @@ brew "yarn"
 brew "yq"
 # Code intelligence tool that builds semantic knowledge graphs from source code
 brew "aovestdipaperino/tap/tokensave", trusted: true
-cask "gh-depmerge"
+cask "ibotta/private/gh-depmerge"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
 cask "wkhtmltopdf"
